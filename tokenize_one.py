@@ -1,4 +1,5 @@
-# worker_encode_and_save_json.py
+#Código para tokenizar un solo MIDI, usado por un proceso padre de manera iterativa para tokenizar
+#el corpus sin incurrir en problemas de memoria
 from pathlib import Path
 import sys
 
@@ -15,10 +16,8 @@ def main():
 
     score = Score(midi_path)
 
-    tokens = tokenizer.encode(score)  # ✅ API correcta
+    tokens = tokenizer.encode(score)
 
-    # tokseq puede ser TokSequence o lista[TokSequence]; guardamos en formato MidiTok
-    # save_tokens guarda solo ids en un JSON con key "ids" (formato oficial). :contentReference[oaicite:3]{index=3}
     out_json.parent.mkdir(parents=True, exist_ok=True)
 
     save_programs = not tokenizer.config.use_programs
