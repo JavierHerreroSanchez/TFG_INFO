@@ -5,14 +5,17 @@ import sys
 
 from miditok import REMI, TokenizerConfig
 from miditok.utils import get_score_programs
+from tokenizer_train import load_bpe_tokenizer
 from symusic import Score
 
 def main():
     midi_path = Path(sys.argv[1])
     out_json = Path(sys.argv[2])
 
-    config = TokenizerConfig(num_velocities=16, use_chords=True, use_programs=True)
-    tokenizer = REMI(config)
+    TOKENIZER_FILENAME = "tokenizer_REMI_BPE.json"
+    OUT_ROOT = Path("./tokenizer").resolve()
+
+    tokenizer = load_bpe_tokenizer(OUT_ROOT, TOKENIZER_FILENAME)
 
     score = Score(midi_path)
 

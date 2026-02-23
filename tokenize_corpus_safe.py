@@ -7,17 +7,12 @@ from miditok import REMI, TokenizerConfig
 
 DATA_ROOT = Path("./data").resolve()
 OUT_ROOT = Path("./tokenizer").resolve()
-TOKENS_DIR = (OUT_ROOT / "tokens_json").resolve()
+TOKENS_DIR = (OUT_ROOT / "tokens_json_bpe").resolve()
 BAD_LIST = OUT_ROOT / "bad_midis.txt"
 
 def main():
     OUT_ROOT.mkdir(parents=True, exist_ok=True)
     TOKENS_DIR.mkdir(parents=True, exist_ok=True)
-
-    # Guardar el tokenizador UNA vez
-    config = TokenizerConfig(num_velocities=16, use_chords=True, use_programs=True)
-    tokenizer = REMI(config)
-    tokenizer.save(OUT_ROOT, None, "tokenizer_REMI.json")
 
     midi_paths = sorted(list(DATA_ROOT.rglob("*.mid")) + list(DATA_ROOT.rglob("*.midi")))
     print(f"[INFO] MIDIs encontrados: {len(midi_paths)}")
@@ -28,7 +23,6 @@ def main():
     ok = 0
 
     for i, midi_path in enumerate(midi_paths, start=1):
-        # replicar árbol: tokens_json/<ruta-relativa-a-data>/<stem>.json
         rel = midi_path.relative_to(DATA_ROOT)
         out_json = (TOKENS_DIR / rel).with_suffix(".json")
         out_json.parent.mkdir(parents=True, exist_ok=True)
@@ -47,7 +41,7 @@ def main():
 
         if r.returncode == 0:
             ok += 1
-            if ok % 200 == 0:
+            if ok % 500 == 0:
                 print(f"[INFO] OK nuevos: {ok}")
         else:
             bad.append(f"{midi_path}\treturncode={r.returncode}")
