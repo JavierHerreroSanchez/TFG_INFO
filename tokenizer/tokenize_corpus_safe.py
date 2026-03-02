@@ -5,8 +5,8 @@ import sys
 
 from miditok import REMI, TokenizerConfig
 
-DATA_ROOT = Path("./data").resolve()
-OUT_ROOT = Path("./tokenizer").resolve()
+DATA_ROOT = Path("../data").resolve()
+OUT_ROOT = Path("").resolve()
 TOKENS_DIR = (OUT_ROOT / "tokens_json_bpe").resolve()
 BAD_LIST = OUT_ROOT / "bad_midis.txt"
 

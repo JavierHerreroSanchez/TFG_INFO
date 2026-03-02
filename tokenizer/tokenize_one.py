@@ -13,7 +13,7 @@ def main():
     out_json = Path(sys.argv[2])
 
     TOKENIZER_FILENAME = "tokenizer_REMI_BPE.json"
-    OUT_ROOT = Path("./tokenizer").resolve()
+    OUT_ROOT = Path("").resolve()
 
     tokenizer = load_bpe_tokenizer(OUT_ROOT, TOKENIZER_FILENAME)
 
