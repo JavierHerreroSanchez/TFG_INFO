@@ -1,2 +1,5 @@
 miditok~=3.0.6.post1
 symusic~=0.5.9
+torch
+numpy
+pandas
