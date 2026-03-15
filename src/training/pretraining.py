@@ -47,7 +47,7 @@ SEED = 100454434
 # entrenar eficientemente en memoria con recortes aleatorios (random crops).
 CACHE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\processed\pretraining").resolve()
 ADD_EOS = True
-EOS_ID = 0
+EOS_ID = 2
 USE_UINT16 = True  # vocab 30k cabe en uint16
 
 # 4) Hiperparámetros del modelo
@@ -65,10 +65,10 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MICRO_BATCH = 4
 GRAD_ACCUM = 8
 
-LR = 3e-4
+LR = 3e-4   # learning rate, elegido para AdamW de acuerdo con la constante de Karpathy
 MIN_LR = 3e-5
-WARMUP_UPDATES = 1000
-WEIGHT_DECAY = 0.1
+WARMUP_UPDATES = 1000   # permite no "arrancar demasiado fuerte" los pesos de AdamW
+WEIGHT_DECAY = 0.1      # regularización sobre los pesos
 GRAD_CLIP = 1.0
 
 EPOCHS = 3  # “epochs de tokens” sobre train.bin
@@ -82,7 +82,7 @@ CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints").r
 NUM_WORKERS = 2
 PIN_MEMORY = True
 
-USE_AMP = True
+USE_AMP = True      # Automatic Mixed Precision: para acelerar el entrenamiento sin sacrificar mucha precisión
 AMP_DTYPE = "bf16"  # "bf16" o "fp16"
 
 
@@ -366,8 +366,8 @@ def evaluate(model, loader, device: str, max_batches: int):
     En esta función evaluamos el modelo en un número acotado de batches para
     obtener una estimación rápida de la loss media.
 
-    Se hace en no_grad() para ahorrar memoria y tiempo, y se alterna model.eval()
-    / model.train() para respetar dropout y LayerNorm.
+    Se hace en no_grad() para ahorrar memoria y tiempo, alternando model.eval()
+    y model.train() para respetar dropout y LayerNorm.
     """
     model.eval()
     losses = []
@@ -474,7 +474,7 @@ def prepare_cache_and_splits() -> Dict:
 # =============================================================================
 # Main: entrenamiento completo
 # -----------------------------------------------------------------------------
-# En main orquestamos:
+# En main se orquesta:
 #  - seeding
 #  - preparación de cache + loaders
 #  - construcción del modelo + optimizador
@@ -555,6 +555,7 @@ def main():
     update = 0
     train_iter = iter(train_loader)
 
+    # Aqui comienza el train + val
     while update < total_updates:
         # Ajustamos LR por schedule (warmup + cosine) en cada update.
         lr = lr_schedule(update, total_updates, LR, MIN_LR, WARMUP_UPDATES)
@@ -575,7 +576,7 @@ def main():
             x = x.to(DEVICE, non_blocking=True)
             y = y.to(DEVICE, non_blocking=True)
 
-            # Forward en autocast si procede; normalizamos loss por acumulación
+            # Forward en autocast (automatic mixed precision) si procede; normalizamos loss por acumulación
             # para que el gradiente sea equivalente a un batch grande.
             if DEVICE == "cuda" and USE_AMP and autocast_dtype is not None:
                 with torch.amp.autocast("cuda"):
@@ -583,17 +584,19 @@ def main():
                     loss = loss / GRAD_ACCUM
             else:
                 _, loss = model(x, y)
-                loss = loss / GRAD_ACCUM
+                loss = loss / GRAD_ACCUM    # esto se usa para la loss media más adelante
 
             # Backprop con scaler si fp16; si bf16 o CPU, backward estándar.
-            if scaler is not None:
+            # Esto permite sumar las losses
+            if scaler is not None:  # Con el scaler, se multiplica temporalmente la loss por un factor grande antes del backward para que los gradientes no desaparezcan al representarse en float16
                 scaler.scale(loss).backward()
             else:
                 loss.backward()
 
             accum_loss += float(loss.item())
 
-        # Antes del step aplicamos clipping para estabilizar el entrenamiento.
+        # Antes del step aplicamos clipping para estabilizar el entrenamiento. Sirve para escalar el gradiente y que
+        # no tenga un valor demasiado grande que afecte negativamente al entrenamiento
         if scaler is not None:
             scaler.unscale_(opt)
             torch.nn.utils.clip_grad_norm_(model.parameters(), GRAD_CLIP)
@@ -628,8 +631,7 @@ def main():
     print("[TRAIN DONE]")
 
     # Evaluación final en test:
-    # Por buenas prácticas, no “miramos” test durante tuning; usamos best.pt
-    # (seleccionado por validación) y evaluamos una sola vez.
+    # Usamos best.pt (seleccionado por validación) y evaluamos una sola vez.
     best_path = CKPT_DIR / "best.pt"
     if best_path.exists():
         ckpt = torch.load(best_path, map_location=DEVICE)
