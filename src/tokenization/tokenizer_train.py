@@ -1,4 +1,3 @@
-# tokenizer_train.py
 
 from __future__ import annotations
 
@@ -9,7 +8,7 @@ from miditok import REMI, TokenizerConfig
 
 # --- Configuración ---
 PROJECT_ROOT = Path(__file__).resolve().parent
-DATA_ROOT = (PROJECT_ROOT / "data").resolve()
+DATA_ROOT = (PROJECT_ROOT / "data/raw").resolve()
 OUT_ROOT = (PROJECT_ROOT / "tokenizer").resolve()
 
 TOKENIZER_FILENAME = "../../tokenizer/tokenizer_REMI_BPE.json"

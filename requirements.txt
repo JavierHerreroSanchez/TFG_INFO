@@ -3,3 +3,4 @@ symusic~=0.5.9
 torch
 numpy
 pandas
+pretty-midi

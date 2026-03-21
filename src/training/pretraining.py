@@ -340,7 +340,7 @@ def configure_optimizer(model: torch.nn.Module, lr: float, weight_decay: float):
     return torch.optim.AdamW(
         [{"params": decay, "weight_decay": weight_decay},
          {"params": no_decay, "weight_decay": 0.0}],
-        lr=lr, betas=(0.9, 0.95), eps=1e-8
+        lr=lr, betas=(0.9, 0.999), eps=1e-8
     )
 
 

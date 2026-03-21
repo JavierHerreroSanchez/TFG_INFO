@@ -7,7 +7,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 
-from blocks import MTConfig, MTEmbedding, MusicTransformerBlockPreLN
+from src.model.blocks import MTConfig, MTEmbedding, MusicTransformerBlockPreLN
 
 # =============================================================================
 # Configuración de alto nivel del modelo (GPT decoder-only)
