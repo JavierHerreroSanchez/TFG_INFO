@@ -40,7 +40,7 @@ VOCAB_SIZE = 30000
 # para entrenamiento. El seed permite reproducibilidad.
 VAL_RATIO = 0.01
 TEST_RATIO = 0.01
-SEED = 100454434
+SEED = random.randrange(1, 1024) # Antes a 100454434
 
 # 3) Caché binario (memmap)
 # Esto permite convertir muchos JSON en un stream 1D concatenado (train/val/test) para
@@ -51,10 +51,10 @@ EOS_ID = 2
 USE_UINT16 = True  # vocab 30k cabe en uint16
 
 # 4) Hiperparámetros del modelo
-BLOCK_SIZE = 1024
+BLOCK_SIZE = 2048       # originalmente a 1024
 D_MODEL = 512
 N_HEADS = 8
-N_LAYER = 8
+N_LAYER = 6         # originalmente a 8
 DROPOUT = 0.1
 D_FF = None
 TIE_WEIGHTS = True
@@ -62,16 +62,16 @@ USE_FINAL_LN = True
 
 # 5) Hiperparámetros de entrenamiento
 DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
-MICRO_BATCH = 4
-GRAD_ACCUM = 8
+MICRO_BATCH = 1     #originalmente eran 4
+GRAD_ACCUM = 16     # originalmente 8
 
-LR = 3e-4   # learning rate, elegido para AdamW de acuerdo con la constante de Karpathy
-MIN_LR = 3e-5
-WARMUP_UPDATES = 1000   # permite no "arrancar demasiado fuerte" los pesos de AdamW
-WEIGHT_DECAY = 0.1      # regularización sobre los pesos
-GRAD_CLIP = 1.0
+LR = 5e-5   # Learning rate, elegido para AdamW de acuerdo con la constante de Karpathy. Originalmente 3e-4
+MIN_LR = 5e-6   # Originalmente 3e-5
+WARMUP_UPDATES = 3000   # permite no "arrancar demasiado fuerte" los pesos de AdamW. Originalmente a 1000
+WEIGHT_DECAY = 0.05      # regularización sobre los pesos, originalmente a 0.1
+GRAD_CLIP = 0.5         # originalmente a 1.0
 
-EPOCHS = 3  # “epochs de tokens” sobre train.bin
+EPOCHS = 4  # “epochs de tokens” sobre train.bin, antes 3
 
 EVAL_EVERY = 1000
 EVAL_BATCHES = 200
@@ -82,7 +82,7 @@ CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints").r
 NUM_WORKERS = 2
 PIN_MEMORY = True
 
-USE_AMP = True      # Automatic Mixed Precision: para acelerar el entrenamiento sin sacrificar mucha precisión
+USE_AMP = False      # Automatic Mixed Precision: para acelerar el entrenamiento sin sacrificar mucha precisión, a True originalmente
 AMP_DTYPE = "bf16"  # "bf16" o "fp16"
 
 
@@ -539,6 +539,7 @@ def main():
             scaler = torch.cuda.amp.GradScaler()
 
     # Plan por tokens (usa el corpus de train.bin entero)
+
     train_tokens = int(cache["meta"]["train_tokens"])
     tokens_per_update = MICRO_BATCH * BLOCK_SIZE * GRAD_ACCUM
     updates_per_epoch = math.ceil(train_tokens / tokens_per_update)
@@ -572,6 +573,7 @@ def main():
             except StopIteration:
                 train_iter = iter(train_loader)
                 x, y = next(train_iter)
+
 
             x = x.to(DEVICE, non_blocking=True)
             y = y.to(DEVICE, non_blocking=True)

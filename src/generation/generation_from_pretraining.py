@@ -41,24 +41,24 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # Este script está adaptado a la lógica de pretraining.py:
 #   - mismo split reproducible train/val/test
 #   - misma resolución de JSON tokenizados
-#   - mismo cache binario memmap para loss teacher-forced
+#   - mismo caché binario memmap para loss teacher-forced
 #   - misma carga de checkpoints best.pt / last.pt
 #
 # Tiene dos usos principales:
 #   1) Evaluar loss en train / val / test con random crops sobre memmap.
-#   2) Generar continuaciones autoregresivas a partir de prompts tomados de
+#   2) Generar continuaciones autorregresivas a partir de prompts tomados de
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 
 DEFAULT_PROMPT_LEN = 100
-DEFAULT_MAX_NEW_TOKENS = 400
+DEFAULT_MAX_NEW_TOKENS = 900
 DEFAULT_TEMPERATURE = 0.9
-DEFAULT_TOP_K = 20
-DEFAULT_NUM_SAMPLES = 5
+DEFAULT_TOP_K = 15
+DEFAULT_NUM_SAMPLES = 3
 DEFAULT_RANDOM_OFFSET = False
 DEFAULT_STOP_ON_EOS = True
 
-OUTPUT_DIR = Path("output/evaluation").resolve()
+OUTPUT_DIR = Path("../../output/evaluation").resolve()
 
 
 def get_model_block_size(model: torch.nn.Module) -> int:
@@ -458,7 +458,7 @@ def parse_args():
 
     parser.add_argument("--mode", choices=["loss", "generate", "all"], default="all")
     parser.add_argument("--ckpt", choices=["best", "last"], default="best")
-    parser.add_argument("--split", choices=["train", "val", "test"], default="test")
+    parser.add_argument("--split", choices=["train", "val", "test"], default="train")
 
     parser.add_argument("--prompt-len", type=int, default=DEFAULT_PROMPT_LEN)
     parser.add_argument("--max-new-tokens", type=int, default=DEFAULT_MAX_NEW_TOKENS)
