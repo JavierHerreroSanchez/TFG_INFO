@@ -1,41 +1,49 @@
 {
   "checkpoint": "best",
   "split": "train",
-  "prompt_len": 100,
-  "max_new_tokens": 900,
-  "num_samples_requested": 3,
-  "num_samples_generated": 3,
-  "random_offset": false,
+  "prompt_len": 512,
+  "max_new_tokens": 2000,
+  "num_samples_requested": 4,
+  "num_samples_generated": 4,
+  "random_offset": true,
   "sampling": {
     "temperature": 0.9,
-    "top_k": 15,
+    "top_k": 150,
     "do_sample": true,
     "stop_on_eos": true
   },
   "samples": [
     {
       "idx": 0,
-      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe\\clean_midi\\Queen\\Radio Ga Ga.4.json",
-      "prompt_start": 0,
-      "prompt_len": 100,
-      "generated_len": 900,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe\\maestro-v3.0.0\\2018\\MIDI-Unprocessed_Recital9-11_MID--AUDIO_09_R1_2018_wav--1.json",
+      "prompt_start": 7979,
+      "prompt_len": 512,
+      "generated_len": 2000,
       "hit_eos": false
     },
     {
       "idx": 1,
-      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe\\clean_midi\\Def Leppard\\Photograph.1.json",
-      "prompt_start": 0,
-      "prompt_len": 100,
-      "generated_len": 900,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe\\maestro-v3.0.0\\2017\\MIDI-Unprocessed_041_PIANO041_MID--AUDIO-split_07-06-17_Piano-e_1-01_wav--4.json",
+      "prompt_start": 7917,
+      "prompt_len": 512,
+      "generated_len": 2000,
       "hit_eos": false
     },
     {
       "idx": 2,
-      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe\\maestro-v3.0.0\\2006\\MIDI-Unprocessed_23_R2_2006_01_ORIG_MID--AUDIO_23_R2_2006_01_Track01_wav.json",
-      "prompt_start": 0,
-      "prompt_len": 100,
-      "generated_len": 900,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe\\maestro-v3.0.0\\2008\\MIDI-Unprocessed_02_R1_2008_01-05_ORIG_MID--AUDIO_02_R1_2008_wav--4.json",
+      "prompt_start": 3457,
+      "prompt_len": 512,
+      "generated_len": 2000,
       "hit_eos": false
+    },
+    {
+      "idx": 3,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe\\maestro-v3.0.0\\2017\\MIDI-Unprocessed_072_PIANO072_MID--AUDIO-split_07-08-17_Piano-e_1-06_wav--2.json",
+      "prompt_start": 5970,
+      "prompt_len": 512,
+      "generated_len": 1308,
+      "hit_eos": true
     }
   ]
 }

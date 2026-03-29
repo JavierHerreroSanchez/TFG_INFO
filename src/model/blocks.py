@@ -87,13 +87,13 @@ def skew(QEr: torch.Tensor) -> torch.Tensor:
     assert M == 2 * T - 1, f"Esperaba 2T-1, recibido {M} con T={T}"
 
     # 1) Añadimos una columna dummy a la izquierda para habilitar el corrimiento.
-    x = F.pad(QEr, (1, 0))  # (B, H, T, 2T)
+    x = F.pad(QEr, (1, 0)).contiguous()  # (B, H, T, 2T)
 
     # 2) Reinterpretamos para desplazar los elementos por filas/columnas.
     x = x.view(B, H, 2 * T, T)  # (B, H, 2T, T)
 
     # 3) Eliminamos la primera fila “extra” para completar el corrimiento.
-    x = x[:, :, 1:, :]  # (B, H, 2T-1, T)
+    x = x[:, :, 1:, :].contiguous()  # (B, H, 2T-1, T)
 
     # 4) Volvemos a la forma original en la que la última dim es “2T-1”.
     x = x.view(B, H, T, 2 * T - 1)  # (B, H, T, 2T-1)
@@ -142,7 +142,7 @@ class RelativeMaskedMHA(nn.Module):
         self.out_drop = nn.Dropout(cfg.dropout)
 
         # Embeddings relativos para distancias en [-L+1, L-1], con L = max_seq_len o T.
-        self.rel_emb = nn.Embedding(2 * cfg.max_seq_len - 1, self.d_head)
+        self.rel_emb = nn.Embedding(2 * cfg.max_seq_len - 1, self.n_heads * self.d_head)
 
         # Máscara causal: True indica posiciones prohibidas (futuro).
         causal = torch.triu(torch.ones(cfg.max_seq_len, cfg.max_seq_len, dtype=torch.bool), diagonal=1)
@@ -182,11 +182,13 @@ class RelativeMaskedMHA(nn.Module):
         center = self.cfg.max_seq_len - 1
         start = center - (T - 1)
         end = center + (T - 1) + 1
-        Er = self.rel_emb.weight[start:end]  # (2T-1, Dh)
+
+        Er_flat = self.rel_emb.weight[start:end]  # (2T-1, H*Dh)
+        Er = Er_flat.view(2 * T - 1, self.n_heads, self.d_head).permute(1, 2, 0)  # (H,2T-1,Dh)
 
         # Proyectamos Q contra Er^T -> (B, H, T, 2T-1) y aplicamos skew.
-        QEr = torch.matmul(q, Er.transpose(0, 1))  # (B, H, T, 2T-1)
-        rel = skew(QEr)  # (B, H, T, T)
+        QEr = torch.matmul(q, Er)  # (B,H,T,2T-1)
+        rel = skew(QEr)  # (B,H,T,T)
 
         # 4) Escalamos y sumamos ambos términos, como en el Transformer.
         scores = (content + rel) / math.sqrt(self.d_head)

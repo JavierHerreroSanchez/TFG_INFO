@@ -50,12 +50,12 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 
-DEFAULT_PROMPT_LEN = 100
-DEFAULT_MAX_NEW_TOKENS = 900
+DEFAULT_PROMPT_LEN = 512
+DEFAULT_MAX_NEW_TOKENS = 2000
 DEFAULT_TEMPERATURE = 0.9
-DEFAULT_TOP_K = 15
-DEFAULT_NUM_SAMPLES = 3
-DEFAULT_RANDOM_OFFSET = False
+DEFAULT_TOP_K = 150
+DEFAULT_NUM_SAMPLES = 4
+DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True
 
 OUTPUT_DIR = Path("../../output/evaluation").resolve()

@@ -24,7 +24,7 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 
 # 1) Rutas
 INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\debug_dataset\index.csv")
-TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_json_bpe")
+TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_json_bpe\maestro-v3.0.0")
 
 # ANCHOR: fragmento de ruta usado para “rebasar” paths del CSV y reconstruirlos
 # dentro de TOKENS_DIR. Esto es útil cuando el CSV fue generado en otra máquina
@@ -38,8 +38,8 @@ VOCAB_SIZE = 30000
 # 2) Split de dataset
 # Reservamos una fracción pequeña para validación y test, manteniendo el grueso
 # para entrenamiento. El seed permite reproducibilidad.
-VAL_RATIO = 0.01
-TEST_RATIO = 0.01
+VAL_RATIO = 0.05    # Originalmente 0.01
+TEST_RATIO = 0.05   # Originalmente 0.01
 SEED = random.randrange(1, 1024) # Antes a 100454434
 
 # 3) Caché binario (memmap)
@@ -54,7 +54,7 @@ USE_UINT16 = True  # vocab 30k cabe en uint16
 BLOCK_SIZE = 2048       # originalmente a 1024
 D_MODEL = 512
 N_HEADS = 8
-N_LAYER = 6         # originalmente a 8
+N_LAYER = 8         # originalmente a 8
 DROPOUT = 0.1
 D_FF = None
 TIE_WEIGHTS = True
@@ -65,16 +65,16 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MICRO_BATCH = 1     #originalmente eran 4
 GRAD_ACCUM = 16     # originalmente 8
 
-LR = 5e-5   # Learning rate, elegido para AdamW de acuerdo con la constante de Karpathy. Originalmente 3e-4
+LR = 3e-4   # Learning rate, elegido para AdamW de acuerdo con la constante de Karpathy. Originalmente 3e-4
 MIN_LR = 5e-6   # Originalmente 3e-5
-WARMUP_UPDATES = 3000   # permite no "arrancar demasiado fuerte" los pesos de AdamW. Originalmente a 1000
-WEIGHT_DECAY = 0.05      # regularización sobre los pesos, originalmente a 0.1
-GRAD_CLIP = 0.5         # originalmente a 1.0
+WARMUP_UPDATES = 1000   # permite no "arrancar demasiado fuerte" los pesos de AdamW. Originalmente a 1000
+WEIGHT_DECAY = 0.1      # regularización sobre los pesos, originalmente a 0.1
+GRAD_CLIP = 1.0        # originalmente a 1.0
 
-EPOCHS = 4  # “epochs de tokens” sobre train.bin, antes 3
+EPOCHS = 30  # “epochs de tokens” sobre train.bin, antes 3
 
-EVAL_EVERY = 1000
-EVAL_BATCHES = 200
+EVAL_EVERY = 500
+EVAL_BATCHES = 500
 
 SAVE_EVERY = 500
 CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints").resolve()
@@ -82,9 +82,14 @@ CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints").r
 NUM_WORKERS = 2
 PIN_MEMORY = True
 
-USE_AMP = False      # Automatic Mixed Precision: para acelerar el entrenamiento sin sacrificar mucha precisión, a True originalmente
+USE_AMP = True      # Automatic Mixed Precision: para acelerar el entrenamiento sin sacrificar mucha precisión, a True originalmente
 AMP_DTYPE = "bf16"  # "bf16" o "fp16"
 
+# 6) Early stopping
+EARLY_STOP = True
+PATIENCE_EVALS = 10      # número de evaluaciones sin mejora
+MIN_DELTA = 0.005        # umbral de mejora mínima
+START_EARLY_AFTER = 5000  # para no activar early stop antes de este update
 
 # =============================================================================
 # Funciones generales
@@ -554,7 +559,10 @@ def main():
     best_val = float("inf")
     t0 = time.time()
     update = 0
+    no_improve = 0
     train_iter = iter(train_loader)
+    last_val_loss = float("nan")
+
 
     # Aqui comienza el train + val
     while update < total_updates:
@@ -581,7 +589,7 @@ def main():
             # Forward en autocast (automatic mixed precision) si procede; normalizamos loss por acumulación
             # para que el gradiente sea equivalente a un batch grande.
             if DEVICE == "cuda" and USE_AMP and autocast_dtype is not None:
-                with torch.amp.autocast("cuda"):
+                with torch.amp.autocast(device_type="cuda", dtype=autocast_dtype):
                     _, loss = model(x, y)
                     loss = loss / GRAD_ACCUM
             else:
@@ -613,7 +621,7 @@ def main():
             elapsed = time.time() - t0
             tokens_seen = (update + 1) * tokens_per_update
             tok_s = tokens_seen / max(elapsed, 1e-9)
-            print(f"[upd {update:>6}/{total_updates}] loss={accum_loss:.4f} lr={lr:.3e} tokens_seen~{tokens_seen:,} tok/s~{tok_s:,.0f}")
+            print(f"[upd {update:>6}/{total_updates}] loss={accum_loss:.4f} lr={lr:.3e} tokens_seen~{tokens_seen:,} tok/s~{tok_s:,.0f} elapsed={elapsed:.1f} sec" )
 
         # Guardado periódico del estado “last” para tolerancia a fallos.
         if update > 0 and update % SAVE_EVERY == 0:
@@ -623,11 +631,31 @@ def main():
         if update > 0 and update % EVAL_EVERY == 0:
             val_loss = evaluate(model, val_loader, DEVICE, max_batches=EVAL_BATCHES)
             print(f"[VAL] update={update} val_loss={val_loss:.4f}")
-            save_ckpt(CKPT_DIR / "last.pt", model, opt, scaler, cfg, update, val_loss=val_loss)
-            if val_loss < best_val:
-                best_val = val_loss
-                save_ckpt(CKPT_DIR / "best.pt", model, opt, scaler, cfg, update, val_loss=val_loss)
+            # Si la val_loss no es finita, no actualizamos best ni contamos paciencia
+            if not math.isfinite(val_loss):
+                print("[VAL][WARN] val_loss NaN/Inf -> no actualizo best ni early stopping.")
+                # Aun así, guardamos last con el último val válido (si existe)
+                save_ckpt(CKPT_DIR / "last.pt", model, opt, scaler, cfg, update, val_loss=last_val_loss)
+            else:
+                # Guardamos last.pt con la val_loss real
+                last_val_loss = val_loss
+                save_ckpt(CKPT_DIR / "last.pt", model, opt, scaler, cfg, update, val_loss=val_loss)
 
+                # ¿Ha mejorado "de verdad" (con margen MIN_DELTA)?
+                improved = (val_loss < best_val - MIN_DELTA)
+
+                if improved:
+                    best_val = val_loss
+                    no_improve = 0
+                    save_ckpt(CKPT_DIR / "best.pt", model, opt, scaler, cfg, update, val_loss=val_loss)
+                else:
+                    no_improve += 1
+                    print(f"[EARLY] no_improve={no_improve}/{PATIENCE_EVALS} | best_val={best_val:.4f}")
+
+                # Early stopping
+                if EARLY_STOP and update >= START_EARLY_AFTER and no_improve >= PATIENCE_EVALS:
+                    print("[EARLY STOP] val_loss no mejora. Se para entrenamiento.")
+                    break
         update += 1
 
     print("[TRAIN DONE]")
