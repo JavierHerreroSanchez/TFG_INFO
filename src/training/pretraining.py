@@ -45,7 +45,7 @@ SEED = random.randrange(1, 1024) # Antes a 100454434
 # 3) Caché binario (memmap)
 # Esto permite convertir muchos JSON en un stream 1D concatenado (train/val/test) para
 # entrenar eficientemente en memoria con recortes aleatorios (random crops).
-CACHE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\processed\pretraining").resolve()
+CACHE_DIR = Path(r"/data/bin_for_pretraining\pretraining").resolve()
 ADD_EOS = True
 EOS_ID = 2
 USE_UINT16 = True  # vocab 30k cabe en uint16
