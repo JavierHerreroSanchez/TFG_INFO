@@ -144,6 +144,11 @@ ENV/
 env.bak/
 venv.bak/
 
+# Data
+
+data/interim/tokenized_json_bpe
+data/raw
+
 # Spyder project settings
 .spyderproject
 .spyproject

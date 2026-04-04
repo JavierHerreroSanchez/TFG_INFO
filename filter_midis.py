@@ -12,7 +12,7 @@ from symusic import Score
 # CONFIG
 # =========================
 MAESTRO_MIDI_DIR = Path(r"data/raw/maestro-v3.0.0")      # <-- AJUSTA a tus .mid/.midi
-LAKH_MIDI_DIR    = Path(r"data/raw/clean_midi")     # <-- AJUSTA a tus .mid/.midi
+LAKH_MIDI_DIR    = Path(r"data/raw_old/clean_midi")     # <-- AJUSTA a tus .mid/.midi
 OUT_CSV = Path(r"data/interim/index_piano_midis.csv")
 
 INCLUDE_LAKH = True

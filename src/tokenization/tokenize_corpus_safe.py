@@ -2,10 +2,12 @@
 import subprocess
 import sys
 from pathlib import Path
+from typing import Any
 
-DATA_ROOT = Path("../../data").resolve()
-OUT_ROOT = Path("").resolve()
-TOKENS_DIR = (OUT_ROOT / "tokens_json_bpe").resolve()
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+DATA_ROOT = (PROJECT_ROOT / "data/raw").resolve()
+OUT_ROOT = (PROJECT_ROOT / "data/tokenized_json_bpe_v2").resolve()
+TOKENS_DIR = (OUT_ROOT / "tokenized_json_bpe").resolve()
 BAD_LIST = OUT_ROOT / "bad_midis.txt"
 
 def main():
@@ -17,6 +19,16 @@ def main():
     print(f"[INFO] data_root: {DATA_ROOT}")
     print(f"[INFO] out_dir: {TOKENS_DIR}")
 
+    bad, ok = tokenize_corpus(midi_paths)
+
+    BAD_LIST.write_text("\n".join(bad), encoding="utf-8")
+    print("\n=== RESUMEN ===")
+    print(f"OK nuevos: {ok}")
+    print(f"BAD: {len(bad)}")
+    print(f"Bad list: {BAD_LIST.resolve()}")
+
+
+def tokenize_corpus(midi_paths: list[Path]) -> tuple[list[Any], int]:
     bad = []
     ok = 0
 
@@ -44,12 +56,8 @@ def main():
         else:
             bad.append(f"{midi_path}\treturncode={r.returncode}")
             print(f"[SKIP] returncode={r.returncode} file={midi_path}")
+    return bad, ok
 
-    BAD_LIST.write_text("\n".join(bad), encoding="utf-8")
-    print("\n=== RESUMEN ===")
-    print(f"OK nuevos: {ok}")
-    print(f"BAD: {len(bad)}")
-    print(f"Bad list: {BAD_LIST.resolve()}")
 
 if __name__ == "__main__":
     main()

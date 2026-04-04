@@ -75,4 +75,20 @@ C:\Users\herre\PycharmProjects\TFG_INFO\data\clean_midi\Yanni\Aria.1.mid	returnc
 C:\Users\herre\PycharmProjects\TFG_INFO\data\clean_midi\Yanni\Marching Season.1.mid	returncode=1
 C:\Users\herre\PycharmProjects\TFG_INFO\data\clean_midi\Yanni\Secret Vows.1.mid	returncode=1
 C:\Users\herre\PycharmProjects\TFG_INFO\data\clean_midi\Yanni\Swept Away.mid	returncode=1
-C:\Users\herre\PycharmProjects\TFG_INFO\data\clean_midi\Yanni\The Rain Must Fall.1.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\clean_midi\Yanni\The Rain Must Fall.1.mid	returncode=1C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000002_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000003_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000004_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000006_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000008_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000009_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000010_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000011_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000012_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000013_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000017_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000022_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000027_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000002_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000028_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000029_0.mid	returncode=1
+C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\data\aa\000030_0.mid	returncode=1

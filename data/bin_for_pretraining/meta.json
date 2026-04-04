@@ -1,0 +1,14 @@
+{
+  "vocab_size": 30000,
+  "block_size": 2048,
+  "dtype": "<class 'numpy.uint16'>",
+  "train_tokens": 713917633,
+  "val_tokens": 89318006,
+  "test_tokens": 88983214,
+  "train_files": 297851,
+  "val_files": 37231,
+  "test_files": 37231,
+  "token_field": "ids",
+  "add_eos": true,
+  "eos_id": 2
+}

@@ -4,6 +4,7 @@ import json
 import math
 import random
 import time
+from math import ceil
 from pathlib import Path
 from typing import List, Dict
 
@@ -24,7 +25,7 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 
 # 1) Rutas
 INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\debug_dataset\index.csv")
-TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_json_bpe\maestro-v3.0.0")
+TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_json_bpe")
 
 # ANCHOR: fragmento de ruta usado para “rebasar” paths del CSV y reconstruirlos
 # dentro de TOKENS_DIR. Esto es útil cuando el CSV fue generado en otra máquina
@@ -38,14 +39,14 @@ VOCAB_SIZE = 30000
 # 2) Split de dataset
 # Reservamos una fracción pequeña para validación y test, manteniendo el grueso
 # para entrenamiento. El seed permite reproducibilidad.
-VAL_RATIO = 0.05    # Originalmente 0.01
-TEST_RATIO = 0.05   # Originalmente 0.01
+VAL_RATIO = 0.1    # Originalmente 0.01
+TEST_RATIO = 0.1   # Originalmente 0.01
 SEED = random.randrange(1, 1024) # Antes a 100454434
 
 # 3) Caché binario (memmap)
 # Esto permite convertir muchos JSON en un stream 1D concatenado (train/val/test) para
 # entrenar eficientemente en memoria con recortes aleatorios (random crops).
-CACHE_DIR = Path(r"/data/bin_for_pretraining\pretraining").resolve()
+CACHE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\bin_for_pretraining").resolve()
 ADD_EOS = True
 EOS_ID = 2
 USE_UINT16 = True  # vocab 30k cabe en uint16
@@ -71,7 +72,7 @@ WARMUP_UPDATES = 1000   # permite no "arrancar demasiado fuerte" los pesos de Ad
 WEIGHT_DECAY = 0.1      # regularización sobre los pesos, originalmente a 0.1
 GRAD_CLIP = 1.0        # originalmente a 1.0
 
-EPOCHS = 30  # “epochs de tokens” sobre train.bin, antes 3
+EPOCHS = 1.2  # “epochs de tokens” sobre train.bin, antes 30
 
 EVAL_EVERY = 500
 EVAL_BATCHES = 500
@@ -240,6 +241,7 @@ def build_memmap(files: List[Path], out_bin: Path, token_field: str, dtype, add_
     El resultado es un archivo binario `out_bin` que se accede con np.memmap.
     Devolvemos el total de tokens escritos (incluyendo EOS si se añade).
     """
+
     if len(files) == 0:
         raise ValueError("No hay ficheros para construir el memmap (lista vacía).")
 
@@ -258,7 +260,7 @@ def build_memmap(files: List[Path], out_bin: Path, token_field: str, dtype, add_
     # 2) Creamos el memmap con el tamaño final y vamos escribiendo secuencialmente.
     mm = np.memmap(out_bin, mode="w+", dtype=dtype, shape=(total,))
     w = 0
-
+    
     for i, p in enumerate(files, start=1):
         obj = json.loads(p.read_text(encoding="utf-8"))
         ids = obj.get(token_field, None)
@@ -548,7 +550,7 @@ def main():
     train_tokens = int(cache["meta"]["train_tokens"])
     tokens_per_update = MICRO_BATCH * BLOCK_SIZE * GRAD_ACCUM
     updates_per_epoch = math.ceil(train_tokens / tokens_per_update)
-    total_updates = updates_per_epoch * EPOCHS
+    total_updates = ceil(updates_per_epoch * EPOCHS)
 
     print(f"[PLAN] train_tokens={train_tokens:,}")
     print(f"[PLAN] tokens/update={tokens_per_update:,} (micro={MICRO_BATCH}, block={BLOCK_SIZE}, accum={GRAD_ACCUM})")

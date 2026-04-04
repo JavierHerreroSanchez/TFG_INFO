@@ -10,7 +10,7 @@ import pretty_midi
 # =============================================================================
 
 # Cambia esta ruta a tu MIDI real
-MIDI_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\clean_midi\Bach Johann Sebastian\Toccata and Fugue in D minor, BWV 565.mid")
+MIDI_PATH = Path(r"/data/raw_old\clean_midi\Bach Johann Sebastian\Toccata and Fugue in D minor, BWV 565.mid")
 
 # Frames por segundo del piano roll
 FS = 100

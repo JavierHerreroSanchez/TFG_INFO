@@ -7,13 +7,13 @@ from typing import Literal
 from miditok import REMI, TokenizerConfig
 
 # --- Configuración ---
-PROJECT_ROOT = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 DATA_ROOT = (PROJECT_ROOT / "data/raw").resolve()
 OUT_ROOT = (PROJECT_ROOT / "tokenizer").resolve()
 
-TOKENIZER_FILENAME = "../../tokenizer/tokenizer_REMI_BPE.json"
+TOKENIZER_FILENAME = "tokenizer_REMI_BPE.json"
 VOCAB_SIZE = 30000
-TRAIN_LIMIT: int | None = None
+TRAIN_LIMIT = 1000
 ENCODE_IDS_SPLIT: Literal["bar", "beat", "no"] = "bar"
 
 
@@ -75,6 +75,9 @@ def load_bpe_tokenizer(out_root: Path = OUT_ROOT, filename: str = TOKENIZER_FILE
 
 def main() -> None:
     ensure_trained_bpe_tokenizer()
+    print(f"PROJECT_ROOT = {PROJECT_ROOT}")
+    print(f"DATA_ROOT    = {DATA_ROOT}")
+    print(f"OUT_ROOT     = {OUT_ROOT}")
 
 
 if __name__ == "__main__":

@@ -1,24 +1,35 @@
-#Código para tokenizar un solo MIDI, usado por un proceso padre de manera iterativa para tokenizar
-#el corpus sin incurrir en problemas de memoria
 from pathlib import Path
 import sys
+import traceback
 
-from miditok import REMI, TokenizerConfig
 from miditok.utils import get_score_programs
-from tokenizer_train import load_bpe_tokenizer
 from symusic import Score
 
+from tokenizer_train import load_bpe_tokenizer
+
+
+THIS_FILE = Path(__file__).resolve()
+PROJECT_ROOT = THIS_FILE.parents[2]  # TFG_INFO/
+TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v3.json"
+
+
 def main():
-    midi_path = Path(sys.argv[1])
-    out_json = Path(sys.argv[2])
+    if len(sys.argv) < 3:
+        raise ValueError("Uso: python tokenize_one.py <midi_path> <out_json>")
 
-    TOKENIZER_FILENAME = "../../tokenizer/tokenizer_REMI_BPE.json"
-    OUT_ROOT = Path("").resolve()
+    midi_path = Path(sys.argv[1]).resolve()
+    out_json = Path(sys.argv[2]).resolve()
 
-    tokenizer = load_bpe_tokenizer(OUT_ROOT, TOKENIZER_FILENAME)
+    if not midi_path.exists():
+        raise FileNotFoundError(f"No existe el MIDI: {midi_path}")
+
+    if not TOKENIZER_PATH.exists():
+        raise FileNotFoundError(f"No existe el tokenizador BPE: {TOKENIZER_PATH}")
+
+    # Si load_bpe_tokenizer espera (root, filename), le pasamos ambos de forma robusta
+    tokenizer = load_bpe_tokenizer(TOKENIZER_PATH.parent, TOKENIZER_PATH.name)
 
     score = Score(midi_path)
-
     tokens = tokenizer.encode(score)
 
     out_json.parent.mkdir(parents=True, exist_ok=True)
@@ -30,5 +41,10 @@ def main():
 
     tokenizer.save_tokens(tokens, out_json, programs)
 
+
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except Exception:
+        traceback.print_exc()
+        sys.exit(1)
