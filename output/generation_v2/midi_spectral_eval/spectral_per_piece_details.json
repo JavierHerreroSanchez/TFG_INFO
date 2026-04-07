@@ -1,0 +1,509 @@
+[
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json0.mid",
+    "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json0_logmel.png",
+    "spectral_reference_based": {
+      "score": 47.38128266985176,
+      "matched_reference_count": 32,
+      "details": {
+        "rms_mean": {
+          "x": 0.14181894727151748,
+          "mu_ref": 0.12561559095177785,
+          "sigma_ref": 0.028846397877420115,
+          "score": 0.6403230914684723
+        },
+        "rms_std": {
+          "x": 0.04563395316896099,
+          "mu_ref": 0.05413086316941437,
+          "sigma_ref": 0.007852583072060097,
+          "score": 0.48029520164522654
+        },
+        "spectral_centroid_mean": {
+          "x": 185.20207692140247,
+          "mu_ref": 460.90622572798236,
+          "sigma_ref": 110.03478516427138,
+          "score": 0.28525714018949994
+        },
+        "spectral_centroid_std": {
+          "x": 102.42564638998188,
+          "mu_ref": 252.95320692514971,
+          "sigma_ref": 113.48525097947618,
+          "score": 0.4298475150823561
+        },
+        "spectral_bandwidth_mean": {
+          "x": 273.8010251926135,
+          "mu_ref": 399.36738928914303,
+          "sigma_ref": 123.94408623271521,
+          "score": 0.49674907832182263
+        },
+        "spectral_bandwidth_std": {
+          "x": 181.18186891942614,
+          "mu_ref": 239.60693899612215,
+          "sigma_ref": 53.62449507731763,
+          "score": 0.47857834167950614
+        },
+        "spectral_rolloff_mean": {
+          "x": 220.65476814939151,
+          "mu_ref": 646.8986038392495,
+          "sigma_ref": 158.56019260863758,
+          "score": 0.27113389261351895
+        },
+        "spectral_rolloff_std": {
+          "x": 139.68755418231288,
+          "mu_ref": 375.91041826442324,
+          "sigma_ref": 164.43802595099885,
+          "score": 0.41041696367571656
+        },
+        "spectral_flatness_mean": {
+          "x": 0.020582340737027575,
+          "mu_ref": 0.03643555074261742,
+          "sigma_ref": 0.03015731674886497,
+          "score": 0.6554438489653911
+        },
+        "spectral_flatness_std": {
+          "x": 0.14191145483730055,
+          "mu_ref": 0.1730868210056303,
+          "sigma_ref": 0.06347207922436537,
+          "score": 0.6706158730541304
+        },
+        "spectral_contrast_mean": {
+          "x": 10.526744307862538,
+          "mu_ref": 16.233628040650192,
+          "sigma_ref": 3.7753664926493036,
+          "score": 0.39815090330790426
+        },
+        "spectral_contrast_std": {
+          "x": 9.794047364247591,
+          "mu_ref": 12.958349112031364,
+          "sigma_ref": 2.794185210578846,
+          "score": 0.4689420703786659
+        }
+      }
+    },
+    "spectral_reference_free": {
+      "score": 90.91636502516843,
+      "details": {
+        "rms_mean": 1.0,
+        "spectral_centroid_mean": 0.882675779917108,
+        "spectral_bandwidth_mean": 0.8806965756750025,
+        "spectral_rolloff_mean": 0.6916095459179951,
+        "spectral_flatness_mean": 1.0,
+        "spectral_contrast_mean": 1.0
+      }
+    },
+    "spectral_global_score": 60.44180737644676,
+    "spectral_qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "rms_mean sólido",
+      "spectral_flatness_mean sólido",
+      "spectral_contrast_mean sólido"
+    ],
+    "issues": [
+      "spectral_centroid_mean alejado de referencia"
+    ]
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json1.mid",
+    "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json1_logmel.png",
+    "spectral_reference_based": {
+      "score": 60.72456544023315,
+      "matched_reference_count": 32,
+      "details": {
+        "rms_mean": {
+          "x": 0.1330205757524732,
+          "mu_ref": 0.12554741090276525,
+          "sigma_ref": 0.028940685714356675,
+          "score": 0.794771364907975
+        },
+        "rms_std": {
+          "x": 0.048083240977219235,
+          "mu_ref": 0.05622467162421838,
+          "sigma_ref": 0.00861277490171311,
+          "score": 0.5140664459840709
+        },
+        "spectral_centroid_mean": {
+          "x": 679.3554377266919,
+          "mu_ref": 468.99014599043034,
+          "sigma_ref": 105.88124145115938,
+          "score": 0.33480601473790617
+        },
+        "spectral_centroid_std": {
+          "x": 451.3889573542504,
+          "mu_ref": 265.68476126111443,
+          "sigma_ref": 114.68284965573008,
+          "score": 0.3817836064462277
+        },
+        "spectral_bandwidth_mean": {
+          "x": 440.2262825460154,
+          "mu_ref": 383.17761169503206,
+          "sigma_ref": 123.27295133154668,
+          "score": 0.6836282296016836
+        },
+        "spectral_bandwidth_std": {
+          "x": 244.29716825792053,
+          "mu_ref": 241.6110388457634,
+          "sigma_ref": 55.243177163314535,
+          "score": 0.9536309068595948
+        },
+        "spectral_rolloff_mean": {
+          "x": 891.1610616599859,
+          "mu_ref": 666.231745425387,
+          "sigma_ref": 157.0639549200827,
+          "score": 0.4111694283129986
+        },
+        "spectral_rolloff_std": {
+          "x": 559.0212812625116,
+          "mu_ref": 392.61372069271465,
+          "sigma_ref": 157.8729148014673,
+          "score": 0.4868406419495986
+        },
+        "spectral_flatness_mean": {
+          "x": 0.022784088900598062,
+          "mu_ref": 0.04884156153924396,
+          "sigma_ref": 0.04520987479965273,
+          "score": 0.634370106713937
+        },
+        "spectral_flatness_std": {
+          "x": 0.1487580838905437,
+          "mu_ref": 0.1918419846881238,
+          "sigma_ref": 0.08600132088092548,
+          "score": 0.666236767947898
+        },
+        "spectral_contrast_mean": {
+          "x": 14.87249664461046,
+          "mu_ref": 17.3519615283466,
+          "sigma_ref": 4.455488294805876,
+          "score": 0.6424684031886404
+        },
+        "spectral_contrast_std": {
+          "x": 14.31566499711323,
+          "mu_ref": 13.512658210173278,
+          "sigma_ref": 2.900487985656521,
+          "score": 0.7831759361774463
+        }
+      }
+    },
+    "spectral_reference_free": {
+      "score": 100.0,
+      "details": {
+        "rms_mean": 1.0,
+        "spectral_centroid_mean": 1.0,
+        "spectral_bandwidth_mean": 1.0,
+        "spectral_rolloff_mean": 1.0,
+        "spectral_flatness_mean": 1.0,
+        "spectral_contrast_mean": 1.0
+      }
+    },
+    "spectral_global_score": 72.5071958081632,
+    "spectral_qualitative_label": "plausible",
+    "strengths": [
+      "rms_mean sólido",
+      "spectral_flatness_mean sólido",
+      "spectral_contrast_mean sólido"
+    ],
+    "issues": []
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json2.mid",
+    "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json2_logmel.png",
+    "spectral_reference_based": {
+      "score": 56.56716341847275,
+      "matched_reference_count": 32,
+      "details": {
+        "rms_mean": {
+          "x": 0.15715767688178436,
+          "mu_ref": 0.12632331113635903,
+          "sigma_ref": 0.029504964399889318,
+          "score": 0.48898395671335404
+        },
+        "rms_std": {
+          "x": 0.05566088189495876,
+          "mu_ref": 0.05410002360762577,
+          "sigma_ref": 0.007872657156566147,
+          "score": 0.8345411849256652
+        },
+        "spectral_centroid_mean": {
+          "x": 500.6720194751216,
+          "mu_ref": 461.15171955811263,
+          "sigma_ref": 109.94320265614522,
+          "score": 0.735585616310136
+        },
+        "spectral_centroid_std": {
+          "x": 178.07581611045822,
+          "mu_ref": 253.5331891722496,
+          "sigma_ref": 113.1557701461248,
+          "score": 0.5999357638687377
+        },
+        "spectral_bandwidth_mean": {
+          "x": 341.95183502672666,
+          "mu_ref": 398.2911815601699,
+          "sigma_ref": 124.78021814453808,
+          "score": 0.6889383726511772
+        },
+        "spectral_bandwidth_std": {
+          "x": 188.42832190656603,
+          "mu_ref": 238.5255628830174,
+          "sigma_ref": 54.59703694554374,
+          "score": 0.5214901714707133
+        },
+        "spectral_rolloff_mean": {
+          "x": 791.6534893527304,
+          "mu_ref": 647.5526076707508,
+          "sigma_ref": 158.54439910223553,
+          "score": 0.5238621223216002
+        },
+        "spectral_rolloff_std": {
+          "x": 294.66012987759666,
+          "mu_ref": 376.9764691259203,
+          "sigma_ref": 163.98536711560897,
+          "score": 0.6657906253938252
+        },
+        "spectral_flatness_mean": {
+          "x": 0.010149610453016773,
+          "mu_ref": 0.03589597969636356,
+          "sigma_ref": 0.030468843095425212,
+          "score": 0.5420035223172261
+        },
+        "spectral_flatness_std": {
+          "x": 0.10008597288460261,
+          "mu_ref": 0.17111149193275646,
+          "sigma_ref": 0.06473521494572394,
+          "score": 0.47683312428646124
+        },
+        "spectral_contrast_mean": {
+          "x": 24.167691443404244,
+          "mu_ref": 16.336209466831754,
+          "sigma_ref": 3.880427842708242,
+          "score": 0.33132323443270434
+        },
+        "spectral_contrast_std": {
+          "x": 17.654043306601153,
+          "mu_ref": 13.001999615756382,
+          "sigma_ref": 2.836419575875032,
+          "score": 0.37877191552512995
+        }
+      }
+    },
+    "spectral_reference_free": {
+      "score": 99.76489963315512,
+      "details": {
+        "rms_mean": 1.0,
+        "spectral_centroid_mean": 1.0,
+        "spectral_bandwidth_mean": 0.9858939779893073,
+        "spectral_rolloff_mean": 1.0,
+        "spectral_flatness_mean": 1.0,
+        "spectral_contrast_mean": 1.0
+      }
+    },
+    "spectral_global_score": 69.52648428287746,
+    "spectral_qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "rms_mean sólido",
+      "spectral_flatness_mean sólido",
+      "spectral_contrast_mean sólido"
+    ],
+    "issues": []
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json3.mid",
+    "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json3_logmel.png",
+    "spectral_reference_based": {
+      "score": 58.61867085476323,
+      "matched_reference_count": 32,
+      "details": {
+        "rms_mean": {
+          "x": 0.1468596882123694,
+          "mu_ref": 0.13484569258668067,
+          "sigma_ref": 0.034141225777164955,
+          "score": 0.7397045174839975
+        },
+        "rms_std": {
+          "x": 0.06578657640726167,
+          "mu_ref": 0.059454839801864584,
+          "sigma_ref": 0.008034510381652185,
+          "score": 0.5592629995081562
+        },
+        "spectral_centroid_mean": {
+          "x": 314.65458149952116,
+          "mu_ref": 452.7819558501483,
+          "sigma_ref": 132.4609087574045,
+          "score": 0.4895293589062016
+        },
+        "spectral_centroid_std": {
+          "x": 126.05028950186379,
+          "mu_ref": 257.5259390520556,
+          "sigma_ref": 120.63753202444668,
+          "score": 0.4785054524756444
+        },
+        "spectral_bandwidth_mean": {
+          "x": 254.4363972974213,
+          "mu_ref": 324.00658655036233,
+          "sigma_ref": 112.91453677882802,
+          "score": 0.6187615765670742
+        },
+        "spectral_bandwidth_std": {
+          "x": 164.0806803991007,
+          "mu_ref": 226.34396949250595,
+          "sigma_ref": 62.625248590323125,
+          "score": 0.5014491301749184
+        },
+        "spectral_rolloff_mean": {
+          "x": 525.6537041544952,
+          "mu_ref": 645.3198177610047,
+          "sigma_ref": 218.62428873694293,
+          "score": 0.6462621677187951
+        },
+        "spectral_rolloff_std": {
+          "x": 228.64519112423,
+          "mu_ref": 370.48994628033546,
+          "sigma_ref": 171.627787843098,
+          "score": 0.5475050101709676
+        },
+        "spectral_flatness_mean": {
+          "x": 0.02630514678734542,
+          "mu_ref": 0.057305357025895474,
+          "sigma_ref": 0.05379574727918931,
+          "score": 0.6344140552683211
+        },
+        "spectral_flatness_std": {
+          "x": 0.15999462903718073,
+          "mu_ref": 0.2084448693044776,
+          "sigma_ref": 0.0867018654335722,
+          "score": 0.6415132415729331
+        },
+        "spectral_contrast_mean": {
+          "x": 21.948051155073106,
+          "mu_ref": 18.92451559103602,
+          "sigma_ref": 4.1656539002030355,
+          "score": 0.5794330391379293
+        },
+        "spectral_contrast_std": {
+          "x": 16.15900436678188,
+          "mu_ref": 14.59396842573376,
+          "sigma_ref": 2.3271196431352568,
+          "score": 0.5978999535866489
+        }
+      }
+    },
+    "spectral_reference_free": {
+      "score": 95.25384303377042,
+      "details": {
+        "rms_mean": 1.0,
+        "spectral_centroid_mean": 1.0,
+        "spectral_bandwidth_mean": 0.8547805982429179,
+        "spectral_rolloff_mean": 0.8604499837833075,
+        "spectral_flatness_mean": 1.0,
+        "spectral_contrast_mean": 1.0
+      }
+    },
+    "spectral_global_score": 69.60922250846538,
+    "spectral_qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "rms_mean sólido",
+      "spectral_flatness_mean sólido",
+      "spectral_contrast_mean sólido"
+    ],
+    "issues": []
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json4.mid",
+    "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json4_logmel.png",
+    "spectral_reference_based": {
+      "score": 64.83398271124977,
+      "matched_reference_count": 32,
+      "details": {
+        "rms_mean": {
+          "x": 0.1189185113167408,
+          "mu_ref": 0.12760251944805917,
+          "sigma_ref": 0.027946694310850586,
+          "score": 0.7629308871423276
+        },
+        "rms_std": {
+          "x": 0.04793163303263519,
+          "mu_ref": 0.05207224067626194,
+          "sigma_ref": 0.00852069606212808,
+          "score": 0.6729714617188466
+        },
+        "spectral_centroid_mean": {
+          "x": 314.4913191730819,
+          "mu_ref": 468.6127415553444,
+          "sigma_ref": 98.62914474391503,
+          "score": 0.3902232381329439
+        },
+        "spectral_centroid_std": {
+          "x": 171.41131343511088,
+          "mu_ref": 246.28215972949562,
+          "sigma_ref": 98.42197222828442,
+          "score": 0.5679518232050074
+        },
+        "spectral_bandwidth_mean": {
+          "x": 349.6750378986838,
+          "mu_ref": 396.14252986024246,
+          "sigma_ref": 113.50079253972062,
+          "score": 0.7095205958704454
+        },
+        "spectral_bandwidth_std": {
+          "x": 244.84554428831112,
+          "mu_ref": 232.20957797660583,
+          "sigma_ref": 48.14185546183092,
+          "score": 0.7920957687692712
+        },
+        "spectral_rolloff_mean": {
+          "x": 472.96353121007485,
+          "mu_ref": 654.5926490872605,
+          "sigma_ref": 149.03564200465138,
+          "score": 0.450715226073408
+        },
+        "spectral_rolloff_std": {
+          "x": 283.0701968107133,
+          "mu_ref": 360.8322822404392,
+          "sigma_ref": 151.008200573909,
+          "score": 0.6600866013320875
+        },
+        "spectral_flatness_mean": {
+          "x": 0.01202331712632594,
+          "mu_ref": 0.033055655701102894,
+          "sigma_ref": 0.02842022369520126,
+          "score": 0.574696686898561
+        },
+        "spectral_flatness_std": {
+          "x": 0.10836054655543231,
+          "mu_ref": 0.16411895123873854,
+          "sigma_ref": 0.06347218198105185,
+          "score": 0.5323481478769387
+        },
+        "spectral_contrast_mean": {
+          "x": 15.359403654492125,
+          "mu_ref": 16.387274720823687,
+          "sigma_ref": 4.008074607720913,
+          "score": 0.795893138476924
+        },
+        "spectral_contrast_std": {
+          "x": 13.465166276039096,
+          "mu_ref": 13.035647203327715,
+          "sigma_ref": 2.8909317326765542,
+          "score": 0.8706443498532124
+        }
+      }
+    },
+    "spectral_reference_free": {
+      "score": 97.08420565322822,
+      "details": {
+        "rms_mean": 1.0,
+        "spectral_centroid_mean": 1.0,
+        "spectral_bandwidth_mean": 0.99942262315427,
+        "spectral_rolloff_mean": 0.8256297160394237,
+        "spectral_flatness_mean": 1.0,
+        "spectral_contrast_mean": 1.0
+      }
+    },
+    "spectral_global_score": 74.5090495938433,
+    "spectral_qualitative_label": "plausible",
+    "strengths": [
+      "rms_mean sólido",
+      "spectral_flatness_mean sólido",
+      "spectral_contrast_mean sólido"
+    ],
+    "issues": []
+  }
+]

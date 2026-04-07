@@ -14,7 +14,7 @@ TOKENIZER_PATH = Path(r"../../tokenizer/tokenizer_REMI_BPE_v3.json")
 
 # JSON generado por evaluation.py
 #GENERATED_JSON_PATH = Path(r"../../output/evaluation/best_test/sample_004.json")
-GENERATED_JSON_PATH = Path(r"../../data/interim/tokenized_json_bpe/maestro-v3.0.0/2004/MIDI-Unprocessed_SMF_02_R1_2004_01-05_ORIG_MID--AUDIO_02_R1_2004_05_Track05_wav.json")
+GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\evaluation\best_val\sample_008.json")
 
 # Campo del JSON a convertir
 # Opciones típicas:
@@ -24,7 +24,7 @@ GENERATED_JSON_PATH = Path(r"../../data/interim/tokenized_json_bpe/maestro-v3.0.
 JSON_TOKEN_FIELD = "full_generated_tokens"
 
 # MIDI de salida
-OUTPUT_MIDI_PATH = Path(r"../../output/generation_v2/generated_from_jsonMAESTRO.mid")
+OUTPUT_MIDI_PATH = Path(r"../../output/generation_v3/generated_from_json8.mid")
 
 # Si True, elimina PAD / BOS / MASK y un EOS final si aparece
 FILTER_SPECIAL_TOKENS = True

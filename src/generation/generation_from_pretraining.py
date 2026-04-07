@@ -50,11 +50,11 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 
-DEFAULT_PROMPT_LEN = 256
-DEFAULT_MAX_NEW_TOKENS = 2000
+DEFAULT_PROMPT_LEN = 150
+DEFAULT_MAX_NEW_TOKENS = 3000
 DEFAULT_TEMPERATURE = 0.9
 DEFAULT_TOP_K = 150
-DEFAULT_NUM_SAMPLES = 9
+DEFAULT_NUM_SAMPLES = 10
 DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True
 
@@ -458,7 +458,7 @@ def parse_args():
 
     parser.add_argument("--mode", choices=["loss", "generate", "all"], default="all")
     parser.add_argument("--ckpt", choices=["best", "last"], default="best")
-    parser.add_argument("--split", choices=["train", "val", "test"], default="test")
+    parser.add_argument("--split", choices=["train", "val", "test"], default="val")
 
     parser.add_argument("--prompt-len", type=int, default=DEFAULT_PROMPT_LEN)
     parser.add_argument("--max-new-tokens", type=int, default=DEFAULT_MAX_NEW_TOKENS)
