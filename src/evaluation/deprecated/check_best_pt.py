@@ -2,7 +2,7 @@ from pathlib import Path
 import torch
 
 # Ruta fija a tu checkpoint
-CKPT_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\best.pt")
+CKPT_PATH = Path(r"/output/checkpoints/best.pt")
 
 
 def format_num(n: int) -> str:
