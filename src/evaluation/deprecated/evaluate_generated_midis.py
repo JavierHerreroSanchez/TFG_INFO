@@ -23,7 +23,7 @@ except Exception as e:  # pragma: no cover
 # No necesita argumentos por terminal.
 # =============================================================================
 GENERATED_DIR = Path(r"/output/generation_v2")
-REFERENCE_DIR = Path(r"/data/raw/maestro-v3.0.0")
+REFERENCE_DIR = Path(r"/data/pretraining_raw/maestro-v3.0.0")
 OUT_DIR = Path(r"/output/midi_eval")
 
 INCLUDE_DRUMS = False

@@ -8,8 +8,8 @@ from miditok import REMI, TokenizerConfig
 # =========================
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-MAESTRO_ROOT = (PROJECT_ROOT / "data/raw" / "maestro-v3.0.0").resolve()
-ARIA_ROOT = (PROJECT_ROOT / "data/raw" / "ariamidi").resolve()
+MAESTRO_ROOT = (PROJECT_ROOT / "data/pretraining_raw" / "maestro-v3.0.0").resolve()
+ARIA_ROOT = (PROJECT_ROOT / "data/pretraining_raw" / "ariamidi").resolve()
 
 OUT_ROOT = (PROJECT_ROOT / "tokenizer").resolve()
 TOKENIZER_FILENAME = "tokenizer_REMI_BPE_v4.json"

@@ -12,7 +12,7 @@ import pandas as pd
 # CONFIGURACIÓN
 # =============================================================================
 
-INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\debug_dataset\index.csv")
+INDEX_CSV = Path(r"/data/interim/debug_dataset/index_pretraining.csv")
 TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_json_bpe").resolve()
 ANCHOR = r"data\interim\tokenized_json_bpe"
 
@@ -61,7 +61,7 @@ def resolve_json_paths(index_csv: Path, tokens_dir: Path, anchor: str) -> List[P
 
     df = pd.read_csv(index_csv)
     if "path" not in df.columns:
-        raise ValueError("index.csv debe tener columna 'path'.")
+        raise ValueError("index_pretraining.csv debe tener columna 'path'.")
 
     raw_paths = df["path"].tolist()
 

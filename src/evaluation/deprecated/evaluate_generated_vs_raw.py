@@ -18,8 +18,8 @@ GENERATED_GLOB = "generated_from_json*.mid"   # o "*.mid"
 
 # Referencias
 REF_DIRS = [
-    Path(r"/data/raw/maestro-v3.0.0"),
-    Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi"),
+    Path(r"/data/pretraining_raw/maestro-v3.0.0"),
+    Path(r"/data/pretraining_raw\ariamidi"),
 ]
 
 # Para que no tarde demasiado: limita el nº de archivos de referencia

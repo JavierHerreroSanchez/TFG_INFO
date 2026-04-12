@@ -10,7 +10,7 @@ THIS_FILE = Path(__file__).resolve()
 PROJECT_ROOT = THIS_FILE.parents[2]
 
 TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe"
-OUT_CSV = PROJECT_ROOT / "data" / "interim" / "debug_dataset" / "index.csv"
+OUT_CSV = PROJECT_ROOT / "data" / "interim" / "debug_dataset" / "index_pretraining.csv"
 
 TOKEN_FIELD_CANDIDATES = ("ids", "ids_encoded")
 
@@ -21,7 +21,6 @@ def extract_ids(obj: dict) -> list[int] | None:
         if isinstance(ids, list):
             return ids
     return None
-
 
 def main() -> None:
     if not TOKENS_DIR.exists():

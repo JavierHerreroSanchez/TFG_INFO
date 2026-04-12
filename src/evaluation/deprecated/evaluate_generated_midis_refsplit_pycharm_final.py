@@ -20,7 +20,7 @@ except Exception as e:  # pragma: no cover
 # CONFIGURACIÓN DE RUTAS
 # =============================================================================
 GENERATED_DIR = Path(r"/output/generation_v2")
-REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi\aa")
+REFERENCE_DIR = Path(r"/data/pretraining_raw\ariamidi\aa")
 OUT_DIR = Path(r"/output/midi_eval_refsplit")
 
 RECURSIVE = True

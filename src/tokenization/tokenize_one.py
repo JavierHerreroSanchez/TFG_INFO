@@ -5,7 +5,7 @@ import traceback
 from miditok.utils import get_score_programs
 from symusic import Score
 
-from tokenizer_train import load_bpe_tokenizer
+from src.tokenization.deprecated.tokenizer_train import load_bpe_tokenizer
 
 
 THIS_FILE = Path(__file__).resolve()

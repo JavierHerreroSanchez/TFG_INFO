@@ -9,7 +9,7 @@ from typing import Iterable
 from miditok.utils import get_score_programs
 from symusic import Score
 
-from tokenizer_train import load_bpe_tokenizer
+from src.tokenization.deprecated.tokenizer_train import load_bpe_tokenizer
 
 
 # ============================================================
@@ -18,7 +18,7 @@ from tokenizer_train import load_bpe_tokenizer
 THIS_FILE = Path(__file__).resolve()
 PROJECT_ROOT = THIS_FILE.parents[2]
 
-DATA_RAW = PROJECT_ROOT / "data" / "raw"
+DATA_RAW = PROJECT_ROOT / "data" / "pretraining_raw"
 TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe"
 BAD_LIST = PROJECT_ROOT / "tokenizer" / "bad_midis.txt"
 TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v3.json"

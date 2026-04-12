@@ -24,7 +24,7 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # =============================================================================
 
 # 1) Rutas
-INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\debug_dataset\index.csv")
+INDEX_CSV = Path(r"../../data/interim/debug_dataset/index_pretraining.csv")
 TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_json_bpe")
 
 # ANCHOR: fragmento de ruta usado para “rebasar” paths del CSV y reconstruirlos
@@ -46,7 +46,7 @@ SEED = random.randrange(1, 1024) # Antes a 100454434
 # 3) Caché binario (memmap)
 # Esto permite convertir muchos JSON en un stream 1D concatenado (train/val/test) para
 # entrenar eficientemente en memoria con recortes aleatorios (random crops).
-CACHE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\bin_for_pretraining").resolve()
+CACHE_DIR = Path(r"../../data/bin/bin_for_pretraining").resolve()
 ADD_EOS = True
 EOS_ID = 2
 USE_UINT16 = True  # vocab 30k cabe en uint16
@@ -78,7 +78,7 @@ EVAL_EVERY = 500
 EVAL_BATCHES = 500
 
 SAVE_EVERY = 500
-CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints").resolve()
+CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\finetuning").resolve()
 
 NUM_WORKERS = 2
 PIN_MEMORY = True
@@ -139,7 +139,7 @@ def split_train_val_test(paths: List[Path], val_ratio: float, test_ratio: float,
 
 def  rebase_path(abs_path: str, tokens_dir: Path, anchor: str) -> Path:
     """
-    En esta función transformamos un path absoluto (típicamente guardado en index.csv)
+    En esta función transformamos un path absoluto (típicamente guardado en index_pretraining.csv)
     en un path equivalente dentro de TOKENS_DIR.
 
     La estrategia es:
@@ -177,7 +177,7 @@ def resolve_json_paths(index_csv: Path, tokens_dir: Path, anchor: str) -> List[P
 
     df = pd.read_csv(index_csv)
     if "path" not in df.columns:
-        raise ValueError("index.csv debe tener columna 'path'.")
+        raise ValueError("index_pretraining.csv debe tener columna 'path'.")
 
     raw_paths = df["path"].tolist()
 

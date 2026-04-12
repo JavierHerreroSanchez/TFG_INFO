@@ -147,8 +147,10 @@ venv.bak/
 # Data
 
 data/interim/tokenized_json_bpe
-data/raw
-
+data/interim/tokenized_finetuning
+data/pretraining_raw
+data/finetuning
+output/checkpoints/finetuning/samples
 # Spyder project settings
 .spyderproject
 .spyproject

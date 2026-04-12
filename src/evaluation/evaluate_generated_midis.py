@@ -22,9 +22,9 @@ OUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v2\mi
 # - "mixed_random": mezcla MAESTRO y ARIA aleatoriamente
 REFERENCE_MODE = "mixed_random"
 
-REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\maestro-v3.0.0")
-MAESTRO_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\maestro-v3.0.0")
-ARIA_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\raw\ariamidi")
+REFERENCE_DIR = Path(r"/data/pretraining_raw\maestro-v3.0.0")
+MAESTRO_DIR = Path(r"/data/pretraining_raw\maestro-v3.0.0")
+ARIA_DIR = Path(r"/data/pretraining_raw\ariamidi")
 
 RECURSIVE = True
 

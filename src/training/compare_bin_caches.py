@@ -4,7 +4,7 @@ import json
 CANDIDATE_DIRS = [
     Path(r"C:\data\bin_for_pretraining\pretraining"),
     Path(r"C:\data\bin_for_pretraining"),
-    Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\bin_for_pretraining"),
+    Path(r"/data/bin/bin_for_pretraining"),
 ]
 
 BIN_NAMES = ["train.bin", "val.bin", "test.bin", "meta.json"]

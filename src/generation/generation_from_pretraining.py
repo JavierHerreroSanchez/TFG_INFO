@@ -50,15 +50,17 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 
-DEFAULT_PROMPT_LEN = 150
-DEFAULT_MAX_NEW_TOKENS = 3000
-DEFAULT_TEMPERATURE = 0.9
-DEFAULT_TOP_K = 150
-DEFAULT_NUM_SAMPLES = 10
+DEFAULT_PROMPT_LEN = 100
+DEFAULT_MIN_NEW_TOKENS = 1800
+DEFAULT_MAX_NEW_TOKENS = 2100
+DEFAULT_TEMPERATURE = 1 # default a 0.9
+DEFAULT_TOP_K = 170
+DEFAULT_NUM_SAMPLES = 5
 DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True
 
-OUTPUT_DIR = Path("../../output/evaluation").resolve()
+
+OUTPUT_DIR = Path("../../output/evaluationv3/2").resolve()
 
 
 def get_model_block_size(model: torch.nn.Module) -> int:
@@ -144,28 +146,89 @@ def load_token_ids_from_json(path: Path) -> List[int]:
     return ids
 
 
+def find_valid_prompt_starts(
+        ids: List[int],
+        prompt_len: int,
+        require_after_eos: bool,
+        eos_token_id: int | None,
+) -> List[int]:
+    """
+    Devuelve los índices válidos desde los que puede empezar un prompt.
+
+    Reglas:
+      - siempre permitimos start=0 si cabe el prompt
+      - si require_after_eos=True, además permitimos cualquier posición i+1
+        tal que ids[i] == eos_token_id
+      - el prompt debe caber, y además debe existir al menos 1 token posterior
+        para que tenga sentido en next-token prediction / gt continuation
+    """
+    if len(ids) < prompt_len + 1:
+        return []
+
+    max_start = len(ids) - prompt_len - 1
+    if max_start < 0:
+        return []
+
+    if not require_after_eos or eos_token_id is None:
+        return list(range(0, max_start + 1))
+
+    valid_starts = [0]
+
+    for i, tok in enumerate(ids[:-1]):
+        candidate = i + 1
+        if int(tok) == int(eos_token_id) and candidate <= max_start:
+            valid_starts.append(candidate)
+
+    return sorted(set(valid_starts))
+
+
+def has_valid_prompt_start(
+        ids: List[int],
+        prompt_len: int,
+        require_after_eos: bool,
+        eos_token_id: int | None,
+) -> bool:
+    return len(find_valid_prompt_starts(
+        ids=ids,
+        prompt_len=prompt_len,
+        require_after_eos=require_after_eos,
+        eos_token_id=eos_token_id,
+    )) > 0
+
+
 def choose_prompt_from_song(
         ids: List[int],
         prompt_len: int,
         max_new_tokens: int,
         random_offset: bool,
+        require_after_eos: bool = True,
+        eos_token_id: int | None = None,
 ) -> Tuple[List[int], int, List[int]]:
     """
     Devuelve:
       - prompt_tokens
       - start_idx del prompt dentro de la pieza
       - continuación real (ground truth) hasta max_new_tokens, si existe
+
+    Si random_offset=True y require_after_eos=True, el prompt solo puede empezar:
+      - en 0
+      - o justo después de un EOS
+
+    Si no hay ningún start válido, se lanza ValueError para desestimar la pieza.
     """
-    if len(ids) < prompt_len + 1:
+    valid_starts = find_valid_prompt_starts(
+        ids=ids,
+        prompt_len=prompt_len,
+        require_after_eos=(random_offset and require_after_eos),
+        eos_token_id=eos_token_id,
+    )
+
+    if not valid_starts:
         raise ValueError(
-            f"Secuencia demasiado corta ({len(ids)} tokens) para prompt_len={prompt_len}"
+            f"Secuencia sin offsets válidos para prompt_len={prompt_len}"
         )
 
-    if random_offset:
-        max_start = max(0, len(ids) - prompt_len - 1)
-        start = random.randint(0, max_start)
-    else:
-        start = 0
+    start = random.choice(valid_starts) if random_offset else 0
 
     prompt = ids[start:start + prompt_len]
     gt_cont = ids[start + prompt_len:start + prompt_len + max_new_tokens]
@@ -246,6 +309,7 @@ def generate_from_prompt(
         prompt_tokens: List[int],
         block_size: int,
         max_new_tokens: int,
+        min_new_tokens: int,
         temperature: float,
         top_k: int | None,
         do_sample: bool,
@@ -255,15 +319,27 @@ def generate_from_prompt(
 ) -> Tuple[List[int], bool]:
     """
     Genera de forma autoregresiva a partir de prompt_tokens.
+
+    Política de longitud mínima:
+      - antes de alcanzar min_new_tokens, EOS no puede terminar la secuencia
+      - una vez alcanzado min_new_tokens, EOS vuelve a estar permitido
+
     Devuelve:
       - secuencia completa (prompt + generación)
       - flag indicando si se encontró EOS
     """
+    if min_new_tokens < 0:
+        raise ValueError("min_new_tokens debe ser >= 0.")
+    if min_new_tokens > max_new_tokens:
+        raise ValueError("min_new_tokens no puede ser mayor que max_new_tokens.")
+
     idx = torch.tensor(prompt_tokens, dtype=torch.long, device=device).unsqueeze(0)  # (1, T)
     saw_eos = False
 
-    for _ in range(max_new_tokens):
-        idx_cond = idx[:, -block_size:]  # recorte al contexto máximo real del modelo (cfg.block_size)
+    for step in range(max_new_tokens):
+        generated_so_far = step
+
+        idx_cond = idx[:, -block_size:]
 
         out = model(idx_cond)
 
@@ -277,6 +353,15 @@ def generate_from_prompt(
 
         logits_last = logits[:, -1, :]  # (1, V)
 
+        # Mientras no hayamos alcanzado la longitud mínima, bloqueamos EOS.
+        if (
+            stop_on_eos
+            and eos_token_id is not None
+            and generated_so_far < min_new_tokens
+        ):
+            logits_last = logits_last.clone()
+            logits_last[:, int(eos_token_id)] = -float("inf")
+
         next_token = sample_next_token(
             logits_last=logits_last,
             temperature=temperature,
@@ -286,7 +371,13 @@ def generate_from_prompt(
 
         idx = torch.cat([idx, next_token], dim=1)
 
-        if stop_on_eos and eos_token_id is not None and int(next_token.item()) == int(eos_token_id):
+        # Una vez alcanzado el mínimo, EOS ya puede cortar.
+        if (
+            stop_on_eos
+            and eos_token_id is not None
+            and (generated_so_far + 1) >= min_new_tokens
+            and int(next_token.item()) == int(eos_token_id)
+        ):
             saw_eos = True
             break
 
@@ -350,6 +441,7 @@ def run_generation(
         split: str,
         prompt_len: int,
         max_new_tokens: int,
+        min_new_tokens: int,
         num_samples: int,
         random_offset: bool,
         temperature: float,
@@ -364,13 +456,23 @@ def run_generation(
     for p in files:
         try:
             ids = load_token_ids_from_json(p)
-            if len(ids) >= prompt_len + 1:
+
+            if has_valid_prompt_start(
+                ids=ids,
+                prompt_len=prompt_len,
+                require_after_eos=random_offset,
+                eos_token_id=EOS_ID if ADD_EOS else None,
+            ):
                 valid_files.append(p)
+            else:
+                print(f"[WARN] saltando {p.name}: sin start válido tras EOS/inicio")
         except Exception as e:
             print(f"[WARN] saltando {p.name}: {e}")
 
     if len(valid_files) == 0:
-        raise RuntimeError(f"No hay ficheros válidos en split={split} con prompt_len={prompt_len}")
+        raise RuntimeError(
+            f"No hay ficheros válidos en split={split} con prompt_len={prompt_len}"
+        )
 
     chosen = random.sample(valid_files, k=min(num_samples, len(valid_files)))
 
@@ -382,6 +484,7 @@ def run_generation(
         "split": split,
         "prompt_len": int(prompt_len),
         "max_new_tokens": int(max_new_tokens),
+        "min_new_tokens": int(min_new_tokens),
         "num_samples_requested": int(num_samples),
         "num_samples_generated": int(len(chosen)),
         "random_offset": bool(random_offset),
@@ -402,6 +505,8 @@ def run_generation(
             prompt_len=prompt_len,
             max_new_tokens=max_new_tokens,
             random_offset=random_offset,
+            require_after_eos=True,
+            eos_token_id=EOS_ID if ADD_EOS else None,
         )
 
         full_generated, hit_eos = generate_from_prompt(
@@ -409,6 +514,7 @@ def run_generation(
             prompt_tokens=prompt_tokens,
             block_size=get_model_block_size(model),
             max_new_tokens=max_new_tokens,
+            min_new_tokens=min_new_tokens,
             temperature=temperature,
             top_k=top_k,
             do_sample=do_sample,
@@ -458,20 +564,44 @@ def parse_args():
 
     parser.add_argument("--mode", choices=["loss", "generate", "all"], default="all")
     parser.add_argument("--ckpt", choices=["best", "last"], default="best")
-    parser.add_argument("--split", choices=["train", "val", "test"], default="val")
+    parser.add_argument("--split", choices=["train", "val", "test"], default="test")
 
     parser.add_argument("--prompt-len", type=int, default=DEFAULT_PROMPT_LEN)
     parser.add_argument("--max-new-tokens", type=int, default=DEFAULT_MAX_NEW_TOKENS)
+    parser.add_argument("--min-new-tokens", type=int, default=DEFAULT_MIN_NEW_TOKENS)
     parser.add_argument("--num-samples", type=int, default=DEFAULT_NUM_SAMPLES)
     parser.add_argument("--temperature", type=float, default=DEFAULT_TEMPERATURE)
     parser.add_argument("--top-k", type=int, default=DEFAULT_TOP_K)
     parser.add_argument("--greedy", action="store_true", help="Usa argmax en lugar de sampling.")
-    parser.add_argument("--random-offset", action="store_true", default=DEFAULT_RANDOM_OFFSET)
-    parser.add_argument("--no-stop-on-eos", action="store_true", help="No parar al generar EOS.")
+
+    parser.add_argument(
+        "--random-offset",
+        action=argparse.BooleanOptionalAction,
+        default=DEFAULT_RANDOM_OFFSET,
+        help="Usa un offset aleatorio válido para el prompt."
+    )
+
+    parser.add_argument(
+        "--stop-on-eos",
+        action=argparse.BooleanOptionalAction,
+        default=DEFAULT_STOP_ON_EOS,
+        help="Detén la generación al emitir EOS."
+    )
+
     parser.add_argument("--max-batches", type=int, default=EVAL_BATCHES)
     parser.add_argument("--device", type=str, default=DEVICE)
 
-    return parser.parse_args()
+    args = parser.parse_args()
+
+    if args.min_new_tokens < 0:
+        raise ValueError("--min-new-tokens no puede ser negativo.")
+    if args.min_new_tokens > args.max_new_tokens:
+        raise ValueError(
+            f"min_new_tokens={args.min_new_tokens} no puede ser mayor que "
+            f"max_new_tokens={args.max_new_tokens}"
+        )
+
+    return args
 
 
 def main():
@@ -479,7 +609,7 @@ def main():
     seed_all(SEED)
 
     do_sample = not args.greedy
-    stop_on_eos = not args.no_stop_on_eos
+    stop_on_eos = args.stop_on_eos
 
     model, ckpt = load_checkpoint_and_model(args.ckpt, device=args.device)
     block_size = get_model_block_size(model)
@@ -505,6 +635,7 @@ def main():
             split=args.split,
             prompt_len=args.prompt_len,
             max_new_tokens=args.max_new_tokens,
+            min_new_tokens=args.min_new_tokens,
             num_samples=args.num_samples,
             random_offset=args.random_offset,
             temperature=args.temperature,
@@ -513,7 +644,6 @@ def main():
             stop_on_eos=stop_on_eos,
             device=args.device,
         )
-
 
 if __name__ == "__main__":
     main()
