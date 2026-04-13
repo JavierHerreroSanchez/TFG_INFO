@@ -16,12 +16,11 @@ TOKENIZER_FILENAME = "tokenizer_REMI_BPE_v4.json"
 
 VOCAB_SIZE = 30000
 ENCODE_IDS_SPLIT: Literal["bar", "beat", "no"] = "bar"
-SEED = 42
+SEED = 1453
 
 # Usar todo MAESTRO y solo una muestra de ARIA
 USE_ALL_MAESTRO = True
-ARIA_SAMPLE_SIZE = 60000        #30000 con el v2
-
+ARIA_SAMPLE_SIZE = 80000        #30000 con el v2
 
 def list_midi_files(root: Path) -> list[Path]:
     """Devuelve todos los .mid y .midi bajo root."""
@@ -64,30 +63,46 @@ def build_tokenizer() -> REMI:
     config = TokenizerConfig(
         pitch_range=(21, 109),
         beat_res={(0, 4): 8, (4, 12): 4},
-        num_velocities=8,
-        encode_ids_split="bar",
+        encode_ids_split=ENCODE_IDS_SPLIT,
 
-        use_velocities=False,              # o True si quieres comparar ambas
+        num_velocities=8,
+        use_velocities=True,
+        use_note_duration_programs=[0],
+
         use_chords=True,
         chord_tokens_with_root_note=True,
+        # usar chord_maps por defecto
+        # no tocar chord_unknown
+
         use_rests=True,
-        use_tempos=False,
+        beat_res_rest={(0, 1): 8, (1, 2): 4, (2, 12): 2},
+
         use_time_signatures=True,
+        use_tempos=False,
 
         use_programs=False,
-        use_pitch_intervals=False,
+        one_token_stream_for_programs=False,
+        program_changes=False,
 
-        # Attribute controls
+        use_pitch_intervals=False,
+        # max_pitch_interval y pitch_intervals_max_time_dist no aplican aquí
+
+        use_sustain_pedals=False,
+        use_pitch_bends=False,
+
+        ac_polyphony_track=False,
         ac_polyphony_bar=True,
         ac_polyphony_min=1,
         ac_polyphony_max=6,
 
         ac_pitch_class_bar=True,
 
+        ac_note_density_track=False,
         ac_note_density_bar=True,
         ac_note_density_bar_max=18,
 
         ac_note_duration_bar=True,
+        ac_note_duration_track=False,
 
         ac_repetition_track=True,
         ac_repetition_track_num_bins=8,
