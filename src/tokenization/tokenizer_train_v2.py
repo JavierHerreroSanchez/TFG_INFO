@@ -62,10 +62,36 @@ def build_training_file_list() -> list[Path]:
 def build_tokenizer() -> REMI:
     """Crea el tokenizer base REMI."""
     config = TokenizerConfig(
-        num_velocities=16,
+        pitch_range=(21, 109),
+        beat_res={(0, 4): 8, (4, 12): 4},
+        num_velocities=8,
+        encode_ids_split="bar",
+
+        use_velocities=False,              # o True si quieres comparar ambas
         use_chords=True,
-        use_programs=True,
-        encode_ids_split=ENCODE_IDS_SPLIT,
+        chord_tokens_with_root_note=True,
+        use_rests=True,
+        use_tempos=False,
+        use_time_signatures=True,
+
+        use_programs=False,
+        use_pitch_intervals=False,
+
+        # Attribute controls
+        ac_polyphony_bar=True,
+        ac_polyphony_min=1,
+        ac_polyphony_max=6,
+
+        ac_pitch_class_bar=True,
+
+        ac_note_density_bar=True,
+        ac_note_density_bar_max=18,
+
+        ac_note_duration_bar=True,
+
+        ac_repetition_track=True,
+        ac_repetition_track_num_bins=8,
+        ac_repetition_track_num_consec_bars=4,
     )
     return REMI(config)
 
