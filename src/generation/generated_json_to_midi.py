@@ -22,6 +22,7 @@ GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\fine
 #   - "generated_tokens" -> solo lo generado
 #   - "prompt_tokens" -> solo el prompt
 JSON_TOKEN_FIELD = "full_generated_tokens"
+# JSON_TOKEN_FIELD = "full_ids"
 
 # MIDI de salida
 #OUTPUT_MIDI_PATH = Path(r"../../output/generation_v4/3/generated_from_json4.mid")

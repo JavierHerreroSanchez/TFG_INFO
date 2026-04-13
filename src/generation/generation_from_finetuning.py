@@ -49,10 +49,10 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # =============================================================================
 
 DEFAULT_PROMPT_LEN = 100
-DEFAULT_MIN_NEW_TOKENS = 1800
+DEFAULT_MIN_NEW_TOKENS = 1400
 DEFAULT_MAX_NEW_TOKENS = 2100
 DEFAULT_TEMPERATURE = 0.9 # default a 0.9
-DEFAULT_TOP_K = 120
+DEFAULT_TOP_K = 100
 DEFAULT_NUM_SAMPLES = 5
 DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True

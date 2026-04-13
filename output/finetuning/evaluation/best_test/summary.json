@@ -3,13 +3,13 @@
   "split": "test",
   "prompt_len": 100,
   "max_new_tokens": 2100,
-  "min_new_tokens": 1800,
+  "min_new_tokens": 1400,
   "num_samples_requested": 5,
   "num_samples_generated": 5,
   "random_offset": true,
   "sampling": {
-    "temperature": 1.0,
-    "top_k": 170,
+    "temperature": 0.9,
+    "top_k": 100,
     "do_sample": true,
     "stop_on_eos": true
   },
@@ -43,8 +43,8 @@
       "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning\\Bach_Carl_Philipp_Emanuel_Keyboard_Sonata_in_A_minor_H.61_HJ-JrNHBuF0__tr-3__ts1p050.json",
       "prompt_start": 0,
       "prompt_len": 100,
-      "generated_len": 2100,
-      "hit_eos": false
+      "generated_len": 1530,
+      "hit_eos": true
     },
     {
       "idx": 4,
