@@ -9,7 +9,7 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # =============================================================================
 
 # Ruta del modelo .pt
-CKPT_PATH = Path(r"../../../output/checkpoints/pretraining/best.pt")
+CKPT_PATH = Path(r"../../../output/checkpoints/old/pretraining/best.pt")
 
 # "cpu" suele ser suficiente para inspeccionar
 DEVICE = "cpu"

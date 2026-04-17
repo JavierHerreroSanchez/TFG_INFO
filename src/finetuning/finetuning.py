@@ -36,7 +36,7 @@ EOS_ID = 2
 USE_UINT16 = True
 
 # ---- Cargar checkpoint preentrenado ----
-PRETRAINED_CKPT = Path(r"../../output/checkpoints/pretraining/best.pt").resolve()
+PRETRAINED_CKPT = Path(r"../../output/checkpoints/old/pretraining/best.pt").resolve()
 
 # ---- Hiperparámetros del modelo (coincidentes con el pretraining) ----
 BLOCK_SIZE = 2048

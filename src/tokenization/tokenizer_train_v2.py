@@ -12,15 +12,55 @@ MAESTRO_ROOT = (PROJECT_ROOT / "data/pretraining_raw" / "maestro-v3.0.0").resolv
 ARIA_ROOT = (PROJECT_ROOT / "data/pretraining_raw" / "ariamidi").resolve()
 
 OUT_ROOT = (PROJECT_ROOT / "tokenizer").resolve()
-TOKENIZER_FILENAME = "tokenizer_REMI_BPE_v4.json"
+TOKENIZER_FILENAME = "tokenizer_REMI_BPE_v5.json"
 
-VOCAB_SIZE = 30000
+VOCAB_SIZE = 18000
 ENCODE_IDS_SPLIT: Literal["bar", "beat", "no"] = "bar"
 SEED = 1453
 
 # Usar todo MAESTRO y solo una muestra de ARIA
 USE_ALL_MAESTRO = True
-ARIA_SAMPLE_SIZE = 80000        #30000 con el v2
+ARIA_SAMPLE_SIZE = 100000        #30000 con el v2
+
+CUSTOM_CHORDS = {
+    # triadas base
+    "min": (0, 3, 7),
+    "maj": (0, 4, 7),
+    "dim": (0, 3, 6),
+    "aug": (0, 4, 8),
+    "sus2": (0, 2, 7),
+    "sus4": (0, 5, 7),
+
+    # séptimas base
+    "7dom": (0, 4, 7, 10),
+    "7min": (0, 3, 7, 10),
+    "7maj": (0, 4, 7, 11),
+    "7halfdim": (0, 3, 6, 10),
+    "7dim": (0, 3, 6, 9),
+    "7aug": (0, 4, 8, 11),
+
+    # novenas base
+    "9maj": (0, 4, 7, 10, 14),
+    "9min": (0, 4, 7, 10, 13),
+
+    # duplicación de octava en triadas
+    "min8": (0, 3, 7, 12),
+    "maj8": (0, 4, 7, 12),
+    "dim8": (0, 3, 6, 12),
+    "aug8": (0, 4, 8, 12),
+    "sus28": (0, 2, 7, 12),
+    "sus48": (0, 5, 7, 12),
+
+    # duplicación de octava en séptimas frecuentes
+    "7dom8": (0, 4, 7, 10, 12),
+    "7min8": (0, 3, 7, 10, 12),
+    "7maj8": (0, 4, 7, 11, 12),
+
+    # voicings abiertos muy frecuentes en piano
+    "maj_open": (0, 7, 12, 16),
+    "min_open": (0, 7, 12, 15),
+}
+
 
 def list_midi_files(root: Path) -> list[Path]:
     """Devuelve todos los .mid y .midi bajo root."""
@@ -65,10 +105,10 @@ def build_tokenizer() -> REMI:
         beat_res={(0, 4): 8, (4, 12): 4},
         encode_ids_split=ENCODE_IDS_SPLIT,
 
-        num_velocities=8,
+        num_velocities=16,
         use_velocities=True,
-        use_note_duration_programs=[0],
 
+        chord_maps= CUSTOM_CHORDS,
         use_chords=True,
         chord_tokens_with_root_note=True,
         # usar chord_maps por defecto
@@ -96,7 +136,7 @@ def build_tokenizer() -> REMI:
         ac_polyphony_max=6,
 
         ac_pitch_class_bar=True,
-
+        use_pitchdrum_tokens= False,
         ac_note_density_track=False,
         ac_note_density_bar=True,
         ac_note_density_bar_max=18,
@@ -104,9 +144,9 @@ def build_tokenizer() -> REMI:
         ac_note_duration_bar=True,
         ac_note_duration_track=False,
 
-        ac_repetition_track=True,
-        ac_repetition_track_num_bins=8,
-        ac_repetition_track_num_consec_bars=4,
+        #ac_repetition_track=True,      #Pasamos a eliminarlo, dado que daba muy poca información
+        #ac_repetition_track_num_bins=8,
+        #ac_repetition_track_num_consec_bars=16,
     )
     return REMI(config)
 

@@ -10,14 +10,13 @@ import numpy as np
 import torch
 import torch.nn.functional as F
 
-from src.training.pretraining import (
+from src.training.pretraining_v2 import (
     INDEX_CSV,
     TOKENS_DIR,
     ANCHOR,
     TOKEN_FIELD,
     VAL_RATIO,
     TEST_RATIO,
-    SEED,
     ADD_EOS,
     EOS_ID,
     MICRO_BATCH,
@@ -50,17 +49,17 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 
-DEFAULT_PROMPT_LEN = 100
-DEFAULT_MIN_NEW_TOKENS = 1800
-DEFAULT_MAX_NEW_TOKENS = 2100
-DEFAULT_TEMPERATURE = 1 # default a 0.9
-DEFAULT_TOP_K = 170
-DEFAULT_NUM_SAMPLES = 5
+DEFAULT_PROMPT_LEN = 150
+DEFAULT_MIN_NEW_TOKENS = 2000
+DEFAULT_MAX_NEW_TOKENS = 4000
+DEFAULT_TEMPERATURE = 0.8 # default a 0.9
+DEFAULT_TOP_K = 50
+DEFAULT_NUM_SAMPLES = 8
 DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True
 
-
-OUTPUT_DIR = Path("../../output/evaluationv3/3").resolve()
+SEED = random.randint(1,100000)
+OUTPUT_DIR = Path("../../output/evaluation_pretraining_improved/batch_3/").resolve()
 
 def get_model_block_size(model: torch.nn.Module) -> int:
     """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerGPTlike."""
@@ -563,7 +562,7 @@ def parse_args():
 
     parser.add_argument("--mode", choices=["loss", "generate", "all"], default="all")
     parser.add_argument("--ckpt", choices=["best", "last"], default="best")
-    parser.add_argument("--split", choices=["train", "val", "test"], default="test")
+    parser.add_argument("--split", choices=["train", "val", "test"], default="train")
 
     parser.add_argument("--prompt-len", type=int, default=DEFAULT_PROMPT_LEN)
     parser.add_argument("--max-new-tokens", type=int, default=DEFAULT_MAX_NEW_TOKENS)

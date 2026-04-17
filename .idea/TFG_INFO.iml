@@ -6,6 +6,10 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/data/interim/tokenized_json_bpe/ariamidi" />
       <excludeFolder url="file://$MODULE_DIR$/data/pretraining_raw/ariamidi" />
+      <excludeFolder url="file://$MODULE_DIR$/data/finetuning" />
+      <excludeFolder url="file://$MODULE_DIR$/data/interim/tokenized_finetuning" />
+      <excludeFolder url="file://$MODULE_DIR$/data/interim/tokenized_json_bpe_v2" />
+      <excludeFolder url="file://$MODULE_DIR$/output/checkpoints/finetuning/samples" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.14 (TFG_INFO)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

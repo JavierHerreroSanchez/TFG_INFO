@@ -19,9 +19,9 @@ THIS_FILE = Path(__file__).resolve()
 PROJECT_ROOT = THIS_FILE.parents[2]
 
 DATA_RAW = PROJECT_ROOT / "data" / "pretraining_raw"
-TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe"
+TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe_v2"
+TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v4.json"
 BAD_LIST = PROJECT_ROOT / "tokenizer" / "bad_midis.txt"
-TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v3.json"
 
 DATASETS_TO_SCAN = [
     DATA_RAW / "maestro-v3.0.0",

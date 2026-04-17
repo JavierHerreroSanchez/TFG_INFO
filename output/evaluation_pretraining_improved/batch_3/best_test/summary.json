@@ -1,0 +1,82 @@
+{
+  "checkpoint": "best",
+  "split": "test",
+  "prompt_len": 150,
+  "max_new_tokens": 4000,
+  "min_new_tokens": 2000,
+  "num_samples_requested": 8,
+  "num_samples_generated": 8,
+  "random_offset": true,
+  "sampling": {
+    "temperature": 0.8,
+    "top_k": 50,
+    "do_sample": true,
+    "stop_on_eos": true
+  },
+  "samples": [
+    {
+      "idx": 0,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe_v2\\ariamidi\\jp\\498734_0.json",
+      "prompt_start": 0,
+      "prompt_len": 150,
+      "generated_len": 2188,
+      "hit_eos": true
+    },
+    {
+      "idx": 1,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe_v2\\ariamidi\\ej\\226053_0.json",
+      "prompt_start": 0,
+      "prompt_len": 150,
+      "generated_len": 3674,
+      "hit_eos": true
+    },
+    {
+      "idx": 2,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe_v2\\ariamidi\\gi\\328112_0.json",
+      "prompt_start": 0,
+      "prompt_len": 150,
+      "generated_len": 4000,
+      "hit_eos": false
+    },
+    {
+      "idx": 3,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe_v2\\ariamidi\\fq\\293058_0.json",
+      "prompt_start": 0,
+      "prompt_len": 150,
+      "generated_len": 4000,
+      "hit_eos": false
+    },
+    {
+      "idx": 4,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe_v2\\ariamidi\\jx\\515264_0.json",
+      "prompt_start": 0,
+      "prompt_len": 150,
+      "generated_len": 4000,
+      "hit_eos": false
+    },
+    {
+      "idx": 5,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe_v2\\ariamidi\\dc\\160519_0.json",
+      "prompt_start": 0,
+      "prompt_len": 150,
+      "generated_len": 4000,
+      "hit_eos": false
+    },
+    {
+      "idx": 6,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe_v2\\ariamidi\\ge\\321909_0.json",
+      "prompt_start": 0,
+      "prompt_len": 150,
+      "generated_len": 4000,
+      "hit_eos": false
+    },
+    {
+      "idx": 7,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_json_bpe_v2\\ariamidi\\fd\\267462_0.json",
+      "prompt_start": 0,
+      "prompt_len": 150,
+      "generated_len": 4000,
+      "hit_eos": false
+    }
+  ]
+}
