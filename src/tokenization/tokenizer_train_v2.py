@@ -1,3 +1,5 @@
+# Código usado para entrenar el último tokenizador, "tokenizer_REMI_BPE_v5.json"
+
 from pathlib import Path
 import random
 from typing import Literal

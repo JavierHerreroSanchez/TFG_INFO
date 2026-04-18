@@ -1,5 +1,5 @@
 """
-tokenize_maestro_with_ac.py
+Usado para tokenizar ARIAMidi y MAESTRO añadiendo attribute controls
 
 Objetivo:
 1) Tokenizar MAESTRO correctamente con el tokenizer BPE ya entrenado.

@@ -1,5 +1,5 @@
 
-# Este es el último que se usó para el pretraining a fecha 15/04/2026
+# Este es el último que se usó para el pretraining a fecha 15/04/2026, y posteriormente a 17/04/2026 tras "el incidente"
 from __future__ import annotations
 
 import json
@@ -114,7 +114,7 @@ ES_MIN_DELTA = 1e-3
 ES_WARMUP_EVALS = 2
 
 SAVE_EVERY = 500
-CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\pretraining").resolve()
+CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\pretraining_v2").resolve()
 
 # =============================================================================
 # LOG de consola (stdout/stderr) a fichero
@@ -125,7 +125,7 @@ CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\pre
 LOG_DIR = CKPT_DIR / "logs"
 STDOUT_LOG = LOG_DIR / "stdout.log"
 
-NUM_WORKERS = 2
+NUM_WORKERS = 0
 PIN_MEMORY = True
 
 USE_AMP = True      # Automatic Mixed Precision: para acelerar el entrenamiento sin sacrificar mucha precisión, a True originalmente
