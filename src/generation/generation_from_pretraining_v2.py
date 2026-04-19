@@ -52,14 +52,14 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 DEFAULT_PROMPT_LEN = 150
 DEFAULT_MIN_NEW_TOKENS = 2000
 DEFAULT_MAX_NEW_TOKENS = 4000
-DEFAULT_TEMPERATURE = 0.8 # default a 0.9
-DEFAULT_TOP_K = 50
-DEFAULT_NUM_SAMPLES = 8
+DEFAULT_TEMPERATURE = 0.9 # default a 0.9
+DEFAULT_TOP_K = 120
+DEFAULT_NUM_SAMPLES = 5
 DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True
 
 SEED = random.randint(1,100000)
-OUTPUT_DIR = Path("../../output/evaluation_pretraining_improved/batch_3/").resolve()
+OUTPUT_DIR = Path("../../output/evaluation_pretraining_improved_v2/batch_2/").resolve()
 
 def get_model_block_size(model: torch.nn.Module) -> int:
     """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerGPTlike."""

@@ -40,7 +40,7 @@ class Tee:
 from src.model.model import MusicTransformerGPTlike, MTModelConfig
 
 # =============================================================================
-# CONFIGURACIÓN (ejecución local / PyCharm)
+# CONFIGURACIÓN
 # -----------------------------------------------------------------------------
 # En esta sección definimos rutas, ratios de split, caché binario y los
 # hiperparámetros principales del modelo y del entrenamiento. La idea es
@@ -100,7 +100,7 @@ WARMUP_UPDATES = 1000   # permite no "arrancar demasiado fuerte" los pesos de Ad
 WEIGHT_DECAY = 0.1      # regularización sobre los pesos, originalmente a 0.1
 GRAD_CLIP = 1.0        # originalmente a 1.0
 
-EPOCHS = 1.2  # “epochs de tokens” sobre train.bin, antes 30
+EPOCHS = 1.2  # “epochs de tokens” sobre train.bin
 
 EVAL_EVERY = 500
 EVAL_BATCHES = 200
