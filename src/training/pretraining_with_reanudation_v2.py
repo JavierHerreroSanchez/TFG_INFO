@@ -84,7 +84,7 @@ GRAD_CLIP = 1.0
 
 # Referencia informativa; la reanudación manda con TARGET_TOTAL_UPDATES.
 EPOCHS = 1.2
-TARGET_TOTAL_UPDATES = 40000   # <-- cámbialo al update final deseado
+TARGET_TOTAL_UPDATES = 40000   # <-- se debe cambiar al update final deseado
 
 EVAL_EVERY = 500
 EVAL_BATCHES = 200

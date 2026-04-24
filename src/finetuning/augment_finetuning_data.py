@@ -50,10 +50,10 @@ def sanitize_stem(name: str) -> str:
 # =============================================================================
 # RUTAS
 # =============================================================================
-IN_CLEAN_DIR = Path(r"../../data/finetuning/finetuning_sonatas_clean")
-OUT_AUG_DIR = Path(r"../../data/finetuning/finetuning_sonatas_aug")
-OUT_AUG_INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning\finetuning_aug_index.csv")
-OUT_AUG_REPORT_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning\finetuning_aug_report.csv")
+IN_CLEAN_DIR = Path(r"../../data/finetuning_v2/finetuning_sonatas_clean")
+OUT_AUG_DIR = Path(r"../../data/finetuning_v2/finetuning_sonatas_aug")
+OUT_AUG_INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning_v2\finetuning_aug_index.csv")
+OUT_AUG_REPORT_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning_v2\finetuning_aug_report.csv")
 
 # Mantener estructura de carpetas dentro de OUT_AUG_DIR
 PRESERVE_TREE = True
@@ -77,7 +77,7 @@ INCLUDE_ORIGINAL = True
 SAMPLE_WITHOUT_REPLACEMENT = True
 
 # Semilla para reproducibilidad
-SEED = 1234
+SEED = 1453
 
 # Seguridad / IO
 DRY_RUN = False

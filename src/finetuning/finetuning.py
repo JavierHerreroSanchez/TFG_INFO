@@ -18,25 +18,25 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # =============================================================================
 
 # ---- Dataset de sonatas para finetuning ----
-INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning\finetuning_aug_index.csv")
-TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_finetuning")
-ANCHOR = r"data\interim\tokenized_finetuning"
+INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\debug_dataset\index_finetuning_v2.csv")
+TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_finetuning_v2")
+ANCHOR = r"data\interim\tokenized_finetuning_v2"
 
 TOKEN_FIELD = "ids"
-VOCAB_SIZE = 30000
+VOCAB_SIZE = 18000
 
 VAL_RATIO = 0.10
 TEST_RATIO = 0.10
 SEED = 1453
 
 # ---- Cache específico de finetuning ----
-CACHE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\bin\bin_for_finetuning").resolve()
+CACHE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\bin\bin_for_finetuning_v2").resolve()
 ADD_EOS = True
 EOS_ID = 2
 USE_UINT16 = True
 
 # ---- Cargar checkpoint preentrenado ----
-PRETRAINED_CKPT = Path(r"../../output/checkpoints/old/pretraining/best.pt").resolve()
+PRETRAINED_CKPT = Path(r"../../output/checkpoints/pretraining_v2/best.pt").resolve()
 
 # ---- Hiperparámetros del modelo (coincidentes con el pretraining) ----
 BLOCK_SIZE = 2048
@@ -59,7 +59,7 @@ WARMUP_UPDATES = 100
 WEIGHT_DECAY = 0.05
 GRAD_CLIP = 1.0
 
-MAX_EPOCHS = 100
+MAX_EPOCHS = 250
 MAX_UPDATES: Optional[int] = None  # si None, se calcula por epochs
 EVAL_EVERY = 100
 EVAL_BATCHES = 64
@@ -77,7 +77,7 @@ PIN_MEMORY = True
 USE_AMP = True
 AMP_DTYPE = "bf16"
 
-CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\finetuning").resolve()
+CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\finetuning_v2").resolve()
 SAMPLES_DIR = CKPT_DIR / "samples"
 
 # ---- Generación de muestras fijas para escucha ----
@@ -312,8 +312,10 @@ def load_pretrained_checkpoint(model: torch.nn.Module, ckpt_path: Path, device: 
         raise FileNotFoundError(f"No existe checkpoint preentrenado: {ckpt_path}")
 
     obj = torch.load(ckpt_path, map_location=device)
+    print("[LOAD] ckpt_update=", obj.get("update"), " ckpt_val_loss=", obj.get("val_loss"))
+    print("[LOAD] ckpt_cfg=", obj.get("cfg", {}).get("vocab_size"), obj.get("cfg", {}).get("block_size"))
     state = obj["model"] if "model" in obj else obj
-    missing, unexpected = model.load_state_dict(state, strict=False)
+    missing, unexpected = model.load_state_dict(state, strict=True)
 
     print(f"[LOAD] checkpoint: {ckpt_path.name}")
     print(f"[LOAD] missing_keys={len(missing)} unexpected_keys={len(unexpected)}")
@@ -494,7 +496,8 @@ def main():
 
     model = MusicTransformerGPTlike(cfg).to(DEVICE)
     load_pretrained_checkpoint(model, PRETRAINED_CKPT, DEVICE)
-
+    val0 = evaluate(model, val_loader, DEVICE, EVAL_BATCHES)
+    print(f"[SANITY] val_loss_before_training={val0:.4f}")
     opt = configure_optimizer(model, LR, WEIGHT_DECAY)
 
     scaler = None

@@ -35,11 +35,11 @@ from src.tokenization.deprecated.tokenizer_train import load_bpe_tokenizer
 THIS_FILE = Path(__file__).resolve()
 PROJECT_ROOT = THIS_FILE.parents[2]
 
-FINETUNING_MIDIS_DIR = PROJECT_ROOT / "data" / "finetuning" / "finetuning_sonatas_aug"
-TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning"
+FINETUNING_MIDIS_DIR = PROJECT_ROOT / "data" / "finetuning_v2" / "finetuning_sonatas_aug"
+TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v2"
 
 BAD_LIST = PROJECT_ROOT / "tokenizer" / "bad_midis_finetuning.txt"
-TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v3.json"
+TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v5.json"
 
 TOKEN_FIELD_CANDIDATES = ("ids", "ids_encoded")
 
@@ -144,6 +144,9 @@ def process_one(midi_str: str) -> tuple[str, str, str]:
 
         score = Score(midi_path)
         tokens = TOKENIZER.encode(score)
+        # Si encode() devuelve lista con un único stream (caso típico piano), lo dejamos plano
+        if isinstance(tokens, list) and len(tokens) == 1:
+            tokens = tokens[0]
 
         out_json.parent.mkdir(parents=True, exist_ok=True)
 
