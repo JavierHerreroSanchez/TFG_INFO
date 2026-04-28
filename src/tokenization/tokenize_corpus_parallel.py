@@ -31,7 +31,7 @@ DATASETS_TO_SCAN = [
 TOKEN_FIELD_CANDIDATES = ("ids", "ids_encoded")
 
 # Ajusta esto según tu CPU:
-# prueba con os.cpu_count() // 2, o 6, 8, 10...
+# prueba con os.cpu_count() // batch_2, o 6, 8, 10...
 MAX_WORKERS = max(1, (os.cpu_count() or 8) - 2)
 
 # Variables globales por worker

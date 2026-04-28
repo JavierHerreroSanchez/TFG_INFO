@@ -10,7 +10,7 @@ THIS_FILE = Path(__file__).resolve()
 PROJECT_ROOT = THIS_FILE.parents[2]
 
 TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v2"
-OUT_CSV = PROJECT_ROOT / "data" / "interim" / "debug_dataset" / "index_finetuning_v2.csv"
+OUT_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_finetuning_v2.csv"
 
 TOKEN_FIELD_CANDIDATES = ("ids", "ids_encoded")
 

@@ -46,21 +46,21 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #
 # Tiene dos usos principales:
 #   1) Evaluar loss en train / val / test con random crops sobre memmap.
-#   2) Generar continuaciones autorregresivas a partir de prompts tomados de
+#   batch_2) Generar continuaciones autorregresivas a partir de prompts tomados de
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 
-DEFAULT_PROMPT_LEN = 100
-DEFAULT_MIN_NEW_TOKENS = 1800
-DEFAULT_MAX_NEW_TOKENS = 2100
-DEFAULT_TEMPERATURE = 1 # default a 0.9
-DEFAULT_TOP_K = 170
-DEFAULT_NUM_SAMPLES = 5
+DEFAULT_PROMPT_LEN = 150
+DEFAULT_MIN_NEW_TOKENS = 2000
+DEFAULT_MAX_NEW_TOKENS = 2000
+DEFAULT_TEMPERATURE = 0.9 # default a 0.9
+DEFAULT_TOP_K = 160
+DEFAULT_NUM_SAMPLES = 1
 DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True
 
 
-OUTPUT_DIR = Path("../../output/evaluationv3/2").resolve()
+OUTPUT_DIR = Path("../../output/generation_v2/batch_2").resolve()
 
 
 def get_model_block_size(model: torch.nn.Module) -> int:

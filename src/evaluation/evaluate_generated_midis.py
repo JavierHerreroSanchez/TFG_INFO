@@ -1,30 +1,41 @@
 from __future__ import annotations
 
+import faulthandler
+faulthandler.enable(all_threads=True)
+
+print("[DEBUG] arranque 1")
 import json
 import math
 import random
 from pathlib import Path
 from typing import Dict, List, Tuple
 
+print("[DEBUG] arranque 2")
 import numpy as np
 import pandas as pd
+
+print("[DEBUG] arranque 3")
 import muspy
+
+print("[DEBUG] arranque 4")
 from scipy.stats import entropy
+
+print("[DEBUG] arranque 5")
 
 # ============================================================
 # CONFIGURACION PYCHARM
 # ============================================================
-GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v2")
-OUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v2\midi_eval")
+GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_first")
+OUT_DIR = Path(r"../../output/generation_pretraining_tfg_first/midi_eval")
 
 # Modo de referencia:
 # - "single_dir": usa REFERENCE_DIR
 # - "mixed_random": mezcla MAESTRO y ARIA aleatoriamente
 REFERENCE_MODE = "mixed_random"
 
-REFERENCE_DIR = Path(r"/data/pretraining_raw\maestro-v3.0.0")
-MAESTRO_DIR = Path(r"/data/pretraining_raw\maestro-v3.0.0")
-ARIA_DIR = Path(r"/data/pretraining_raw\ariamidi")
+REFERENCE_DIR = Path(r"../../data/pretraining_raw/maestro-v3.0.0")
+MAESTRO_DIR = Path(r"../../data/pretraining_raw/maestro-v3.0.0")
+ARIA_DIR = Path(r"../../data/pretraining_raw/ariamidi")
 
 RECURSIVE = True
 

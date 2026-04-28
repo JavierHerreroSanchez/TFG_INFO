@@ -153,7 +153,7 @@ def save_professional_spectrogram(
         cmap=COLORMAP,
         ax=ax0,
     )
-    cbar = fig.colorbar(img, ax=ax0, format="%+2.0f dB", pad=0.01)
+    cbar = fig.colorbar(img, ax=ax0, format="%+batch_2.0f dB", pad=0.01)
     cbar.set_label("Nivel (dB)", rotation=90)
 
     subtitle_parts = [f"sr={sr}", f"n_fft={N_FFT}", f"hop={HOP_LENGTH}", f"mels={N_MELS}", f"dur={duration_s:.1f}s"]

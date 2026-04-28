@@ -42,18 +42,18 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # =============================================================================
 
 # 1) Rutas
-INDEX_CSV = Path(r"../../data/interim/debug_dataset/index_pretraining_v2.csv")
+INDEX_CSV = Path(r"../../data/interim/indexes/index_pretraining_v2.csv")
 TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_json_bpe_v2")
 ANCHOR = r"data\interim\tokenized_json_bpe_v2"
 TOKEN_FIELD = "ids"
 VOCAB_SIZE = 18000
 
-# 2) Split de dataset
+# batch_2) Split de dataset
 VAL_RATIO = 0.05
 TEST_RATIO = 0.05
 SEED = 1453
 
-# 3) Caché binario
+# batch_3) Caché binario
 CACHE_DIR = Path(r"../../data/bin/bin_for_pretraining_v2").resolve()
 ADD_BOS = True
 BOS_ID = 1

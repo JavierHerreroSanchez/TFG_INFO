@@ -5,8 +5,8 @@ Evaluación espectral para MIDIs generados, basada en audio sintetizado SIN Soun
 
 Qué hace:
 1) Sintetiza cada MIDI con pretty_midi.synthesize() (consistente, simple)
-2) Genera log-mel spectrogram PNG
-3) Extrae descriptores espectrales por pieza
+batch_2) Genera log-mel spectrogram PNG
+batch_3) Extrae descriptores espectrales por pieza
 4) Si USE_REFERENCE=True:
    - compara cada pieza generada contra un pool local de referencias (por duración)
    - calcula score spectral reference-based
@@ -34,7 +34,7 @@ from scipy.stats import entropy
 # CONFIGURACIÓN PYCHARM
 # ============================================================
 GENERATED_DIR = Path(r"/output/generation_v2")
-OUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v2\midi_spectral_eval")
+OUT_DIR = Path(r"/output/generation_v2/best_test/midi_spectral_eval")
 
 # Referencias (opcionales pero recomendadas para score reference-based)
 USE_REFERENCE = True
@@ -258,7 +258,7 @@ def save_professional_spectrogram(
         cmap=COLORMAP,
         ax=ax0,
     )
-    cbar = fig.colorbar(img, ax=ax0, format="%+2.0f dB", pad=0.01)
+    cbar = fig.colorbar(img, ax=ax0, format="%+batch_2.0f dB", pad=0.01)
     cbar.set_label("Nivel (dB)", rotation=90)
 
     subtitle_parts = [f"sr={sr}", f"n_fft={N_FFT}", f"hop={HOP_LENGTH}", f"mels={N_MELS}", f"dur={duration_s:.1f}s"]

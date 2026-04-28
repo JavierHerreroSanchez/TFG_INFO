@@ -6,3 +6,5 @@ pandas
 pretty-midi
 librosa
 matplotlib
+muspy
+scipy

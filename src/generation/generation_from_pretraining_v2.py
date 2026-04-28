@@ -42,7 +42,7 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #   - misma resolución de JSON tokenizados
 #   - mismo caché binario memmap para loss teacher-forced
 #   - misma carga de checkpoints best.pt / last.pt
-#
+#   - usa la versión mejorada con attribute controls
 # Tiene dos usos principales:
 #   1) Evaluar loss en train / val / test con random crops sobre memmap.
 #   2) Generar continuaciones autorregresivas a partir de prompts tomados de

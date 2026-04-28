@@ -14,7 +14,7 @@ OUT_MID = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\test_decode.mid"
 music_tokenizer = REMI(params=TOKENIZER_PATH)
 
 # ------------------------------------------------------------
-# 2) ids BPE del json
+# batch_2) ids BPE del json
 # ------------------------------------------------------------
 obj = json.loads(JSON_PATH.read_text(encoding="utf-8"))
 ids_bpe = obj["ids"]
@@ -22,7 +22,7 @@ ids_bpe = obj["ids"]
 print(f"[DEBUG] n_ids={len(ids_bpe)} min={min(ids_bpe)} max={max(ids_bpe)}")
 
 # ------------------------------------------------------------
-# 3) cargar tokenizer HF-BPE embebido
+# batch_3) cargar tokenizer HF-BPE embebido
 # ------------------------------------------------------------
 tok_obj = json.loads(TOKENIZER_PATH.read_text(encoding="utf-8"))
 hf_model_json = tok_obj["_model"]

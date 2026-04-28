@@ -24,7 +24,7 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # =============================================================================
 
 # 1) Rutas
-INDEX_CSV = Path(r"../../data/interim/debug_dataset/index_pretraining.csv")
+INDEX_CSV = Path(r"../../data/interim/indexes/index_pretraining_v1.csv")
 TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_json_bpe")
 
 # ANCHOR: fragmento de ruta usado para “rebasar” paths del CSV y reconstruirlos
@@ -36,14 +36,14 @@ ANCHOR = r"data\interim\tokenized_json_bpe"
 TOKEN_FIELD = "ids"  # o "ids_encoded"
 VOCAB_SIZE = 30000
 
-# 2) Split de dataset
+# batch_2) Split de dataset
 # Reservamos una fracción pequeña para validación y test, manteniendo el grueso
 # para entrenamiento. El seed permite reproducibilidad.
 VAL_RATIO = 0.1    # Originalmente 0.01
 TEST_RATIO = 0.1   # Originalmente 0.01
 SEED = random.randrange(1, 1024) # Antes a 100454434
 
-# 3) Caché binario (memmap)
+# batch_3) Caché binario (memmap)
 # Esto permite convertir muchos JSON en un stream 1D concatenado (train/val/test) para
 # entrenar eficientemente en memoria con recortes aleatorios (random crops).
 CACHE_DIR = Path(r"../../data/bin/bin_for_pretraining").resolve()
@@ -78,7 +78,7 @@ EVAL_EVERY = 500
 EVAL_BATCHES = 500
 
 SAVE_EVERY = 500
-CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\finetuning").resolve()
+CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\pretraining").resolve()
 
 NUM_WORKERS = 2
 PIN_MEMORY = True
@@ -144,8 +144,8 @@ def  rebase_path(abs_path: str, tokens_dir: Path, anchor: str) -> Path:
 
     La estrategia es:
       1) buscar el substring `anchor` dentro del path,
-      2) tomar la parte posterior a `anchor` como ruta relativa,
-      3) “repegarla” a `tokens_dir`.
+      batch_2) tomar la parte posterior a `anchor` como ruta relativa,
+      batch_3) “repegarla” a `tokens_dir`.
 
     Si no se encuentra el anchor, devolvemos el path original tal cual.
     """
@@ -166,8 +166,8 @@ def resolve_json_paths(index_csv: Path, tokens_dir: Path, anchor: str) -> List[P
 
     Probamos tres estrategias, por orden:
       1) usar los paths del CSV tal cual,
-      2) rebasar con TOKENS_DIR + ANCHOR,
-      3) si lo anterior falla, escanear TOKENS_DIR recursivamente.
+      batch_2) rebasar con TOKENS_DIR + ANCHOR,
+      batch_3) si lo anterior falla, escanear TOKENS_DIR recursivamente.
 
     Esta lógica evita bloqueos por rutas absolutas obsoletas y permite continuar
     el entrenamiento sin generar de nuevo el index.
@@ -190,7 +190,7 @@ def resolve_json_paths(index_csv: Path, tokens_dir: Path, anchor: str) -> List[P
 
     print("[DATA][WARN] 0 paths existentes usando rutas absolutas del CSV. Intento rebase...")
 
-    # 2) Rebase
+    # batch_2) Rebase
     if tokens_dir.exists():
         paths2 = [rebase_path(p, tokens_dir, anchor) for p in raw_paths]
         exist2 = [p for p in paths2 if p.exists()]
@@ -200,7 +200,7 @@ def resolve_json_paths(index_csv: Path, tokens_dir: Path, anchor: str) -> List[P
 
     print("[DATA][WARN] 0 paths existentes tras rebase. Fallback: escaneo TOKENS_DIR...")
 
-    # 3) Scan
+    # batch_3) Scan
     if not tokens_dir.exists():
         raise FileNotFoundError(f"TOKENS_DIR no existe: {tokens_dir}")
     scan = sorted([p for p in tokens_dir.rglob("*.json") if p.is_file()])
@@ -257,7 +257,7 @@ def build_memmap(files: List[Path], out_bin: Path, token_field: str, dtype, add_
     if total <= 0:
         raise ValueError("Total tokens = 0. ¿TOKEN_FIELD correcto? ¿JSON vacíos?")
 
-    # 2) Creamos el memmap con el tamaño final y vamos escribiendo secuencialmente.
+    # batch_2) Creamos el memmap con el tamaño final y vamos escribiendo secuencialmente.
     mm = np.memmap(out_bin, mode="w+", dtype=dtype, shape=(total,))
     w = 0
     

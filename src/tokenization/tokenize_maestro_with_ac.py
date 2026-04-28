@@ -3,8 +3,8 @@ Usado para tokenizar ARIAMidi y MAESTRO añadiendo attribute controls
 
 Objetivo:
 1) Tokenizar MAESTRO correctamente con el tokenizer BPE ya entrenado.
-2) Insertar Attribute Controls (AC) de forma explícita y robusta.
-3) Guardar JSONs y un resumen claro de OK / SKIP / BAD.
+batch_2) Insertar Attribute Controls (AC) de forma explícita y robusta.
+batch_3) Guardar JSONs y un resumen claro de OK / SKIP / BAD.
 4) Dejar el script listo para reutilizarlo con otros datasets cambiando solo DATASET_ROOT.
 
 Notas importantes:
@@ -206,14 +206,14 @@ def process_one_file(midi_path_str: str) -> FileResult:
         # 1) Cargar Score
         score = Score(midi_path)
 
-        # 2) Preprocesar explícitamente
+        # batch_2) Preprocesar explícitamente
         score_pre = tokenizer.preprocess_score(score)
 
         if len(score_pre.tracks) == 0:
             save_bad_line(midi_path, "no_tracks_after_preprocess")
             return FileResult(status="bad", midi_path=str(midi_path), reason="no_tracks_after_preprocess")
 
-        # 3) Construir AC map tras el preprocess
+        # batch_3) Construir AC map tras el preprocess
         ac_indexes = build_attribute_controls_indexes(tokenizer, score_pre)
 
         # 4) Tokenizar con AC

@@ -6,9 +6,9 @@ inspect_tokenized_json_with_ac_v2.py
 
 Qué hace este script:
 1. Carga cada JSON tokenizado.
-2. Usa el campo `source_midi` guardado dentro del JSON para volver a tokenizar el MIDI
+batch_2. Usa el campo `source_midi` guardado dentro del JSON para volver a tokenizar el MIDI
    con el MISMO tokenizer.
-3. Hace dos tokenizaciones:
+batch_3. Hace dos tokenizaciones:
    - encode_ids=True  -> para comprobar que los ids guardados coinciden exactamente.
    - encode_ids=False -> para obtener tokens legibles (AC, Chord, Bar, Rest, etc.).
 4. Muestra un resumen por archivo y un resumen global.
@@ -236,7 +236,7 @@ def main() -> None:
 
             exact_match, exact_msg = compare_ids(saved_ids_nested, gen_ids_nested)
 
-            # 2) Re-tokenización legible sin BPE
+            # batch_2) Re-tokenización legible sin BPE
             seq_plain = tokenizer.encode(
                 score_pre,
                 encode_ids=False,

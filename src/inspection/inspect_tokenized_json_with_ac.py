@@ -76,7 +76,7 @@ def normalize_loaded_tokens(tokenizer: REMI, path: Path) -> list[list[str]]:
         tokenizer.complete_sequence(seq, complete_bytes=False)
         return [seq.tokens or []]
 
-    # Caso 2: varias pistas => lista de listas
+    # Caso batch_2: varias pistas => lista de listas
     if ids and isinstance(ids[0], list):
         tracks_tokens: list[list[str]] = []
         for ids_track in ids:

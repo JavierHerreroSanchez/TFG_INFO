@@ -10,8 +10,8 @@ Los datasets MIDI masivos (p. ej., GiantMIDI) suelen contener:
 
 Este script recorre recursivamente un directorio de MIDIs y genera un corpus "clean":
   1) Filtrado (hard gate) por calidad mínima (duración, nº de notas, densidad, ratio de silencio).
-  2) Recorte del silencio inicial y compresión de gaps largos.
-  3) Split opcional si se detecta un gap muy grande (p. ej., dos piezas pegadas).
+  batch_2) Recorte del silencio inicial y compresión de gaps largos.
+  batch_3) Split opcional si se detecta un gap muy grande (p. ej., dos piezas pegadas).
   4) Escritura robusta (evita errores de mido por tiempos negativos).
 
 Salidas
@@ -689,7 +689,7 @@ def main():
                     continue
                 seen_hash[h] = str(src)
 
-        # 2) Métricas + filtrado de calidad
+        # batch_2) Métricas + filtrado de calidad
         feat = compute_quality_features(midi, src)
         row.update(feat)
 
@@ -706,7 +706,7 @@ def main():
             report_rows.append(row)
             continue
 
-        # 3) Limpieza temporal
+        # batch_3) Limpieza temporal
         actions: List[str] = []
 
         if feat["first_onset_s"] > LEADING_SILENCE_TRIM_S:

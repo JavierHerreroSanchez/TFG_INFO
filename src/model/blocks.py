@@ -62,10 +62,10 @@ class MTEmbedding(nn.Module):
 # Skewing (reindexado absoluto-relativo -> absoluto-absoluto)
 # -----------------------------------------------------------------------------
 # Este procedimiento corresponde al “skewing” descrito en Music Transformer
-# (Huang et al., 2018, Sección 3.4.1). Su objetivo es transformar una matriz
+# (Huang et al., 2018, Sección batch_3.4.1). Su objetivo es transformar una matriz
 # indexada por (posición_absoluta, distancia_relativa) en otra indexada por
 # (posición_absoluta, posición_absoluta), alineando cada logit relativo con el
-# par (i, j) correcto sin materializar un tensor O(T^2 * d_head).
+# par (i, j) correcto sin materializar un tensor O(T^batch_2 * d_head).
 # =============================================================================
 def skew(QEr: torch.Tensor) -> torch.Tensor:
     """
@@ -89,10 +89,10 @@ def skew(QEr: torch.Tensor) -> torch.Tensor:
     # 1) Añadimos una columna dummy a la izquierda para habilitar el corrimiento.
     x = F.pad(QEr, (1, 0)).contiguous()  # (B, H, T, 2T)
 
-    # 2) Reinterpretamos para desplazar los elementos por filas/columnas.
+    # batch_2) Reinterpretamos para desplazar los elementos por filas/columnas.
     x = x.view(B, H, 2 * T, T)  # (B, H, 2T, T)
 
-    # 3) Eliminamos la primera fila “extra” para completar el corrimiento.
+    # batch_3) Eliminamos la primera fila “extra” para completar el corrimiento.
     x = x[:, :, 1:, :].contiguous()  # (B, H, 2T-1, T)
 
     # 4) Volvemos a la forma original en la que la última dim es “2T-1”.
@@ -175,10 +175,10 @@ class RelativeMaskedMHA(nn.Module):
         k = k.view(B, T, self.n_heads, self.d_head).transpose(1, 2)  # (B, H, T, Dh)
         v = v.view(B, T, self.n_heads, self.d_head).transpose(1, 2)  # (B, H, T, Dh)
 
-        # 2) Término de contenido (estándar): QK^T.
+        # batch_2) Término de contenido (estándar): QK^T.
         content = q @ k.transpose(-2, -1)  # (B, H, T, T)
 
-        # 3) Término relativo (Music Transformer):
+        # batch_3) Término relativo (Music Transformer):
         center = self.cfg.max_seq_len - 1
         start = center - (T - 1)
         end = center + (T - 1) + 1
@@ -265,7 +265,7 @@ class MusicTransformerBlockPreLN(nn.Module):
     """
     En este bloque combinamos:
       1) Autoatención (con posiciones relativas y máscara causal)
-      2) Feed-Forward (FFN)
+      batch_2) Feed-Forward (FFN)
     y envolvemos ambos submódulos con residual connections.
 
     Elegimos el esquema Pre-LN (normalizar antes de cada subcapa), que suele mejorar
@@ -288,7 +288,7 @@ class MusicTransformerBlockPreLN(nn.Module):
         attn_out, attn_w = self.attn(self.ln1(x), return_attn=return_attn)
         x = x + self.resid_drop1(attn_out)
 
-        # Subcapa 2: FFN (mismo patrón: LN -> FFN -> dropout -> residual).
+        # Subcapa batch_2: FFN (mismo patrón: LN -> FFN -> dropout -> residual).
         ffn_out = self.ffn(self.ln2(x))
         x = x + self.resid_drop2(ffn_out)
 

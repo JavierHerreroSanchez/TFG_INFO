@@ -9,7 +9,7 @@ from typing import Dict, List, Tuple
 import torch
 import torch.nn.functional as F
 
-from src.finetuning.finetuning import (
+from src.finetuning.finetuning_v2 import (
     TOKENS_DIR,
     ANCHOR,
     TOKEN_FIELD,
@@ -44,7 +44,7 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #
 # Tiene dos usos principales:
 #   1) Evaluar loss en train / val / test con random crops sobre memmap.
-#   2) Generar continuaciones autorregresivas a partir de prompts tomados de
+#   batch_2) Generar continuaciones autorregresivas a partir de prompts tomados de
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 

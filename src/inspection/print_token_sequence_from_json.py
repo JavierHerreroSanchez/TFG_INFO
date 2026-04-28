@@ -90,8 +90,8 @@ def ids_to_tokens(tokenizer: REMI, ids: list[int]) -> list[str]:
     """
     Convierte ids a tokens legibles de forma robusta:
     1) crea TokSequence(ids=...)
-    2) decode_token_ids => deshace BPE / modelo
-    3) complete_sequence => rellena .tokens
+    batch_2) decode_token_ids => deshace BPE / modelo
+    batch_3) complete_sequence => rellena .tokens
     """
     seq = TokSequence(ids=ids)
     tokenizer.decode_token_ids(seq)

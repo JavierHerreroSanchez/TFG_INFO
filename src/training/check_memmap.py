@@ -12,7 +12,7 @@ import pandas as pd
 # CONFIGURACIÓN
 # =============================================================================
 
-INDEX_CSV = Path(r"/data/interim/debug_dataset/index_pretraining.csv")
+INDEX_CSV = Path(r"/data/interim/indexes/index_pretraining.csv")
 TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_json_bpe").resolve()
 ANCHOR = r"data\interim\tokenized_json_bpe"
 
@@ -74,7 +74,7 @@ def resolve_json_paths(index_csv: Path, tokens_dir: Path, anchor: str) -> List[P
 
     print("[DATA][WARN] 0 paths existentes usando rutas absolutas del CSV. Intento rebase...")
 
-    # 2) Rebase
+    # batch_2) Rebase
     if tokens_dir.exists():
         paths2 = [rebase_path(p, tokens_dir, anchor) for p in raw_paths]
         exist2 = [p for p in paths2 if p.exists()]
@@ -84,7 +84,7 @@ def resolve_json_paths(index_csv: Path, tokens_dir: Path, anchor: str) -> List[P
 
     print("[DATA][WARN] 0 paths existentes tras rebase. Fallback: escaneo TOKENS_DIR...")
 
-    # 3) Scan
+    # batch_3) Scan
     if not tokens_dir.exists():
         raise FileNotFoundError(f"TOKENS_DIR no existe: {tokens_dir}")
 

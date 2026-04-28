@@ -73,10 +73,10 @@ class MusicTransformerGPTlike(nn.Module):
         # 1) Embedding de tokens (sin positional encoding absoluto).
         self.embed = MTEmbedding(cfg.vocab_size, cfg.d_model, cfg.dropout, debug=cfg.debug)
 
-        # 2) Pila de bloques decoder (Pre-LN) con atención relativa y FFN.
+        # batch_2) Pila de bloques decoder (Pre-LN) con atención relativa y FFN.
         self.blocks = nn.ModuleList([MusicTransformerBlockPreLN(bcfg) for _ in range(cfg.n_layer)])
 
-        # 3) Normalización final (opcional). En muchos Transformers, un LN final
+        # batch_3) Normalización final (opcional). En muchos Transformers, un LN final
         #    mejora estabilidad y calidad; lo dejamos configurable.
         self.ln_f = nn.LayerNorm(cfg.d_model) if cfg.use_final_ln else nn.Identity()
 
@@ -138,11 +138,11 @@ class MusicTransformerGPTlike(nn.Module):
         # 1) Embedding: (B, T) -> (B, T, D)
         x = self.embed(idx)
 
-        # 2) Decoder stack: mantenemos la forma (B, T, D) a lo largo de los bloques.
+        # batch_2) Decoder stack: mantenemos la forma (B, T, D) a lo largo de los bloques.
         for blk in self.blocks:
             x = blk(x)
 
-        # 3) Normalización final (si se habilita).
+        # batch_3) Normalización final (si se habilita).
         x = self.ln_f(x)
 
         # 4) Logits sobre el vocabulario: (B, T, D) -> (B, T, V)

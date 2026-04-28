@@ -38,19 +38,19 @@ from scipy.stats import entropy
 # ============================================================
 # CONFIGURACIÓN PYCHARM
 # ============================================================
-GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v3")
-OUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v3\midi_spectral_eval")
+GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_first")
+OUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_first\midi_spectral_eval")
 
 # Referencias
 USE_REFERENCE = True
 REFERENCE_MODE = "mixed_random"  # "single_dir" o "mixed_random"
-REFERENCE_DIR = Path(r"/data/pretraining_raw\maestro-v3.0.0")
-MAESTRO_DIR = Path(r"/data/pretraining_raw\maestro-v3.0.0")
-ARIA_DIR = Path(r"/data/pretraining_raw\ariamidi")
+REFERENCE_DIR = Path(r"../../data/pretraining_raw\maestro-v3.0.0")
+MAESTRO_DIR = Path(r"../../data/pretraining_raw\maestro-v3.0.0")
+ARIA_DIR = Path(r"../../data/pretraining_raw\ariamidi")
 
 RECURSIVE = True
 MAX_GENERATED_FILES: Optional[int] = None
-MAX_REFERENCE_FILES = 1000
+MAX_REFERENCE_FILES = 4000
 MAESTRO_FRACTION = 0.50
 REFERENCE_RANDOM_SEED = 1453
 
@@ -74,8 +74,8 @@ FIG_H = 5.5
 COLORMAP = "magma"
 
 # Pesos de puntuación
-W_REFERENCE_BASED = 0.70
-W_REFERENCE_FREE = 0.30
+W_REFERENCE_BASED = 0.75
+W_REFERENCE_FREE = 0.25
 
 QUAL_LABELS = [
     (85.0, "muy plausible"),
@@ -276,7 +276,7 @@ def save_professional_spectrogram(
         cmap=COLORMAP,
         ax=ax0,
     )
-    cbar = fig.colorbar(img, ax=ax0, format="%+2.0f dB", pad=0.01)
+    cbar = fig.colorbar(img, ax=ax0, format="%+batch_2.0f dB", pad=0.01)
     cbar.set_label("Nivel (dB)", rotation=90)
 
     subtitle_parts = [f"sr={sr}", f"n_fft={N_FFT}", f"hop={HOP_LENGTH}", f"mels={N_MELS}", f"dur={duration_s:.1f}s"]

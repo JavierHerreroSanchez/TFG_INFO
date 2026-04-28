@@ -9,8 +9,8 @@ import pandas as pd
 THIS_FILE = Path(__file__).resolve()
 PROJECT_ROOT = THIS_FILE.parents[2]
 
-TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe_v2"
-OUT_CSV = PROJECT_ROOT / "data" / "interim" / "debug_dataset" / "index_pretraining_v2.csv"
+TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe"
+OUT_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_pretraining_v1.csv"
 
 TOKEN_FIELD_CANDIDATES = ("ids", "ids_encoded")
 

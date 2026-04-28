@@ -18,7 +18,7 @@ EXTERNAL_WAV_PATH = None  # Path(r"output/generated.wav")
 # CONFIGURACIÓN
 # =============================================================================
 
-MIDI_PATH = Path(r"../../../output/generation_v2/generated_from_json2.mid")
+MIDI_PATH = Path(r"../../../output/generation_v2/best_test/generated_from_json2.mid")
 
 # Si pretty_midi.fluidsynth necesita SoundFont explícita, indícala aquí.
 # Si no, déjalo en None e inténtalo igualmente.
@@ -117,8 +117,8 @@ def synthesize_audio(pm: pretty_midi.PrettyMIDI) -> tuple[np.ndarray, int]:
 
     Prioridad:
     1) WAV externo, si se ha indicado.
-    2) FluidSynth, si está disponible.
-    3) pretty_midi.synthesize() como fallback sin dependencias externas.
+    batch_2) FluidSynth, si está disponible.
+    batch_3) pretty_midi.synthesize() como fallback sin dependencias externas.
     """
     if EXTERNAL_WAV_PATH is not None:
         if not EXTERNAL_WAV_PATH.exists():
@@ -155,7 +155,7 @@ def plot_melspectrogram(y: np.ndarray, sr: int):
 
     plt.figure(figsize=(14, 6))
     librosa.display.specshow(S_db, sr=sr, x_axis="time", y_axis="mel")
-    plt.colorbar(format="%+2.0f dB")
+    plt.colorbar(format="%+batch_2.0f dB")
     plt.title(f"Mel-spectrogram - {MIDI_PATH.name}")
     plt.tight_layout()
 

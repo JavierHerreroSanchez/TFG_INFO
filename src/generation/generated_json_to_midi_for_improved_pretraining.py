@@ -13,8 +13,8 @@ from miditok import REMI, TokSequence
 TOKENIZER_PATH = Path(r"../../tokenizer/tokenizer_REMI_BPE_v5.json")
 
 # JSON generado por evaluation.py
-GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\evaluation_pretraining_improved_v2\batch_4\best_train\sample_000.json")
-#GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\evaluationv3\2\best_test\sample_004.json")
+GENERATED_JSON_PATH = Path(r"/output/generation_pretraining_improved_v2/batch_4/best_train/sample_000.json")
+#GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\evaluationv3\batch_2\best_test\sample_004.json")
 
 # Campo del JSON a convertir
 # Opciones típicas:
@@ -148,10 +148,10 @@ def decode_json_to_midi(
     # 1) Deshacer BPE / reconstruir tokens básicos
     tokenizer.decode_token_ids(seq)
 
-    # 2) Completar la secuencia (tokens, bytes, etc.)
+    # batch_2) Completar la secuencia (tokens, bytes, etc.)
     tokenizer.complete_sequence(seq)
 
-    # 3) Decodificar a Score
+    # batch_3) Decodificar a Score
     score = tokenizer.decode([seq])
 
     # 4) Guardar MIDI

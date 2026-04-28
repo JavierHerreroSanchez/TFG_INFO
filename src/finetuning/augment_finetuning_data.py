@@ -4,7 +4,7 @@ Aumentación OFFLINE al estilo Music Transformer (sin sobrerrepresentar obras)
 Idea
 ----
 En Music Transformer se aplica, por ejemplo en Piano-e-Competition:
-  - Transposición uniforme en semitonos: {-3,-2,-1,0,1,2,3}
+  - Transposición uniforme en semitonos: {-batch_3,-batch_2,-1,0,1,batch_2,batch_3}
   - Time-stretch uniforme: {0.95, 0.975, 1.0, 1.025, 1.05}
 
 En vez de generar el producto cartesiano completo (35 variantes por obra),
