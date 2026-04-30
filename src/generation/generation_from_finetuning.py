@@ -9,13 +9,12 @@ from typing import Dict, List, Tuple
 import torch
 import torch.nn.functional as F
 
-from src.finetuning.finetuning_v2 import (
+from src.finetuning.finetuning import (
     TOKENS_DIR,
     ANCHOR,
     TOKEN_FIELD,
     VAL_RATIO,
     TEST_RATIO,
-    SEED,
     ADD_EOS,
     EOS_ID,
     MICRO_BATCH,
@@ -32,6 +31,7 @@ from src.finetuning.finetuning_v2 import (
     evaluate,
 )
 from src.model.model import MusicTransformerGPTlike, MTModelConfig
+
 
 # =============================================================================
 # CONFIGURACIÓN POR DEFECTO
@@ -56,9 +56,10 @@ DEFAULT_TOP_K = 100
 DEFAULT_NUM_SAMPLES = 5
 DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True
+SEED = 1984
 
 INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning\finetuning_aug_index.csv")
-OUTPUT_DIR = Path("../../output/finetuning/evaluation").resolve()
+OUTPUT_DIR = Path("../../output/finetuning/evaluation/batch_2").resolve()
 
 def get_model_block_size(model: torch.nn.Module) -> int:
     """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerGPTlike."""

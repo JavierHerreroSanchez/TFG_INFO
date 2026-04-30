@@ -50,15 +50,15 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 
-DEFAULT_PROMPT_LEN = 150
+DEFAULT_PROMPT_LEN = 250
 DEFAULT_MAX_NEW_TOKENS = 2000
-DEFAULT_TEMPERATURE = 0.9
-DEFAULT_TOP_K = 160
-DEFAULT_NUM_SAMPLES = 5
+DEFAULT_TEMPERATURE = 0.8
+DEFAULT_TOP_K = 150
+DEFAULT_NUM_SAMPLES = 10
 DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True
 
-OUTPUT_DIR = Path("../../output/generation_v2/batch_2").resolve()
+OUTPUT_DIR = Path("../../output/generation_pretraining_tfg_first/batch_2").resolve()
 
 
 def get_model_block_size(model: torch.nn.Module) -> int:
@@ -458,7 +458,7 @@ def parse_args():
 
     parser.add_argument("--mode", choices=["loss", "generate", "all"], default="all")
     parser.add_argument("--ckpt", choices=["best", "last"], default="best")
-    parser.add_argument("--split", choices=["train", "val", "test"], default="val")
+    parser.add_argument("--split", choices=["train", "val", "test"], default="train")
 
     parser.add_argument("--prompt-len", type=int, default=DEFAULT_PROMPT_LEN)
     parser.add_argument("--max-new-tokens", type=int, default=DEFAULT_MAX_NEW_TOKENS)

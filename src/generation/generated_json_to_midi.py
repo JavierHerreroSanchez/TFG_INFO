@@ -14,8 +14,8 @@ TOKENIZER_PATH = Path(r"../../tokenizer/tokenizer_REMI_BPE_v3.json")
 
 # JSON generado por evaluation.py
 
-GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v2\best_test\sample_009.json")
-
+#GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v2\best_test\sample_009.json")
+GENERATED_JSON_PATH = Path(r"/output/generation_finetuning_tfg_first/sample_009.json")
 # Campo del JSON a convertir
 # Opciones típicas:
 #   - "full_generated_tokens" -> prompt + continuación
@@ -25,7 +25,8 @@ JSON_TOKEN_FIELD = "full_generated_tokens"
 # JSON_TOKEN_FIELD = "full_ids"
 
 # MIDI de salida
-OUTPUT_MIDI_PATH = Path(r"../../output/generation_v2/best_test/generated_from_json9.mid")
+#OUTPUT_MIDI_PATH = Path(r"../../output/generation_v2/best_test/generated_from_json9.mid")
+OUTPUT_MIDI_PATH = Path(r"../../output/generation_finetuning_tfg_first/generated_from_json9.mid")
 
 # Si True, elimina PAD / BOS / MASK y un EOS final si aparece
 FILTER_SPECIAL_TOKENS = True

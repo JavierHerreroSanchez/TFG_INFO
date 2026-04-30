@@ -26,7 +26,7 @@ print("[DEBUG] arranque 5")
 # CONFIGURACION PYCHARM
 # ============================================================
 GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_first")
-OUT_DIR = Path(r"../../output/generation_pretraining_tfg_first/midi_eval")
+OUT_DIR = Path(r"../../output/generation_pretraining_tfg_first/batch_1/midi_eval")
 
 # Modo de referencia:
 # - "single_dir": usa REFERENCE_DIR
