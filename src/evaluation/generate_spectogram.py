@@ -38,8 +38,8 @@ from scipy.stats import entropy
 # ============================================================
 # CONFIGURACIÓN PYCHARM
 # ============================================================
-GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_first")
-OUT_DIR = Path(r"/output/generation_pretraining_tfg_first/batch_1/midi_spectral_eval")
+GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_second")
+OUT_DIR = Path(r"../../output/generation_pretraining_tfg_second/midi_spectral_eval")
 
 # Referencias
 USE_REFERENCE = True

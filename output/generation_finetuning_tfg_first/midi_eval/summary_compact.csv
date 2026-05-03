@@ -1,0 +1,16 @@
+﻿section,key,value
+meta,generated_dir,..\..\output\generation_finetuning_tfg_first
+meta,reference_mode,single_dir
+meta,reference_dir,C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning\finetuning_sonatas_aug
+meta,n_generated_files,10
+meta,n_reference_files,744
+global_report_top10,n_pitch_classes_used,"{""oa"": 0.9758064516131014, ""kld_real_to_gen"": 0.5948617328256134, ""real_mean"": 11.96774193548387, ""gen_mean"": 12.0}"
+global_report_top10,consecutive_pitch_repetition_ratio_custom,"{""oa"": 0.6032258064523771, ""kld_real_to_gen"": 9.661868982772441, ""real_mean"": 0.024899961500777962, ""gen_mean"": 0.03451728872192057}"
+global_report_top10,empty_beat_rate,"{""oa"": 0.5185483870981336, ""kld_real_to_gen"": 12.173686057672986, ""real_mean"": 0.013123943965230084, ""gen_mean"": 0.008761139009898666}"
+global_report_top10,mean_duration_beats_custom,"{""oa"": 0.43279569892642883, ""kld_real_to_gen"": 15.211657459088986, ""real_mean"": 0.6585155252225116, ""gen_mean"": 0.44850321257649506}"
+global_report_top10,mean_velocity_custom,"{""oa"": 0.37096774193738113, ""kld_real_to_gen"": 16.475942410980323, ""real_mean"": 68.40554574069924, ""gen_mean"": 71.33701804570387}"
+global_report_top10,std_velocity_custom,"{""oa"": 0.36290322580815176, ""kld_real_to_gen"": 16.841207132772897, ""real_mean"": 14.157158905284131, ""gen_mean"": 12.609809996858102}"
+global_report_top10,n_pitches_used,"{""oa"": 0.33064516129222127, ""kld_real_to_gen"": 17.62718071971223, ""real_mean"": 55.314516129032256, ""gen_mean"": 47.8}"
+global_report_top10,scale_consistency,"{""oa"": 0.3225806451628934, ""kld_real_to_gen"": 18.083055323065913, ""real_mean"": 0.8652531132742434, ""gen_mean"": 0.9118912215185724}"
+global_report_top10,n_notes_custom,"{""oa"": 0.3145161290340587, ""kld_real_to_gen"": 18.31489079487546, ""real_mean"": 5939.258064516129, ""gen_mean"": 1390.1}"
+global_report_top10,std_duration_beats_custom,"{""oa"": 0.2962365591415172, ""kld_real_to_gen"": 18.550642076982356, ""real_mean"": 0.7738409973147296, ""gen_mean"": 0.42773336836196163}"

@@ -1,32 +1,25 @@
 from __future__ import annotations
 
-import faulthandler
-faulthandler.enable(all_threads=True)
 
-print("[DEBUG] arranque 1")
 import json
 import math
 import random
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-print("[DEBUG] arranque 2")
 import numpy as np
 import pandas as pd
 
-print("[DEBUG] arranque 3")
 import muspy
 
-print("[DEBUG] arranque 4")
 from scipy.stats import entropy
 
-print("[DEBUG] arranque 5")
 
 # ============================================================
 # CONFIGURACION PYCHARM
 # ============================================================
-GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_first")
-OUT_DIR = Path(r"../../output/generation_pretraining_tfg_first/batch_1/midi_eval")
+GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_second")
+OUT_DIR = Path(r"../../output/generation_pretraining_tfg_second/midi_eval")
 
 # Modo de referencia:
 # - "single_dir": usa REFERENCE_DIR

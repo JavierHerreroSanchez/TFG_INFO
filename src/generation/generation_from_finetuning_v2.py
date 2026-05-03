@@ -49,17 +49,17 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 
-DEFAULT_PROMPT_LEN = 400 # solemos usar 150
+DEFAULT_PROMPT_LEN = 250 # solemos usar 150
 DEFAULT_MIN_NEW_TOKENS = 2000
-DEFAULT_MAX_NEW_TOKENS = 2400
+DEFAULT_MAX_NEW_TOKENS = 2000
 DEFAULT_TEMPERATURE = 0.9 # default a 0.9
-DEFAULT_TOP_K = 120
+DEFAULT_TOP_K = 160
 DEFAULT_NUM_SAMPLES = 10
 DEFAULT_RANDOM_OFFSET = False
 DEFAULT_STOP_ON_EOS = False
 
 SEED = 100454434
-OUTPUT_DIR = Path("../../output/generation_finetuning_v2/batch_2/").resolve()
+OUTPUT_DIR = Path("../../output/generation_finetuning_tfg_second").resolve()
 
 def get_model_block_size(model: torch.nn.Module) -> int:
     """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerGPTlike."""

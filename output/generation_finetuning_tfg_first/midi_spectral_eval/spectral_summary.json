@@ -1,0 +1,280 @@
+{
+  "generated_dir": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first",
+  "use_reference": true,
+  "reference_mode": "single_dir",
+  "reference_dir": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\finetuning\\finetuning_sonatas_aug",
+  "finetuning_reference_dir": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\finetuning\\finetuning_sonatas_aug",
+  "n_generated_files": 10,
+  "n_reference_files": 744,
+  "synthesis_mode": "pretty_midi_simple",
+  "spectrogram": {
+    "generated_pngs_only": true,
+    "type": "log-mel",
+    "sample_rate": 16000,
+    "n_fft": 2048,
+    "hop_length": 512,
+    "n_mels": 96,
+    "fmin": 27.5,
+    "fmax": 6000.0,
+    "top_db": 80.0,
+    "dpi": 180,
+    "colormap": "magma"
+  },
+  "features_used": [
+    "duration_s",
+    "rms_mean",
+    "rms_std",
+    "spectral_centroid_mean",
+    "spectral_centroid_std",
+    "spectral_bandwidth_mean",
+    "spectral_bandwidth_std",
+    "spectral_rolloff_mean",
+    "spectral_rolloff_std",
+    "spectral_flatness_mean",
+    "spectral_flatness_std",
+    "spectral_contrast_mean",
+    "spectral_contrast_std"
+  ],
+  "scoring": {
+    "reference_based": "1 / (1 + |x-mu|/sigma)",
+    "reference_free": "range acceptance with soft penalty outside",
+    "weights": {
+      "reference_based": 0.75,
+      "reference_free": 0.25
+    }
+  },
+  "top_global_matches": [
+    {
+      "feature": "spectral_flatness_mean",
+      "oa": 0.6336021505390587,
+      "kld_real_to_gen": 9.314015341360998,
+      "real_mean": 0.05037350841533519,
+      "gen_mean": 0.04490678777530667,
+      "real_std": 0.031166424320984147,
+      "gen_std": 0.02251176466015181,
+      "n_real": 744,
+      "n_gen": 10
+    },
+    {
+      "feature": "spectral_flatness_std",
+      "oa": 0.5887096774209483,
+      "kld_real_to_gen": 10.666504602297847,
+      "real_mean": 0.2067289847765311,
+      "gen_mean": 0.19903631100843264,
+      "real_std": 0.062147601250724355,
+      "gen_std": 0.048477937217227034,
+      "n_real": 744,
+      "n_gen": 10
+    },
+    {
+      "feature": "spectral_bandwidth_std",
+      "oa": 0.48521505376513663,
+      "kld_real_to_gen": 13.563881656449421,
+      "real_mean": 266.3689709051668,
+      "gen_mean": 287.54376507484704,
+      "real_std": 28.055584379432286,
+      "gen_std": 31.802624699195906,
+      "n_real": 744,
+      "n_gen": 10
+    },
+    {
+      "feature": "rms_mean",
+      "oa": 0.44623655914158084,
+      "kld_real_to_gen": 14.583683436094953,
+      "real_mean": 0.10413420332715108,
+      "gen_mean": 0.11248414547092797,
+      "real_std": 0.02626045217723659,
+      "gen_std": 0.0391012543749615,
+      "n_real": 744,
+      "n_gen": 10
+    },
+    {
+      "feature": "spectral_rolloff_mean",
+      "oa": 0.42876344086191287,
+      "kld_real_to_gen": 15.089114615960915,
+      "real_mean": 609.0411917881754,
+      "gen_mean": 595.32654321533,
+      "real_std": 82.27939277298744,
+      "gen_std": 115.46092328112108,
+      "n_real": 744,
+      "n_gen": 10
+    },
+    {
+      "feature": "rms_std",
+      "oa": 0.414516129033986,
+      "kld_real_to_gen": 14.982101430945063,
+      "real_mean": 0.050015699019388286,
+      "gen_mean": 0.05072096743661718,
+      "real_std": 0.007576617206841001,
+      "gen_std": 0.009506453726183254,
+      "n_real": 744,
+      "n_gen": 10
+    },
+    {
+      "feature": "spectral_centroid_std",
+      "oa": 0.400537634410301,
+      "kld_real_to_gen": 16.00840526809618,
+      "real_mean": 242.6526286913347,
+      "gen_mean": 262.7770183406884,
+      "real_std": 42.40481702019878,
+      "gen_std": 61.84820672514308,
+      "n_real": 744,
+      "n_gen": 10
+    },
+    {
+      "feature": "spectral_rolloff_std",
+      "oa": 0.3870967741954451,
+      "kld_real_to_gen": 16.251710756035823,
+      "real_mean": 306.0175465667907,
+      "gen_mean": 298.11853732711086,
+      "real_std": 53.527667220408,
+      "gen_std": 68.32706391580246,
+      "n_real": 744,
+      "n_gen": 10
+    },
+    {
+      "feature": "spectral_centroid_mean",
+      "oa": 0.37365591398029313,
+      "kld_real_to_gen": 16.65549652582516,
+      "real_mean": 484.7348633254196,
+      "gen_mean": 523.8211494992967,
+      "real_std": 67.15523164478526,
+      "gen_std": 104.73028485520929,
+      "n_real": 744,
+      "n_gen": 10
+    },
+    {
+      "feature": "spectral_bandwidth_mean",
+      "oa": 0.34327956989390773,
+      "kld_real_to_gen": 17.45373728506646,
+      "real_mean": 385.95508678122593,
+      "gen_mean": 453.6504174607094,
+      "real_std": 64.08162089436878,
+      "gen_std": 111.31246193026627,
+      "n_real": 744,
+      "n_gen": 10
+    }
+  ],
+  "per_piece_preview": [
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json6.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json6_logmel.png",
+      "duration_s": 171.25,
+      "spectral_reference_based_score": 67.86643311364274,
+      "spectral_reference_free_score": 98.66122165506474,
+      "spectral_global_score": 75.56513024899823,
+      "spectral_qualitative_label": "plausible",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json1.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json1_logmel.png",
+      "duration_s": 203.1875,
+      "spectral_reference_based_score": 64.68631554283425,
+      "spectral_reference_free_score": 98.2025132753242,
+      "spectral_global_score": 73.06536497595674,
+      "spectral_qualitative_label": "plausible",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json8.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json8_logmel.png",
+      "duration_s": 163.0625,
+      "spectral_reference_based_score": 59.813943334825936,
+      "spectral_reference_free_score": 97.69018742522233,
+      "spectral_global_score": 69.28300435742504,
+      "spectral_qualitative_label": "aceptable con anomalías",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json2.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json2_logmel.png",
+      "duration_s": 160.625,
+      "spectral_reference_based_score": 59.132349414025796,
+      "spectral_reference_free_score": 98.76088580137723,
+      "spectral_global_score": 69.03948351086366,
+      "spectral_qualitative_label": "aceptable con anomalías",
+      "spectral_reference_matched_count": 32,
+      "strengths": "spectral_flatness_mean cercano a referencia | rms_mean sólido | spectral_flatness_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json7.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json7_logmel.png",
+      "duration_s": 224.125,
+      "spectral_reference_based_score": 59.343483639577876,
+      "spectral_reference_free_score": 96.82869766774692,
+      "spectral_global_score": 68.71478714662014,
+      "spectral_qualitative_label": "aceptable con anomalías",
+      "spectral_reference_matched_count": 32,
+      "strengths": "spectral_contrast_mean cercano a referencia | rms_mean sólido | spectral_flatness_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json5.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json5_logmel.png",
+      "duration_s": 153.9375,
+      "spectral_reference_based_score": 55.09653597374731,
+      "spectral_reference_free_score": 99.3749383894635,
+      "spectral_global_score": 66.16613657767635,
+      "spectral_qualitative_label": "aceptable con anomalías",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json3.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json3_logmel.png",
+      "duration_s": 209.9375,
+      "spectral_reference_based_score": 46.880250129871335,
+      "spectral_reference_free_score": 94.02950974484044,
+      "spectral_global_score": 58.66756503361361,
+      "spectral_qualitative_label": "aceptable con anomalías",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json0.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json0_logmel.png",
+      "duration_s": 122.5625,
+      "spectral_reference_based_score": 44.266926041866675,
+      "spectral_reference_free_score": 97.05917029480683,
+      "spectral_global_score": 57.46498710510171,
+      "spectral_qualitative_label": "débil",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json9.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json9_logmel.png",
+      "duration_s": 124.25,
+      "spectral_reference_based_score": 42.82868022840276,
+      "spectral_reference_free_score": 100.0,
+      "spectral_global_score": 57.12151017130207,
+      "spectral_qualitative_label": "débil",
+      "spectral_reference_matched_count": 32,
+      "strengths": "spectral_flatness_mean cercano a referencia | rms_mean sólido | spectral_flatness_mean sólido",
+      "issues": "spectral_centroid_mean alejado de referencia"
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json4.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\midi_spectral_eval\\generated_spectrograms\\generated_from_json4_logmel.png",
+      "duration_s": 140.0625,
+      "spectral_reference_based_score": 42.61565044734992,
+      "spectral_reference_free_score": 95.96983667681579,
+      "spectral_global_score": 55.95419700471639,
+      "spectral_qualitative_label": "débil",
+      "spectral_reference_matched_count": 32,
+      "strengths": "spectral_flatness_mean cercano a referencia | rms_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    }
+  ]
+}
