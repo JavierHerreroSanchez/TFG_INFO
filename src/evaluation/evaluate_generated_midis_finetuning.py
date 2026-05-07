@@ -13,13 +13,13 @@ from scipy.stats import entropy
 # ============================================================
 # CONFIGURACION PYCHARM - FINETUNING
 # ============================================================
-GENERATED_DIR = Path(r"../../output/generation_finetuning_tfg_first")
-OUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_finetuning_tfg_first\midi_eval")
+GENERATED_DIR = Path(r"../../output/generation_finetuning_tfg_second/best_train")
+OUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_finetuning_tfg_second\best_train\midi_eval")
 
 # Para finetuning se usa un único conjunto de referencia:
 # subconjunto de GiantPianoMIDI / sonatas aumentadas.
 REFERENCE_MODE = "single_dir"
-REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning\finetuning_sonatas_aug")
+REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v2\finetuning_sonatas_aug")
 
 RECURSIVE = True
 MAX_REFERENCE_FILES = None

@@ -1,0 +1,16 @@
+﻿section,key,value
+meta,generated_dir,..\..\output\generation_finetuning_tfg_second\best_train
+meta,reference_mode,single_dir
+meta,reference_dir,C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v2\finetuning_sonatas_aug
+meta,n_generated_files,10
+meta,n_reference_files,162
+global_report_top10,n_pitch_classes_used,"{""oa"": 0.699999999999264, ""kld_real_to_gen"": 0.35667494393923727, ""real_mean"": 12.0, ""gen_mean"": 11.6}"
+global_report_top10,consecutive_pitch_repetition_ratio_custom,"{""oa"": 0.570370370370818, ""kld_real_to_gen"": 11.050719423463148, ""real_mean"": 0.03127018131813295, ""gen_mean"": 0.019358300919435707}"
+global_report_top10,mean_velocity_custom,"{""oa"": 0.47037037037104157, ""kld_real_to_gen"": 14.089592559030216, ""real_mean"": 62.28710177344332, ""gen_mean"": 63.03529473819848}"
+global_report_top10,polyphony,"{""oa"": 0.4481481481483894, ""kld_real_to_gen"": 4.469266469442879, ""real_mean"": 3.0386168234404978, ""gen_mean"": 2.444085990634375}"
+global_report_top10,pitch_class_entropy,"{""oa"": 0.44814814814829557, ""kld_real_to_gen"": 9.558833171532063, ""real_mean"": 3.2072557085531392, ""gen_mean"": 3.0875129860366703}"
+global_report_top10,pitch_histogram_entropy_custom,"{""oa"": 0.44814814814829557, ""kld_real_to_gen"": 9.558833171532063, ""real_mean"": 3.2072557085531392, ""gen_mean"": 3.0875129860366703}"
+global_report_top10,scale_consistency,"{""oa"": 0.4333333333339137, ""kld_real_to_gen"": 15.175596374489185, ""real_mean"": 0.8704189972693666, ""gen_mean"": 0.8972231434876587}"
+global_report_top10,mean_duration_beats_custom,"{""oa"": 0.37283950617302114, ""kld_real_to_gen"": 5.4174461398418154, ""real_mean"": 0.5267202176414434, ""gen_mean"": 0.5451558830716436}"
+global_report_top10,std_velocity_custom,"{""oa"": 0.37037037037098386, ""kld_real_to_gen"": 17.273682914969566, ""real_mean"": 14.726654978178178, ""gen_mean"": 12.697824311621321}"
+global_report_top10,pitch_range,"{""oa"": 0.3111111111114853, ""kld_real_to_gen"": 16.77054856554105, ""real_mean"": 65.29629629629629, ""gen_mean"": 48.5}"
