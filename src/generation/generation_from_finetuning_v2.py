@@ -58,8 +58,8 @@ DEFAULT_NUM_SAMPLES = 10
 DEFAULT_RANDOM_OFFSET = False
 DEFAULT_STOP_ON_EOS = False
 
-SEED = 100454434
-OUTPUT_DIR = Path("../../output/generation_finetuning_tfg_second").resolve()
+SEED = 1453
+OUTPUT_DIR = Path("../../output/generation_finetuning_tfg_second/batch_2").resolve()
 
 def get_model_block_size(model: torch.nn.Module) -> int:
     """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerGPTlike."""

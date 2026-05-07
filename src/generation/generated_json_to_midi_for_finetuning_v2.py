@@ -13,7 +13,7 @@ from miditok import REMI, TokSequence
 TOKENIZER_PATH = Path(r"../../tokenizer/tokenizer_REMI_BPE_v5.json")
 
 # JSON generado por evaluation.py
-GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_finetuning_tfg_second\best_train\sample_009.json")
+GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_finetuning_tfg_second\batch_2\best_train\sample_000.json")
 #GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\evaluationv3\batch_2\best_test\sample_004.json")
 
 # Campo del JSON a convertir
@@ -25,7 +25,7 @@ JSON_TOKEN_FIELD = "full_generated_tokens"
 # JSON_TOKEN_FIELD = "full_ids"
 
 # MIDI de salida
-OUTPUT_MIDI_PATH = Path(r"../../output/generation_finetuning_tfg_second/best_train/generated_from_json9.mid")
+OUTPUT_MIDI_PATH = Path(r"../../output/generation_finetuning_tfg_second/batch_2/best_train/generated_from_json0.mid")
 
 # Si True, elimina PAD / BOS / MASK y un EOS final si aparece
 FILTER_SPECIAL_TOKENS = True
