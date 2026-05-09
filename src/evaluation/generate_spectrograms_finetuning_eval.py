@@ -23,7 +23,6 @@ Cambios frente a versiones previas:
 
 import json
 import math
-import random
 from pathlib import Path
 from typing import Dict, List, Optional, Tuple
 
@@ -38,13 +37,13 @@ from scipy.stats import entropy
 # ============================================================
 # CONFIGURACIÓN PYCHARM
 # ============================================================
-GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_finetuning_tfg_second")
-OUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_finetuning_tfg_second\best_train\midi_spectral_eval")
+GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_finetuning_tfg_third\batch_1")
+OUT_DIR = Path(r"/output/generation_finetuning_tfg_third/batch_1/best_train/midi_spectral_eval")
 
 # Referencias de finetuning: subconjunto de GiantPianoMIDI / sonatas aumentadas
 USE_REFERENCE = True
 REFERENCE_MODE = "single_dir"  # finetuning: usar solo el subconjunto de sonatas aumentadas
-REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v2\finetuning_sonatas_aug")
+REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v3\mozart_sonatas_aug")
 MAESTRO_DIR = None  # no se usa en finetuning
 ARIA_DIR = None      # no se usa en finetuning
 

@@ -37,8 +37,8 @@ from miditoolkit import MidiFile, Instrument, Note, TempoChange, ControlChange, 
 # =============================================================================
 INPUT_ROOT_DIR = Path(r"../../data/finetuning/finetuning_sonatas_raw")
 OUT_CLEAN_DIR = Path(r"../../data/finetuning/finetuning_sonatas_clean")
-OUT_CLEAN_INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning\finetuning_clean_index.csv")
-OUT_REPORT_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning\finetuning_clean_report.csv")
+OUT_CLEAN_INDEX_CSV = Path(r"/output/generation_finetuning_tfg_first/finetuning_clean_index.csv")
+OUT_REPORT_CSV = Path(r"/output/generation_finetuning_tfg_first/finetuning_clean_report.csv")
 
 # Mantener la estructura de carpetas de INPUT_ROOT_DIR en OUT_CLEAN_DIR
 PRESERVE_TREE = True

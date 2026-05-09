@@ -32,7 +32,7 @@ from scipy.stats import entropy
 # CONFIGURACIÓN PYCHARM
 # ============================================================
 GENERATED_DIR = Path(r"/output/generation_v2")
-OUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v2\midi_spectrogram_eval_simple")
+OUT_DIR = Path(r"/output/deprecated/generation_v2\midi_spectrogram_eval_simple")
 
 RECURSIVE = True
 MAX_FILES: Optional[int] = None  # None = todas

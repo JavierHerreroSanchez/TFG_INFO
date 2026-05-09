@@ -18,7 +18,7 @@ EXTERNAL_WAV_PATH = None  # Path(r"output/generated.wav")
 # CONFIGURACIÓN
 # =============================================================================
 
-MIDI_PATH = Path(r"../../../output/generation_v2/best_test/generated_from_json2.mid")
+MIDI_PATH = Path(r"../../../output/deprecated/generation_v2/best_test/generated_from_json2.mid")
 
 # Si pretty_midi.fluidsynth necesita SoundFont explícita, indícala aquí.
 # Si no, déjalo en None e inténtalo igualmente.
@@ -32,8 +32,8 @@ PITCH_MIN = 21
 PITCH_MAX = 108
 PIANOROLL_FS = 100
 
-SAVE_PIANOROLL_PNG = Path(r"../../../output/generation_v2/generated_pianoroll.png")
-SAVE_SPECTROGRAM_PNG = Path(r"../../../output/generation_v2/generated_spectrogram.png")
+SAVE_PIANOROLL_PNG = Path(r"../../../output/deprecated/generation_v2/generated_pianoroll.png")
+SAVE_SPECTROGRAM_PNG = Path(r"../../../output/deprecated/generation_v2/generated_spectrogram.png")
 
 
 # =============================================================================

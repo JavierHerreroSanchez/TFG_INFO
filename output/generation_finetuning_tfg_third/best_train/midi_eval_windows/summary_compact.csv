@@ -1,0 +1,29 @@
+﻿section,key,value
+meta,generated_dir,..\..\output\generation_finetuning_tfg_third\best_train
+meta,reference_mode,single_dir
+meta,reference_dir,C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v3\mozart_sonatas_aug
+meta,n_generated_files,10
+meta,n_reference_files_full_piece,322
+meta,n_reference_windows,20431
+meta,window_lengths_beats,"[144.0, 160.0, 208.0, 224.0]"
+meta,scoring_note,Mismas métricas/pesos que finetuning; referencias recortadas en ventanas; scale_consistency corregida como rango; sigma cero con fallback.
+global_report_top10_windows,consecutive_pitch_repetition_ratio_custom,"{""oa"": 0.7690519308909345, ""kld_real_to_gen"": 5.452420648295734, ""real_mean"": 0.016158055236166122, ""gen_mean"": 0.008106315991384708}"
+global_report_top10_windows,std_duration_beats_custom,"{""oa"": 0.44261661201527897, ""kld_real_to_gen"": 9.511226199557122, ""real_mean"": 1.4685974675697613, ""gen_mean"": 0.5503507186161339}"
+global_report_top10_windows,n_pitch_classes_used,"{""oa"": 0.39175762321981855, ""kld_real_to_gen"": 17.541096878277113, ""real_mean"": 11.407126425529832, ""gen_mean"": 10.3}"
+global_report_top10_windows,empty_beat_rate,"{""oa"": 0.36705007097312414, ""kld_real_to_gen"": 4.724904256803342, ""real_mean"": 0.03206776642846211, ""gen_mean"": 0.08263893208115083}"
+global_report_top10_windows,empty_measure_rate,"{""oa"": 0.36274289070854077, ""kld_real_to_gen"": 12.501032151532534, ""real_mean"": 0.043086685758833405, ""gen_mean"": 0.0517905982905983}"
+global_report_top10_windows,pitch_range,"{""oa"": 0.36058440605195086, ""kld_real_to_gen"": 16.591687120531248, ""real_mean"": 48.92085556262542, ""gen_mean"": 44.7}"
+global_report_top10_windows,duration_beats_custom,"{""oa"": 0.35128481229716235, ""kld_real_to_gen"": 14.40919350681952, ""real_mean"": 183.4190784058094, ""gen_mean"": 159.875}"
+global_report_top10_windows,mean_duration_beats_custom,"{""oa"": 0.3443786403054024, ""kld_real_to_gen"": 17.220139072780917, ""real_mean"": 1.217749465059, ""gen_mean"": 0.6534568449455416}"
+global_report_top10_windows,scale_consistency,"{""oa"": 0.33982673388868256, ""kld_real_to_gen"": 17.24427817178419, ""real_mean"": 0.9032639507622056, ""gen_mean"": 0.951939076375174}"
+global_report_top10_windows,std_velocity_custom,"{""oa"": 0.3229406294391614, ""kld_real_to_gen"": 17.52824599524496, ""real_mean"": 10.491232803692185, ""gen_mean"": 9.37727071266518}"
+global_report_top10_full_piece_diagnostic,consecutive_pitch_repetition_ratio_custom,"{""oa"": 0.49130434782661914, ""kld_real_to_gen"": 11.858951670047315, ""real_mean"": 0.015500484235426812, ""gen_mean"": 0.008106315991384708}"
+global_report_top10_full_piece_diagnostic,mean_velocity_custom,"{""oa"": 0.3913043478265085, ""kld_real_to_gen"": 17.018601739335388, ""real_mean"": 64.13515573166546, ""gen_mean"": 68.73576692605768}"
+global_report_top10_full_piece_diagnostic,std_duration_beats_custom,"{""oa"": 0.3583850931680671, ""kld_real_to_gen"": 10.827417044587309, ""real_mean"": 1.6500691664803466, ""gen_mean"": 0.5503507186161339}"
+global_report_top10_full_piece_diagnostic,empty_measure_rate,"{""oa"": 0.32919254658466357, ""kld_real_to_gen"": 18.38505377200935, ""real_mean"": 0.04517600811311403, ""gen_mean"": 0.0517905982905983}"
+global_report_top10_full_piece_diagnostic,empty_beat_rate,"{""oa"": 0.29006211180141755, ""kld_real_to_gen"": 13.646175312462313, ""real_mean"": 0.03398032833127344, ""gen_mean"": 0.08263893208115083}"
+global_report_top10_full_piece_diagnostic,polyphony_rate,"{""oa"": 0.23043478260924252, ""kld_real_to_gen"": 20.55498738932978, ""real_mean"": 0.4203939966807649, ""gen_mean"": 0.22410380429571758}"
+global_report_top10_full_piece_diagnostic,pitch_range,"{""oa"": 0.23043478260895184, ""kld_real_to_gen"": 18.887590247891175, ""real_mean"": 57.608695652173914, ""gen_mean"": 44.7}"
+global_report_top10_full_piece_diagnostic,std_velocity_custom,"{""oa"": 0.20000000000066484, ""kld_real_to_gen"": 19.44404914697123, ""real_mean"": 12.51685131196197, ""gen_mean"": 9.37727071266518}"
+global_report_top10_full_piece_diagnostic,polyphony,"{""oa"": 0.14347826087040763, ""kld_real_to_gen"": 18.186697409090158, ""real_mean"": 2.4560654886493176, ""gen_mean"": 2.07418612434779}"
+global_report_top10_full_piece_diagnostic,mean_duration_beats_custom,"{""oa"": 0.13416149068446032, ""kld_real_to_gen"": 23.152214673172644, ""real_mean"": 1.023843028233621, ""gen_mean"": 0.6534568449455416}"

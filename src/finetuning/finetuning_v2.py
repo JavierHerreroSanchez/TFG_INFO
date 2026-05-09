@@ -18,9 +18,9 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # =============================================================================
 
 # ---- Dataset de sonatas para finetuning ----
-INDEX_CSV = Path(r"../../data/interim/indexes\index_finetuning_v2.csv")
-TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_finetuning_v2")
-ANCHOR = r"data\interim\tokenized_finetuning_v2"
+INDEX_CSV = Path(r"../../data/interim/indexes\index_finetuning_v3.csv")
+TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_finetuning_v3")
+ANCHOR = r"data\interim\tokenized_finetuning_v3"
 
 TOKEN_FIELD = "ids"
 VOCAB_SIZE = 18000
@@ -30,7 +30,7 @@ TEST_RATIO = 0.10
 SEED = 1453
 
 # ---- Cache específico de finetuning ----
-CACHE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\bin\bin_for_finetuning_v2").resolve()
+CACHE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\bin\bin_for_finetuning_v3").resolve()
 ADD_EOS = True
 EOS_ID = 2
 USE_UINT16 = True
@@ -53,7 +53,7 @@ DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
 MICRO_BATCH = 1
 GRAD_ACCUM = 16
 
-LR = 3e-4
+LR = 3e-5
 MIN_LR = 2e-6
 WARMUP_UPDATES = 100
 WEIGHT_DECAY = 0.05
@@ -67,9 +67,9 @@ SAVE_EVERY = 500
 
 # ---- Early stopping ----
 EARLY_STOP = True
-PATIENCE_EVALS = 12
+PATIENCE_EVALS = 6
 MIN_DELTA = 1e-4
-START_EARLY_AFTER = 2000
+START_EARLY_AFTER = 1000
 
 NUM_WORKERS = 2
 PIN_MEMORY = True
@@ -77,15 +77,15 @@ PIN_MEMORY = True
 USE_AMP = True
 AMP_DTYPE = "bf16"
 
-CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\finetuning_v2").resolve()
+CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\finetuning_v3").resolve()
 SAMPLES_DIR = CKPT_DIR / "samples"
 
 # ---- Generación de muestras fijas para escucha ----
 N_LISTEN_SAMPLES = 4
 LISTEN_PRIMER_TOKENS = 128
 LISTEN_GEN_TOKENS = 512
-GEN_TEMPERATURE = 1.0
-GEN_TOP_K = 140
+GEN_TEMPERATURE = 0.9
+GEN_TOP_K = 160
 
 
 # =============================================================================

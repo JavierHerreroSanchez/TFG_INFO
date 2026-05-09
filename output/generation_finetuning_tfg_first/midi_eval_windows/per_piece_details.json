@@ -1,0 +1,1386 @@
+[
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json0.mid",
+    "reference_based": {
+      "score": 46.29218983595985,
+      "pitch_hist_similarity_score": 0.574388610616504,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 60.0,
+          "mu_ref": 59.395,
+          "sigma_ref": 5.959779777810586,
+          "score": 0.9078415391716658
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.94,
+          "sigma_ref": 0.25768197453450253,
+          "score": 0.8111318714638499
+        },
+        "n_pitches_used": {
+          "x": 50.0,
+          "mu_ref": 52.35,
+          "sigma_ref": 6.84817493935428,
+          "score": 0.7445145351665846
+        },
+        "polyphony": {
+          "x": 1.723054960742327,
+          "mu_ref": 3.5725820928688203,
+          "sigma_ref": 0.8612605599787051,
+          "score": 0.317715976978577
+        },
+        "polyphony_rate": {
+          "x": 0.16298200514138816,
+          "mu_ref": 0.6037019856770833,
+          "sigma_ref": 0.15068898726371324,
+          "score": 0.25479658826347606
+        },
+        "pitch_class_entropy": {
+          "x": 2.8283839246723077,
+          "mu_ref": 3.1949009088065417,
+          "sigma_ref": 0.1161031776718183,
+          "score": 0.24056843633995548
+        },
+        "pitch_entropy": {
+          "x": 4.19259540065936,
+          "mu_ref": 5.038046214835971,
+          "sigma_ref": 0.22407536007931808,
+          "score": 0.20950900078271353
+        },
+        "scale_consistency": {
+          "x": 0.9388249545729861,
+          "mu_ref": 0.863685906787276,
+          "sigma_ref": 0.056296717892202475,
+          "score": 1.0
+        },
+        "empty_beat_rate": {
+          "x": 0.0,
+          "mu_ref": 0.006348547717842318,
+          "sigma_ref": 0.008898552842768645,
+          "score": 0.5836226243405896
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.026149843912591054,
+          "sigma_ref": 0.024755878589070867,
+          "score": 0.48630836323485366
+        },
+        "groove_consistency": {
+          "x": 0.5036458333333333,
+          "mu_ref": 0.9774157986111112,
+          "sigma_ref": 0.008618804888134324,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 2.8283839246723077,
+          "mu_ref": 3.1949009088065417,
+          "sigma_ref": 0.1161031776718183,
+          "score": 0.24056843633995548
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.11333333333333333,
+          "mu_ref": 0.02498525732267844,
+          "sigma_ref": 0.014926195583364665,
+          "score": 0.16666666666666666
+        },
+        "mean_velocity_custom": {
+          "x": 69.14415505754089,
+          "mu_ref": 72.24520573781997,
+          "sigma_ref": 4.460782865882439,
+          "score": 0.5899075718410627
+        },
+        "std_velocity_custom": {
+          "x": 8.19425317140813,
+          "mu_ref": 12.616723107204429,
+          "sigma_ref": 1.5268669206356151,
+          "score": 0.2566448929488498
+        },
+        "mean_duration_beats_custom": {
+          "x": 0.1980617807389461,
+          "mu_ref": 0.798431513449468,
+          "sigma_ref": 0.35529758873523504,
+          "score": 0.37177957303984416
+        },
+        "std_duration_beats_custom": {
+          "x": 0.15464501406298053,
+          "mu_ref": 0.8087401888711457,
+          "sigma_ref": 0.2950811712802318,
+          "score": 0.3108812946048182
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 240.0,
+        "min": 240.0,
+        "max": 240.0
+      }
+    },
+    "reference_free": {
+      "score": 82.53613650317227,
+      "details": {
+        "pitch_class_entropy": 0.6575295552220589,
+        "consecutive_pitch_repetition_ratio_custom": 0.12000000000000022,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 1.0,
+        "polyphony": 1.0,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 55.35317650276296,
+    "qualitative_label": "débil",
+    "strengths": [
+      "pitch_range cercano a referencia",
+      "scale_consistency cercano a referencia",
+      "scale_consistency sólido"
+    ],
+    "issues": [
+      "pitch_class_entropy alejado de referencia",
+      "exceso de repetición consecutiva"
+    ]
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json1.mid",
+    "reference_based": {
+      "score": 55.69363711971072,
+      "pitch_hist_similarity_score": 0.5641451314700879,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 60.0,
+          "mu_ref": 58.495,
+          "sigma_ref": 5.304712527555099,
+          "score": 0.7789921389617978
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.755,
+          "sigma_ref": 0.6363764609097353,
+          "score": 0.7220257053982172
+        },
+        "n_pitches_used": {
+          "x": 51.0,
+          "mu_ref": 51.35,
+          "sigma_ref": 7.686188912588605,
+          "score": 0.9564470168873545
+        },
+        "polyphony": {
+          "x": 1.5193798449612403,
+          "mu_ref": 2.84062001231051,
+          "sigma_ref": 0.8095846870831459,
+          "score": 0.37993957382236077
+        },
+        "polyphony_rate": {
+          "x": 0.0732612055641422,
+          "mu_ref": 0.4420493537144846,
+          "sigma_ref": 0.18502658530744784,
+          "score": 0.33409473264139855
+        },
+        "pitch_class_entropy": {
+          "x": 3.0535351401264457,
+          "mu_ref": 3.152403964965934,
+          "sigma_ref": 0.14379798262527485,
+          "score": 0.5925737604066651
+        },
+        "pitch_entropy": {
+          "x": 4.8701389343219965,
+          "mu_ref": 4.925307991977139,
+          "sigma_ref": 0.23392128364176684,
+          "score": 0.8091632622257653
+        },
+        "scale_consistency": {
+          "x": 0.9319727891156463,
+          "mu_ref": 0.8851946101107842,
+          "sigma_ref": 0.05106423464238923,
+          "score": 1.0
+        },
+        "empty_beat_rate": {
+          "x": 0.02716049382716046,
+          "mu_ref": 0.009724222451206941,
+          "sigma_ref": 0.008924616693055287,
+          "score": 0.3385552364431727
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.03919185874495515,
+          "sigma_ref": 0.03302552934315866,
+          "score": 0.4573071696093963
+        },
+        "groove_consistency": {
+          "x": 0.569760101010101,
+          "mu_ref": 0.9790954485888383,
+          "sigma_ref": 0.006449647901803911,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 3.0535351401264457,
+          "mu_ref": 3.152403964965934,
+          "sigma_ref": 0.14379798262527482,
+          "score": 0.5925737604066651
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.01361573373676248,
+          "mu_ref": 0.026047684297113922,
+          "sigma_ref": 0.013144509253230588,
+          "score": 0.5139299711154854
+        },
+        "mean_velocity_custom": {
+          "x": 72.20332577475435,
+          "mu_ref": 65.12163712836097,
+          "sigma_ref": 8.474640509077258,
+          "score": 0.5447712261923318
+        },
+        "std_velocity_custom": {
+          "x": 11.030237604989198,
+          "mu_ref": 14.989056191909036,
+          "sigma_ref": 2.296930905778643,
+          "score": 0.36717117724415754
+        },
+        "mean_duration_beats_custom": {
+          "x": 0.4088246409674981,
+          "mu_ref": 0.6328629605681517,
+          "sigma_ref": 0.24523076579045774,
+          "score": 0.5225802709464031
+        },
+        "std_duration_beats_custom": {
+          "x": 0.29243755891295214,
+          "mu_ref": 0.6842235471287232,
+          "sigma_ref": 0.23759929910498517,
+          "score": 0.37751009420068704
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 400.04212239583336,
+        "min": 400.0,
+        "max": 408.4244791666667
+      }
+    },
+    "reference_free": {
+      "score": 98.47579965558934,
+      "details": {
+        "pitch_class_entropy": 1.0,
+        "consecutive_pitch_repetition_ratio_custom": 1.0,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 1.0,
+        "polyphony": 0.893305975891254,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 66.38917775368037,
+    "qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "scale_consistency cercano a referencia",
+      "pitch_class_entropy sólido",
+      "scale_consistency sólido"
+    ],
+    "issues": []
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json2.mid",
+    "reference_based": {
+      "score": 56.02287812953128,
+      "pitch_hist_similarity_score": 0.6579697022247227,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 63.0,
+          "mu_ref": 58.33,
+          "sigma_ref": 5.580421131061705,
+          "score": 0.5444089622963327
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.945,
+          "sigma_ref": 0.2863127660444082,
+          "score": 0.838857477739805
+        },
+        "n_pitches_used": {
+          "x": 56.0,
+          "mu_ref": 51.15,
+          "sigma_ref": 7.101936355670896,
+          "score": 0.5942080131895283
+        },
+        "polyphony": {
+          "x": 2.15539494062984,
+          "mu_ref": 2.9759399834103055,
+          "sigma_ref": 0.7808376915071226,
+          "score": 0.4876021670450295
+        },
+        "polyphony_rate": {
+          "x": 0.21848081440877057,
+          "mu_ref": 0.447989889678904,
+          "sigma_ref": 0.18858595335673073,
+          "score": 0.45106002330641776
+        },
+        "pitch_class_entropy": {
+          "x": 3.4100102806006523,
+          "mu_ref": 3.1837950568888584,
+          "sigma_ref": 0.11897752238084278,
+          "score": 0.3446698220851771
+        },
+        "pitch_entropy": {
+          "x": 5.150493159102636,
+          "mu_ref": 4.973519235810986,
+          "sigma_ref": 0.2284125787708288,
+          "score": 0.5634439667052006
+        },
+        "scale_consistency": {
+          "x": 0.7607449856733525,
+          "mu_ref": 0.8681764465722517,
+          "sigma_ref": 0.055594117256996624,
+          "score": 0.7406907196604284
+        },
+        "empty_beat_rate": {
+          "x": 0.009375000000000022,
+          "mu_ref": 0.019009845219435745,
+          "sigma_ref": 0.019185313929261805,
+          "score": 0.6656907697932977
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.0692653668012193,
+          "sigma_ref": 0.0447239049979942,
+          "score": 0.3923518791906414
+        },
+        "groove_consistency": {
+          "x": 0.5068108974358974,
+          "mu_ref": 0.9794702136654369,
+          "sigma_ref": 0.006352564738595754,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 3.4100102806006523,
+          "mu_ref": 3.1837950568888584,
+          "sigma_ref": 0.11897752238084279,
+          "score": 0.34466982208517716
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.03225806451612903,
+          "mu_ref": 0.02592741430133792,
+          "sigma_ref": 0.019420605750300645,
+          "score": 0.7541614970790977
+        },
+        "mean_velocity_custom": {
+          "x": 77.38395415472779,
+          "mu_ref": 66.2667141035012,
+          "sigma_ref": 8.375146852330525,
+          "score": 0.4296624571310026
+        },
+        "std_velocity_custom": {
+          "x": 14.488860471907461,
+          "mu_ref": 14.770509304946252,
+          "sigma_ref": 2.3750925739612643,
+          "score": 0.8939871105645832
+        },
+        "mean_duration_beats_custom": {
+          "x": 0.38216332378223494,
+          "mu_ref": 0.6933280234341741,
+          "sigma_ref": 0.4559668092586625,
+          "score": 0.5943789349836223
+        },
+        "std_duration_beats_custom": {
+          "x": 0.42290979919329,
+          "mu_ref": 0.8289305266307073,
+          "sigma_ref": 0.4629509794834455,
+          "score": 0.5327572529649764
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 319.457265625,
+        "min": 318.71875,
+        "max": 319.78125
+      }
+    },
+    "reference_free": {
+      "score": 96.29558170943469,
+      "details": {
+        "pitch_class_entropy": 1.0,
+        "consecutive_pitch_repetition_ratio_custom": 1.0,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 0.7406907196604284,
+        "polyphony": 1.0,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 66.09105402450713,
+    "qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "pitch_class_entropy sólido",
+      "groove_consistency sólido"
+    ],
+    "issues": []
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json3.mid",
+    "reference_based": {
+      "score": 56.01788967439075,
+      "pitch_hist_similarity_score": 0.5729040653257775,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 50.0,
+          "mu_ref": 59.925,
+          "sigma_ref": 5.519907155016287,
+          "score": 0.357393353007208
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.85,
+          "sigma_ref": 0.507444578254611,
+          "score": 0.7718438862204607
+        },
+        "n_pitches_used": {
+          "x": 42.0,
+          "mu_ref": 53.24,
+          "sigma_ref": 7.036504814181541,
+          "score": 0.38500276096125374
+        },
+        "polyphony": {
+          "x": 2.7260232131948685,
+          "mu_ref": 3.0473771316654426,
+          "sigma_ref": 0.849905325259528,
+          "score": 0.7256338251409139
+        },
+        "polyphony_rate": {
+          "x": 0.5103200717918037,
+          "mu_ref": 0.48439766125801287,
+          "sigma_ref": 0.17627635260638666,
+          "score": 0.871797383271728
+        },
+        "pitch_class_entropy": {
+          "x": 3.0591206474960746,
+          "mu_ref": 3.1735302695285963,
+          "sigma_ref": 0.12861980853850047,
+          "score": 0.5292355260689837
+        },
+        "pitch_entropy": {
+          "x": 4.537804654143345,
+          "mu_ref": 4.977823723638334,
+          "sigma_ref": 0.2266886123038986,
+          "score": 0.340012000000143
+        },
+        "scale_consistency": {
+          "x": 0.9278242677824268,
+          "mu_ref": 0.8766135229040123,
+          "sigma_ref": 0.04769151574656782,
+          "score": 1.0
+        },
+        "empty_beat_rate": {
+          "x": 0.0,
+          "mu_ref": 0.009688249400479616,
+          "sigma_ref": 0.009693234228197019,
+          "score": 0.5001285976815012
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.03895195195195195,
+          "sigma_ref": 0.03488385271838212,
+          "score": 0.4724517173495074
+        },
+        "groove_consistency": {
+          "x": 0.6721813725490196,
+          "mu_ref": 0.9783391551482373,
+          "sigma_ref": 0.006516748915720895,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 3.0591206474960746,
+          "mu_ref": 3.1735302695285963,
+          "sigma_ref": 0.12861980853850047,
+          "score": 0.5292355260689837
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.04712041884816754,
+          "mu_ref": 0.025276247662015507,
+          "sigma_ref": 0.013026247193843979,
+          "score": 0.3735615400965966
+        },
+        "mean_velocity_custom": {
+          "x": 72.53138075313808,
+          "mu_ref": 65.35405852719344,
+          "sigma_ref": 8.376359184637664,
+          "score": 0.538545117616889
+        },
+        "std_velocity_custom": {
+          "x": 13.67150698037496,
+          "mu_ref": 14.82388294219955,
+          "sigma_ref": 2.352616060406784,
+          "score": 0.6712186634048442
+        },
+        "mean_duration_beats_custom": {
+          "x": 1.2034518828451883,
+          "mu_ref": 0.656869991421866,
+          "sigma_ref": 0.2614230482810013,
+          "score": 0.3235413986165293
+        },
+        "std_duration_beats_custom": {
+          "x": 0.7408506495395905,
+          "mu_ref": 0.7252834389519341,
+          "sigma_ref": 0.2562867021708048,
+          "score": 0.9427368529306855
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 416.0,
+        "min": 416.0,
+        "max": 416.0
+      }
+    },
+    "reference_free": {
+      "score": 94.0585408475317,
+      "details": {
+        "pitch_class_entropy": 1.0,
+        "consecutive_pitch_repetition_ratio_custom": 0.5840978593272188,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 1.0,
+        "polyphony": 1.0,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 65.52805246767599,
+    "qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "scale_consistency cercano a referencia",
+      "pitch_class_entropy sólido",
+      "scale_consistency sólido"
+    ],
+    "issues": []
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json4.mid",
+    "reference_based": {
+      "score": 54.58729493089115,
+      "pitch_hist_similarity_score": 0.5867738178634514,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 59.0,
+          "mu_ref": 56.52,
+          "sigma_ref": 5.58118267036656,
+          "score": 0.692352834390338
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.91,
+          "sigma_ref": 0.3345145736735546,
+          "score": 0.7879931442136813
+        },
+        "n_pitches_used": {
+          "x": 56.0,
+          "mu_ref": 47.575,
+          "sigma_ref": 6.498797965777979,
+          "score": 0.4354654211133444
+        },
+        "polyphony": {
+          "x": 1.7562277580071175,
+          "mu_ref": 2.9400960102475575,
+          "sigma_ref": 0.6612927485504436,
+          "score": 0.3583929794023375
+        },
+        "polyphony_rate": {
+          "x": 0.14606741573033707,
+          "mu_ref": 0.4820397709865196,
+          "sigma_ref": 0.1598642751981575,
+          "score": 0.32241320100064463
+        },
+        "pitch_class_entropy": {
+          "x": 3.2249426762149516,
+          "mu_ref": 3.1531225782197554,
+          "sigma_ref": 0.11089840923048314,
+          "score": 0.6069358321404754
+        },
+        "pitch_entropy": {
+          "x": 4.888116642016601,
+          "mu_ref": 4.861270991268318,
+          "sigma_ref": 0.21376702275820253,
+          "score": 0.8884279437277479
+        },
+        "scale_consistency": {
+          "x": 0.8622189992748368,
+          "mu_ref": 0.8892262064504215,
+          "sigma_ref": 0.04376939866712445,
+          "score": 1.0
+        },
+        "empty_beat_rate": {
+          "x": 0.02508960573476704,
+          "mu_ref": 0.009029304029304023,
+          "sigma_ref": 0.012469703251273384,
+          "score": 0.43707329424522523
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.04217630853994491,
+          "sigma_ref": 0.03336222366628279,
+          "score": 0.44165835225922323
+        },
+        "groove_consistency": {
+          "x": 0.5507246376811594,
+          "mu_ref": 0.9793472828584558,
+          "sigma_ref": 0.007725597877795876,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 3.2249426762149516,
+          "mu_ref": 3.1531225782197554,
+          "sigma_ref": 0.11089840923048314,
+          "score": 0.6069358321404754
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.036284470246734396,
+          "mu_ref": 0.024943385616587755,
+          "sigma_ref": 0.019040370422590137,
+          "score": 0.6267102872307945
+        },
+        "mean_velocity_custom": {
+          "x": 60.30819434372734,
+          "mu_ref": 67.5442465797112,
+          "sigma_ref": 8.116953893474975,
+          "score": 0.5286882467857831
+        },
+        "std_velocity_custom": {
+          "x": 16.572604174959814,
+          "mu_ref": 13.954656374333416,
+          "sigma_ref": 1.8388680761993998,
+          "score": 0.4125968240602
+        },
+        "mean_duration_beats_custom": {
+          "x": 0.27356780275562004,
+          "mu_ref": 0.7161550489047215,
+          "sigma_ref": 0.3913204532665787,
+          "score": 0.46926111072097937
+        },
+        "std_duration_beats_custom": {
+          "x": 0.24484762604233246,
+          "mu_ref": 0.7541870888893498,
+          "sigma_ref": 0.37036539892217785,
+          "score": 0.4210109719950021
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 272.0,
+        "min": 272.0,
+        "max": 272.0
+      }
+    },
+    "reference_free": {
+      "score": 100.0,
+      "details": {
+        "pitch_class_entropy": 1.0,
+        "consecutive_pitch_repetition_ratio_custom": 1.0,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 1.0,
+        "polyphony": 1.0,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 65.94047119816835,
+    "qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "scale_consistency cercano a referencia",
+      "pitch_class_entropy sólido",
+      "scale_consistency sólido"
+    ],
+    "issues": []
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json5.mid",
+    "reference_based": {
+      "score": 46.90620705394437,
+      "pitch_hist_similarity_score": 0.5334333435574298,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 50.0,
+          "mu_ref": 61.975,
+          "sigma_ref": 5.649280927693364,
+          "score": 0.3205396549720529
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.995,
+          "sigma_ref": 0.07053367989832943,
+          "score": 0.9338043637390515
+        },
+        "n_pitches_used": {
+          "x": 44.0,
+          "mu_ref": 54.96,
+          "sigma_ref": 6.449682162711586,
+          "score": 0.370465244708812
+        },
+        "polyphony": {
+          "x": 1.562062062062062,
+          "mu_ref": 3.2667883856773496,
+          "sigma_ref": 0.629944303006816,
+          "score": 0.26982148823204455
+        },
+        "polyphony_rate": {
+          "x": 0.0894973436861463,
+          "mu_ref": 0.553188690720943,
+          "sigma_ref": 0.14579653155279743,
+          "score": 0.2392115359056216
+        },
+        "pitch_class_entropy": {
+          "x": 2.943142802950749,
+          "mu_ref": 3.199681935282486,
+          "sigma_ref": 0.1012936134578851,
+          "score": 0.2830753044536562
+        },
+        "pitch_entropy": {
+          "x": 4.514149891362406,
+          "mu_ref": 5.006931339429809,
+          "sigma_ref": 0.18052666242575374,
+          "score": 0.26811894823831683
+        },
+        "scale_consistency": {
+          "x": 0.9574036511156186,
+          "mu_ref": 0.8635846834828571,
+          "sigma_ref": 0.04102356701145329,
+          "score": 1.0
+        },
+        "empty_beat_rate": {
+          "x": 0.0,
+          "mu_ref": 0.01555737704918032,
+          "sigma_ref": 0.02069212901494649,
+          "score": 0.5708251300953259
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.04384141331142153,
+          "sigma_ref": 0.03777096122932691,
+          "score": 0.46280924237130433
+        },
+        "groove_consistency": {
+          "x": 0.5241666666666667,
+          "mu_ref": 0.9773203638980263,
+          "sigma_ref": 0.008297413921573004,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 2.943142802950749,
+          "mu_ref": 3.199681935282486,
+          "sigma_ref": 0.1012936134578851,
+          "score": 0.2830753044536562
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.02571041948579161,
+          "mu_ref": 0.0361155167610549,
+          "sigma_ref": 0.024103203102887685,
+          "score": 0.6984755215052172
+        },
+        "mean_velocity_custom": {
+          "x": 66.55916159567275,
+          "mu_ref": 61.02515915188451,
+          "sigma_ref": 10.349793549733967,
+          "score": 0.6515944648215617
+        },
+        "std_velocity_custom": {
+          "x": 11.846681517993204,
+          "mu_ref": 15.63739830095261,
+          "sigma_ref": 2.6359319839612287,
+          "score": 0.410156534075574
+        },
+        "mean_duration_beats_custom": {
+          "x": 0.2667342799188641,
+          "mu_ref": 0.7526513832066272,
+          "sigma_ref": 0.4407116340056039,
+          "score": 0.47560756133346244
+        },
+        "std_duration_beats_custom": {
+          "x": 0.32224892902791835,
+          "mu_ref": 0.8106948979419734,
+          "sigma_ref": 0.39676959495801056,
+          "score": 0.4482180512309125
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 304.0,
+        "min": 304.0,
+        "max": 304.0
+      }
+    },
+    "reference_free": {
+      "score": 99.2398068427413,
+      "details": {
+        "pitch_class_entropy": 1.0,
+        "consecutive_pitch_repetition_ratio_custom": 1.0,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 1.0,
+        "polyphony": 0.9467864789918914,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 59.989607001143604,
+    "qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "scale_consistency cercano a referencia",
+      "pitch_class_entropy sólido",
+      "scale_consistency sólido"
+    ],
+    "issues": [
+      "polyphony alejado de referencia",
+      "pitch_class_entropy alejado de referencia",
+      "histograma de pitch poco alineado"
+    ]
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json6.mid",
+    "reference_based": {
+      "score": 53.844854576103316,
+      "pitch_hist_similarity_score": 0.5543673351520726,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 51.0,
+          "mu_ref": 58.685,
+          "sigma_ref": 6.220592817408964,
+          "score": 0.44734466909035014
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.985,
+          "sigma_ref": 0.12155245781143217,
+          "score": 0.8901521053490353
+        },
+        "n_pitches_used": {
+          "x": 40.0,
+          "mu_ref": 52.065,
+          "sigma_ref": 7.017889640055621,
+          "score": 0.36775822595152663
+        },
+        "polyphony": {
+          "x": 2.3053402239448753,
+          "mu_ref": 3.1158145548255947,
+          "sigma_ref": 0.739988167988042,
+          "score": 0.4772693106269564
+        },
+        "polyphony_rate": {
+          "x": 0.24008810572687225,
+          "mu_ref": 0.5069890873015873,
+          "sigma_ref": 0.1676444453634993,
+          "score": 0.38579268120415805
+        },
+        "pitch_class_entropy": {
+          "x": 2.936751021888337,
+          "mu_ref": 3.2043600325624584,
+          "sigma_ref": 0.10352788541123528,
+          "score": 0.2789479744622998
+        },
+        "pitch_entropy": {
+          "x": 4.496794363622616,
+          "mu_ref": 5.0204298328372445,
+          "sigma_ref": 0.22467038486585894,
+          "score": 0.300238710736711
+        },
+        "scale_consistency": {
+          "x": 0.9592430858806404,
+          "mu_ref": 0.8707977575927787,
+          "sigma_ref": 0.04286095826474315,
+          "score": 1.0
+        },
+        "empty_beat_rate": {
+          "x": 0.017595307917888547,
+          "mu_ref": 0.011290801186943613,
+          "sigma_ref": 0.013048613484614472,
+          "score": 0.6742382282172632
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.039817843866171,
+          "sigma_ref": 0.03332893175381687,
+          "score": 0.45564457860681834
+        },
+        "groove_consistency": {
+          "x": 0.5636160714285714,
+          "mu_ref": 0.9771276661706348,
+          "sigma_ref": 0.008826025528396692,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 2.936751021888337,
+          "mu_ref": 3.2043600325624584,
+          "sigma_ref": 0.10352788541123528,
+          "score": 0.2789479744622998
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.026948288419519302,
+          "mu_ref": 0.02117130960127775,
+          "sigma_ref": 0.014936254587624837,
+          "score": 0.721097198827229
+        },
+        "mean_velocity_custom": {
+          "x": 67.00582241630276,
+          "mu_ref": 67.47647969171064,
+          "sigma_ref": 9.028784461797484,
+          "score": 0.9504542173710583
+        },
+        "std_velocity_custom": {
+          "x": 16.43583867293006,
+          "mu_ref": 14.600535320937206,
+          "sigma_ref": 2.583638937967315,
+          "score": 0.5846736093017868
+        },
+        "mean_duration_beats_custom": {
+          "x": 0.5040938864628821,
+          "mu_ref": 0.7102835582943418,
+          "sigma_ref": 0.418493469640776,
+          "score": 0.6699291878671199
+        },
+        "std_duration_beats_custom": {
+          "x": 1.1213324000702651,
+          "mu_ref": 0.7326885528322151,
+          "sigma_ref": 0.35078665418605715,
+          "score": 0.47440111479099006
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 336.0,
+        "min": 336.0,
+        "max": 336.0
+      }
+    },
+    "reference_free": {
+      "score": 100.0,
+      "details": {
+        "pitch_class_entropy": 1.0,
+        "consecutive_pitch_repetition_ratio_custom": 1.0,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 1.0,
+        "polyphony": 1.0,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 65.38364093207748,
+    "qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "scale_consistency cercano a referencia",
+      "pitch_class_entropy sólido",
+      "scale_consistency sólido"
+    ],
+    "issues": [
+      "pitch_class_entropy alejado de referencia"
+    ]
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json7.mid",
+    "reference_based": {
+      "score": 49.23191121361956,
+      "pitch_hist_similarity_score": 0.5801690189996838,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 51.0,
+          "mu_ref": 59.235,
+          "sigma_ref": 5.248787955328353,
+          "score": 0.38926657499491485
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.995,
+          "sigma_ref": 0.07053367989832944,
+          "score": 0.9338043637390515
+        },
+        "n_pitches_used": {
+          "x": 44.0,
+          "mu_ref": 53.76,
+          "sigma_ref": 6.4461151091180495,
+          "score": 0.3977581959473601
+        },
+        "polyphony": {
+          "x": 1.8495522388059702,
+          "mu_ref": 3.1252834518719212,
+          "sigma_ref": 0.7734530240141746,
+          "score": 0.3774443556701689
+        },
+        "polyphony_rate": {
+          "x": 0.13529411764705881,
+          "mu_ref": 0.4824836521244207,
+          "sigma_ref": 0.17899725094449379,
+          "score": 0.3401781570796912
+        },
+        "pitch_class_entropy": {
+          "x": 3.1001361421650344,
+          "mu_ref": 3.235775114686809,
+          "sigma_ref": 0.09862035734088725,
+          "score": 0.42098795979099335
+        },
+        "pitch_entropy": {
+          "x": 4.5171284021260885,
+          "mu_ref": 5.038431062081364,
+          "sigma_ref": 0.20592429274935364,
+          "score": 0.2831637248640204
+        },
+        "scale_consistency": {
+          "x": 0.8942577030812325,
+          "mu_ref": 0.8535369475496402,
+          "sigma_ref": 0.0474557010966931,
+          "score": 1.0
+        },
+        "empty_beat_rate": {
+          "x": 0.0022371364653244186,
+          "mu_ref": 0.017938926850761074,
+          "sigma_ref": 0.017528499174930188,
+          "score": 0.5274855984353536
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.0633982673382904,
+          "sigma_ref": 0.03772497693011243,
+          "score": 0.3730594009620798
+        },
+        "groove_consistency": {
+          "x": 0.576295045045045,
+          "mu_ref": 0.9796624371144701,
+          "sigma_ref": 0.006458327458363599,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 3.1001361421650344,
+          "mu_ref": 3.235775114686809,
+          "sigma_ref": 0.09862035734088725,
+          "score": 0.42098795979099335
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.009810791871058164,
+          "mu_ref": 0.026599028365012486,
+          "sigma_ref": 0.02362009063324439,
+          "score": 0.5845352260907081
+        },
+        "mean_velocity_custom": {
+          "x": 83.34173669467788,
+          "mu_ref": 65.52318126341754,
+          "sigma_ref": 8.18269112410962,
+          "score": 0.3147038010921701
+        },
+        "std_velocity_custom": {
+          "x": 12.685189330728992,
+          "mu_ref": 15.16653706590169,
+          "sigma_ref": 2.610668649976199,
+          "score": 0.5126983993198325
+        },
+        "mean_duration_beats_custom": {
+          "x": 0.5440301120448179,
+          "mu_ref": 0.772593760030771,
+          "sigma_ref": 0.540945887069777,
+          "score": 0.7029748982000595
+        },
+        "std_duration_beats_custom": {
+          "x": 0.3053958395937376,
+          "mu_ref": 0.8716463478586811,
+          "sigma_ref": 0.478050727958206,
+          "score": 0.45777091070689363
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 447.2920052083333,
+        "min": 445.1380208333333,
+        "max": 447.8151041666667
+      }
+    },
+    "reference_free": {
+      "score": 100.0,
+      "details": {
+        "pitch_class_entropy": 1.0,
+        "consecutive_pitch_repetition_ratio_custom": 1.0,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 1.0,
+        "polyphony": 1.0,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 61.92393341021467,
+    "qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "scale_consistency cercano a referencia",
+      "pitch_class_entropy sólido",
+      "scale_consistency sólido"
+    ],
+    "issues": []
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json8.mid",
+    "reference_based": {
+      "score": 52.83950652810209,
+      "pitch_hist_similarity_score": 0.5417360394769927,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 56.0,
+          "mu_ref": 60.405,
+          "sigma_ref": 4.456565381546645,
+          "score": 0.5029094961965763
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.99,
+          "sigma_ref": 0.09949874371066199,
+          "score": 0.9086747513156528
+        },
+        "n_pitches_used": {
+          "x": 48.0,
+          "mu_ref": 54.17,
+          "sigma_ref": 5.150834883783405,
+          "score": 0.45498719278749905
+        },
+        "polyphony": {
+          "x": 2.3316666666666666,
+          "mu_ref": 3.3024514399908798,
+          "sigma_ref": 0.7780694727566911,
+          "score": 0.44490241225093874
+        },
+        "polyphony_rate": {
+          "x": 0.327419976860779,
+          "mu_ref": 0.5350756429036458,
+          "sigma_ref": 0.1551716809243597,
+          "score": 0.42767360900824286
+        },
+        "pitch_class_entropy": {
+          "x": 3.0252432923749644,
+          "mu_ref": 3.229766757954668,
+          "sigma_ref": 0.09569895112137577,
+          "score": 0.3187601784468338
+        },
+        "pitch_entropy": {
+          "x": 4.741051186334123,
+          "mu_ref": 5.072520206300802,
+          "sigma_ref": 0.18511307598237353,
+          "score": 0.35834202817712457
+        },
+        "scale_consistency": {
+          "x": 0.9200298953662183,
+          "mu_ref": 0.8538977942992676,
+          "sigma_ref": 0.04420576350972712,
+          "score": 1.0
+        },
+        "empty_beat_rate": {
+          "x": 0.006153846153846176,
+          "mu_ref": 0.011292834890965733,
+          "sigma_ref": 0.011880712849698266,
+          "score": 0.6980564723238256
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.03997658079625294,
+          "sigma_ref": 0.03161116279511949,
+          "score": 0.44157227493519136
+        },
+        "groove_consistency": {
+          "x": 0.5216049382716049,
+          "mu_ref": 0.976647216796875,
+          "sigma_ref": 0.009070261528798486,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 3.0252432923749644,
+          "mu_ref": 3.229766757954668,
+          "sigma_ref": 0.09569895112137579,
+          "score": 0.3187601784468338
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.02169035153328347,
+          "mu_ref": 0.02132303224278668,
+          "sigma_ref": 0.015518690773811416,
+          "score": 0.9768778133080714
+        },
+        "mean_velocity_custom": {
+          "x": 78.50373692077729,
+          "mu_ref": 66.62014810898845,
+          "sigma_ref": 6.9550529322390275,
+          "score": 0.36919078491653384
+        },
+        "std_velocity_custom": {
+          "x": 10.107585739106556,
+          "mu_ref": 14.609939505792655,
+          "sigma_ref": 2.4476261804202424,
+          "score": 0.3521774449779993
+        },
+        "mean_duration_beats_custom": {
+          "x": 0.5298019431988041,
+          "mu_ref": 0.7162937365785286,
+          "sigma_ref": 0.37988254939151533,
+          "score": 0.6707269745532082
+        },
+        "std_duration_beats_custom": {
+          "x": 0.4904609668731237,
+          "mu_ref": 0.768558384921343,
+          "sigma_ref": 0.3361271617751812,
+          "score": 0.5472382135404337
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 320.0,
+        "min": 320.0,
+        "max": 320.0
+      }
+    },
+    "reference_free": {
+      "score": 100.0,
+      "details": {
+        "pitch_class_entropy": 1.0,
+        "consecutive_pitch_repetition_ratio_custom": 1.0,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 1.0,
+        "polyphony": 1.0,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 64.62962989607657,
+    "qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "scale_consistency cercano a referencia",
+      "pitch_class_entropy sólido",
+      "scale_consistency sólido"
+    ],
+    "issues": [
+      "histograma de pitch poco alineado"
+    ]
+  },
+  {
+    "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_finetuning_tfg_first\\generated_from_json9.mid",
+    "reference_based": {
+      "score": 49.515430203932475,
+      "pitch_hist_similarity_score": 0.4995039998909926,
+      "matched_reference_count": 200,
+      "details": {
+        "pitch_range": {
+          "x": 60.0,
+          "mu_ref": 56.89,
+          "sigma_ref": 5.057459836716452,
+          "score": 0.619220655849554
+        },
+        "n_pitch_classes_used": {
+          "x": 12.0,
+          "mu_ref": 11.975,
+          "sigma_ref": 0.15612494995995993,
+          "score": 0.861973736884251
+        },
+        "n_pitches_used": {
+          "x": 47.0,
+          "mu_ref": 48.83,
+          "sigma_ref": 5.954082632950269,
+          "score": 0.7649048595330232
+        },
+        "polyphony": {
+          "x": 1.5741007194244605,
+          "mu_ref": 3.2264444733565307,
+          "sigma_ref": 0.6445557100979064,
+          "score": 0.28061990530792097
+        },
+        "polyphony_rate": {
+          "x": 0.0755578093306288,
+          "mu_ref": 0.5619712999131944,
+          "sigma_ref": 0.14152619075722447,
+          "score": 0.22538182402370266
+        },
+        "pitch_class_entropy": {
+          "x": 2.8183024157742453,
+          "mu_ref": 3.22184791633279,
+          "sigma_ref": 0.0950519114131386,
+          "score": 0.1906385976558917
+        },
+        "pitch_entropy": {
+          "x": 4.501655668241046,
+          "mu_ref": 4.9495060210591975,
+          "sigma_ref": 0.20005816125041093,
+          "score": 0.30877532384030465
+        },
+        "scale_consistency": {
+          "x": 0.9663918833227647,
+          "mu_ref": 0.8603732528304502,
+          "sigma_ref": 0.04838701894134401,
+          "score": 1.0
+        },
+        "empty_beat_rate": {
+          "x": 0.0,
+          "mu_ref": 0.011804979253112032,
+          "sigma_ref": 0.014440176821418741,
+          "score": 0.5502035034736181
+        },
+        "empty_measure_rate": {
+          "x": 0.0,
+          "mu_ref": 0.03529136316337149,
+          "sigma_ref": 0.02939066503301385,
+          "score": 0.45438688075424793
+        },
+        "groove_consistency": {
+          "x": 0.5395833333333333,
+          "mu_ref": 0.98146826171875,
+          "sigma_ref": 0.008846907500274006,
+          "score": 0.16666666666666666
+        },
+        "pitch_histogram_entropy_custom": {
+          "x": 2.8183024157742453,
+          "mu_ref": 3.22184791633279,
+          "sigma_ref": 0.0950519114131386,
+          "score": 0.1906385976558917
+        },
+        "consecutive_pitch_repetition_ratio_custom": {
+          "x": 0.018401015228426396,
+          "mu_ref": 0.024234909670998048,
+          "sigma_ref": 0.021658748680720676,
+          "score": 0.7878016160028988
+        },
+        "mean_velocity_custom": {
+          "x": 66.38871274571972,
+          "mu_ref": 69.46828394152806,
+          "sigma_ref": 8.047134012586547,
+          "score": 0.7232270345865852
+        },
+        "std_velocity_custom": {
+          "x": 11.065342304182648,
+          "mu_ref": 14.031698759839124,
+          "sigma_ref": 2.5601872669218264,
+          "score": 0.46325287475106064
+        },
+        "mean_duration_beats_custom": {
+          "x": 0.1743024730500951,
+          "mu_ref": 0.9986691888730991,
+          "sigma_ref": 0.6090314930646797,
+          "score": 0.42488646161856714
+        },
+        "std_duration_beats_custom": {
+          "x": 0.1822049003034264,
+          "mu_ref": 1.0377160153085356,
+          "sigma_ref": 0.5628435572208993,
+          "score": 0.3968285001222971
+        }
+      },
+      "local_reference_duration_beats": {
+        "mean": 240.0,
+        "min": 240.0,
+        "max": 240.0
+      }
+    },
+    "reference_free": {
+      "score": 94.14766334286499,
+      "details": {
+        "pitch_class_entropy": 0.6272879351552839,
+        "consecutive_pitch_repetition_ratio_custom": 1.0,
+        "empty_measure_rate": 1.0,
+        "scale_consistency": 1.0,
+        "polyphony": 0.9630484988452656,
+        "std_velocity_custom": 1.0,
+        "groove_consistency": 1.0
+      }
+    },
+    "global_score": 60.6734884886656,
+    "qualitative_label": "aceptable con anomalías",
+    "strengths": [
+      "scale_consistency cercano a referencia",
+      "scale_consistency sólido",
+      "groove_consistency sólido"
+    ],
+    "issues": [
+      "polyphony alejado de referencia",
+      "pitch_class_entropy alejado de referencia",
+      "histograma de pitch poco alineado"
+    ]
+  }
+]

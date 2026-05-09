@@ -1,0 +1,58 @@
+{
+  "checkpoint": "best",
+  "split": "test",
+  "prompt_len": 100,
+  "max_new_tokens": 2100,
+  "min_new_tokens": 1400,
+  "num_samples_requested": 5,
+  "num_samples_generated": 5,
+  "random_offset": true,
+  "sampling": {
+    "temperature": 0.9,
+    "top_k": 100,
+    "do_sample": true,
+    "stop_on_eos": true
+  },
+  "samples": [
+    {
+      "idx": 0,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning\\Mozart_Wolfgang_Amadeus_Piano_Sonata_No.1_in_C_major_K.279_189d_ZixdOZh7zo4__tr0__ts1p000.json",
+      "prompt_start": 0,
+      "prompt_len": 100,
+      "generated_len": 2100,
+      "hit_eos": false
+    },
+    {
+      "idx": 1,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning\\Bach_Carl_Philipp_Emanuel_Keyboard_Sonata_in_F_major_H.240_vIGTVGNeia8__tr+2__ts1p025.json",
+      "prompt_start": 0,
+      "prompt_len": 100,
+      "generated_len": 2100,
+      "hit_eos": false
+    },
+    {
+      "idx": 2,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning\\Haydn_Joseph_Keyboard_Sonata_in_D_major_Hob.XVI_37_0FqCqwaoXVg__tr-2__ts0p950.json",
+      "prompt_start": 0,
+      "prompt_len": 100,
+      "generated_len": 2100,
+      "hit_eos": false
+    },
+    {
+      "idx": 3,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning\\Bach_Carl_Philipp_Emanuel_Keyboard_Sonata_in_A_minor_H.61_HJ-JrNHBuF0__tr-3__ts1p050.json",
+      "prompt_start": 0,
+      "prompt_len": 100,
+      "generated_len": 1530,
+      "hit_eos": true
+    },
+    {
+      "idx": 4,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning\\Beethoven_Ludwig_van_Piano_Sonata_No.16_Op.31_No.1_q7LXQVxd6xA__tr+1__ts1p000.json",
+      "prompt_start": 0,
+      "prompt_len": 100,
+      "generated_len": 2100,
+      "hit_eos": false
+    }
+  ]
+}

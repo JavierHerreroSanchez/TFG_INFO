@@ -58,8 +58,8 @@ DEFAULT_RANDOM_OFFSET = True
 DEFAULT_STOP_ON_EOS = True
 SEED = 1984
 
-INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning\finetuning_aug_index.csv")
-OUTPUT_DIR = Path("../../output/finetuning/evaluation/batch_2").resolve()
+INDEX_CSV = Path(r"/output/generation_finetuning_tfg_first/finetuning_aug_index.csv")
+OUTPUT_DIR = Path("../../output/deprecated/finetuning/evaluation/batch_2").resolve()
 
 def get_model_block_size(model: torch.nn.Module) -> int:
     """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerGPTlike."""

@@ -38,8 +38,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 TOKENIZER_PATH = (PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v5.json").resolve()
 
 # Mantengo las rutas del proyecto como venías usando.
-DATASET_ROOT = (PROJECT_ROOT / "data" / "finetuning_v2" / "finetuning_sonatas_aug").resolve()
-OUT_DIR = (PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v2").resolve()
+DATASET_ROOT = (PROJECT_ROOT / "data" / "finetuning_v3" / "mozart_sonatas_aug").resolve()
+OUT_DIR = (PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v3").resolve()
 BAD_LIST_PATH = (PROJECT_ROOT / "tokenizer" / "bad_midis.txt").resolve()
 
 NUM_WORKERS = max(1, (os.cpu_count() or 8) - 2)

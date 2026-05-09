@@ -1,0 +1,221 @@
+{
+  "generated_dir": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2",
+  "use_reference": true,
+  "reference_mode": "mixed_random",
+  "reference_dir": null,
+  "maestro_dir": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\raw\\maestro-v3.0.0",
+  "aria_dir": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\raw\\ariamidi",
+  "n_generated_files": 5,
+  "n_reference_files": 1000,
+  "synthesis_mode": "pretty_midi_simple",
+  "spectrogram": {
+    "generated_pngs_only": true,
+    "type": "log-mel",
+    "sample_rate": 16000,
+    "n_fft": 2048,
+    "hop_length": 512,
+    "n_mels": 96,
+    "fmin": 27.5,
+    "fmax": 6000.0,
+    "top_db": 80.0,
+    "dpi": 180,
+    "colormap": "magma"
+  },
+  "features_used": [
+    "duration_s",
+    "rms_mean",
+    "rms_std",
+    "spectral_centroid_mean",
+    "spectral_centroid_std",
+    "spectral_bandwidth_mean",
+    "spectral_bandwidth_std",
+    "spectral_rolloff_mean",
+    "spectral_rolloff_std",
+    "spectral_flatness_mean",
+    "spectral_flatness_std",
+    "spectral_contrast_mean",
+    "spectral_contrast_std"
+  ],
+  "scoring": {
+    "reference_based": "1 / (1 + |x-mu|/sigma)",
+    "reference_free": "range acceptance with soft penalty outside",
+    "weights": {
+      "reference_based": 0.7,
+      "reference_free": 0.3
+    }
+  },
+  "top_global_matches": [
+    {
+      "feature": "spectral_flatness_mean",
+      "oa": 0.45100000000339996,
+      "kld_real_to_gen": 14.171258858030333,
+      "real_mean": 0.05460681952007712,
+      "gen_mean": 0.018368900800862755,
+      "real_std": 0.048690850145164305,
+      "gen_std": 0.006248205640946176,
+      "n_real": 1000,
+      "n_gen": 5
+    },
+    {
+      "feature": "duration_s",
+      "oa": 0.3070000000053945,
+      "kld_real_to_gen": 18.09260297780779,
+      "real_mean": 390.7462205,
+      "gen_mean": 142.7625,
+      "real_std": 356.04626988933404,
+      "gen_std": 25.4510989448393,
+      "n_real": 1000,
+      "n_gen": 5
+    },
+    {
+      "feature": "spectral_bandwidth_mean",
+      "oa": 0.2880000000051961,
+      "kld_real_to_gen": 18.29873724943126,
+      "real_mean": 365.4131685883287,
+      "gen_mean": 332.01811559229213,
+      "real_std": 106.73993614141584,
+      "gen_std": 65.61647005258651,
+      "n_real": 1000,
+      "n_gen": 5
+    },
+    {
+      "feature": "spectral_rolloff_mean",
+      "oa": 0.2840000000042012,
+      "kld_real_to_gen": 18.752090919021445,
+      "real_mean": 626.196395937053,
+      "gen_mean": 580.4173109053356,
+      "real_std": 159.02956343537906,
+      "gen_std": 238.8124185562839,
+      "n_real": 1000,
+      "n_gen": 5
+    },
+    {
+      "feature": "rms_std",
+      "oa": 0.28100000000420133,
+      "kld_real_to_gen": 18.586586444316506,
+      "real_mean": 0.05108041044601535,
+      "gen_mean": 0.05261925709620717,
+      "real_std": 0.009620899097837352,
+      "gen_std": 0.007402344382758042,
+      "n_real": 1000,
+      "n_gen": 5
+    },
+    {
+      "feature": "spectral_flatness_std",
+      "oa": 0.26100000000499796,
+      "kld_real_to_gen": 18.876308275288245,
+      "real_mean": 0.2034787605679578,
+      "gen_mean": 0.131822137441012,
+      "real_std": 0.08713566316309096,
+      "gen_std": 0.023409144700456127,
+      "n_real": 1000,
+      "n_gen": 5
+    },
+    {
+      "feature": "rms_mean",
+      "oa": 0.24800000000460032,
+      "kld_real_to_gen": 19.310372864096276,
+      "real_mean": 0.10972647155322687,
+      "gen_mean": 0.13955507988697705,
+      "real_std": 0.03896312028375595,
+      "gen_std": 0.012937554064982195,
+      "n_real": 1000,
+      "n_gen": 5
+    },
+    {
+      "feature": "spectral_centroid_std",
+      "oa": 0.21300000000480046,
+      "kld_real_to_gen": 20.364981082550052,
+      "real_mean": 266.6428290887085,
+      "gen_mean": 205.87040455833304,
+      "real_std": 111.39373651421091,
+      "gen_std": 125.94554111612175,
+      "n_real": 1000,
+      "n_gen": 5
+    },
+    {
+      "feature": "spectral_bandwidth_std",
+      "oa": 0.21100000000539748,
+      "kld_real_to_gen": 20.242631686286114,
+      "real_mean": 248.215184099075,
+      "gen_mean": 204.5667167542649,
+      "real_std": 56.17898563969842,
+      "gen_std": 33.6074716706635,
+      "n_real": 1000,
+      "n_gen": 5
+    },
+    {
+      "feature": "spectral_contrast_std",
+      "oa": 0.2060000000051986,
+      "kld_real_to_gen": 20.419546753982114,
+      "real_mean": 13.362633717920254,
+      "gen_mean": 14.277585262156588,
+      "real_std": 2.5750569661390585,
+      "gen_std": 2.6722198087114095,
+      "n_real": 1000,
+      "n_gen": 5
+    }
+  ],
+  "per_piece_preview": [
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json4.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json4_logmel.png",
+      "duration_s": 175.3125,
+      "spectral_reference_based_score": 64.83398271124977,
+      "spectral_reference_free_score": 97.08420565322822,
+      "spectral_global_score": 74.5090495938433,
+      "spectral_qualitative_label": "plausible",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json1.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json1_logmel.png",
+      "duration_s": 135.6875,
+      "spectral_reference_based_score": 60.72456544023315,
+      "spectral_reference_free_score": 100.0,
+      "spectral_global_score": 72.5071958081632,
+      "spectral_qualitative_label": "plausible",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json3.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json3_logmel.png",
+      "duration_s": 98.5625,
+      "spectral_reference_based_score": 58.61867085476323,
+      "spectral_reference_free_score": 95.25384303377042,
+      "spectral_global_score": 69.60922250846538,
+      "spectral_qualitative_label": "aceptable con anomalías",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json2.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json2_logmel.png",
+      "duration_s": 151.75,
+      "spectral_reference_based_score": 56.56716341847275,
+      "spectral_reference_free_score": 99.76489963315512,
+      "spectral_global_score": 69.52648428287746,
+      "spectral_qualitative_label": "aceptable con anomalías",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": ""
+    },
+    {
+      "file": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\generation_v2\\generated_from_json0.mid",
+      "spectrogram_path": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\output\\midi_spectral_eval_fast\\generated_spectrograms\\generated_from_json0_logmel.png",
+      "duration_s": 152.5,
+      "spectral_reference_based_score": 47.38128266985176,
+      "spectral_reference_free_score": 90.91636502516843,
+      "spectral_global_score": 60.44180737644676,
+      "spectral_qualitative_label": "aceptable con anomalías",
+      "spectral_reference_matched_count": 32,
+      "strengths": "rms_mean sólido | spectral_flatness_mean sólido | spectral_contrast_mean sólido",
+      "issues": "spectral_centroid_mean alejado de referencia"
+    }
+  ]
+}

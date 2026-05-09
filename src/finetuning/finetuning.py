@@ -18,7 +18,7 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # =============================================================================
 
 # ---- Dataset de sonatas para finetuning ----
-INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning\finetuning_aug_index.csv")
+INDEX_CSV = Path(r"/output/generation_finetuning_tfg_first/finetuning_aug_index.csv")
 TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_finetuning")
 ANCHOR = r"data\interim\tokenized_finetuning"
 

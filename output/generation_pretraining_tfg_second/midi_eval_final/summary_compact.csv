@@ -1,0 +1,15 @@
+﻿section,key,value
+meta,generated_dir,C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_second
+meta,reference_mode,mixed_random
+meta,n_generated_files,10
+meta,n_reference_files,30000
+global_report_top10,n_pitch_classes_used,"{""oa"": 0.8485333333309543, ""kld_real_to_gen"": 1.4983329031325276, ""real_mean"": 10.8741, ""gen_mean"": 10.8}"
+global_report_top10,consecutive_pitch_repetition_ratio_custom,"{""oa"": 0.8283666666688059, ""kld_real_to_gen"": 1.8463598423740128, ""real_mean"": 0.022666374266777672, ""gen_mean"": 0.01951123800659457}"
+global_report_top10,std_duration_beats_custom,"{""oa"": 0.7522000000002602, ""kld_real_to_gen"": 1.0000827452640566, ""real_mean"": 1.6815503759029564, ""gen_mean"": 1.9225739201089496}"
+global_report_top10,mean_duration_beats_custom,"{""oa"": 0.6286000000002604, ""kld_real_to_gen"": 6.218035583068061, ""real_mean"": 2.0248564178576243, ""gen_mean"": 2.3046873953698253}"
+global_report_top10,polyphony,"{""oa"": 0.6155666666692865, ""kld_real_to_gen"": 9.3341120211263, ""real_mean"": 5.737097420541213, ""gen_mean"": 5.835497063975962}"
+global_report_top10,empty_measure_rate,"{""oa"": 0.49016666667058606, ""kld_real_to_gen"": 13.154756149477242, ""real_mean"": 0.026474286289371422, ""gen_mean"": 0.002702702702702697}"
+global_report_top10,polyphony_rate,"{""oa"": 0.4685666666695266, ""kld_real_to_gen"": 12.429911281340688, ""real_mean"": 0.8084707358046993, ""gen_mean"": 0.8259746969923946}"
+global_report_top10,std_velocity_custom,"{""oa"": 0.4233000000038998, ""kld_real_to_gen"": 14.997989695792015, ""real_mean"": 13.665897134783778, ""gen_mean"": 12.621909149814005}"
+global_report_top10,pitch_range,"{""oa"": 0.37500000000379985, ""kld_real_to_gen"": 16.160766676848162, ""real_mean"": 63.3109, ""gen_mean"": 61.3}"
+global_report_top10,pitch_class_entropy,"{""oa"": 0.3488333333369332, ""kld_real_to_gen"": 16.85246377711941, ""real_mean"": 3.0405489000497825, ""gen_mean"": 2.942376239039873}"

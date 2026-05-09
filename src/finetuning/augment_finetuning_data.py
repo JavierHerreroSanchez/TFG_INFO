@@ -50,10 +50,10 @@ def sanitize_stem(name: str) -> str:
 # =============================================================================
 # RUTAS
 # =============================================================================
-IN_CLEAN_DIR = Path(r"../../data/finetuning_v2/finetuning_sonatas_clean")
-OUT_AUG_DIR = Path(r"../../data/finetuning_v2/finetuning_sonatas_aug")
-OUT_AUG_INDEX_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning_v2\finetuning_aug_index.csv")
-OUT_AUG_REPORT_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning_v2\finetuning_aug_report.csv")
+IN_CLEAN_DIR = Path(r"../../data/finetuning_v3/mozart_sonatas_merged")
+OUT_AUG_DIR = Path(r"../../data/finetuning_v3/mozart_sonatas_aug")
+OUT_AUG_INDEX_CSV = Path(r"/output/generation_finetuning_tfg_third/finetuning_aug_index.csv")
+OUT_AUG_REPORT_CSV = Path(r"/output/generation_finetuning_tfg_third/finetuning_aug_report.csv")
 
 # Mantener estructura de carpetas dentro de OUT_AUG_DIR
 PRESERVE_TREE = True
@@ -65,8 +65,8 @@ COMMON_ROOT = IN_CLEAN_DIR
 TRANSPOSE_SHIFTS = [-3, -2, -1, 0, 1, 2, 3]
 TIME_STRETCH_FACTORS = [0.95, 0.975, 1.0, 1.025, 1.05]
 
-# Nº de variantes por obra (recomendación práctica: 4–8)
-K_VARIANTS_PER_FILE = 6
+# Nº de variantes por obra
+K_VARIANTS_PER_FILE = 14
 
 # Si True, siempre incluye (transpose=0, stretch=1.0) como una de las variantes.
 # Si ya está en el muestreo, no se duplica.
@@ -81,7 +81,7 @@ SEED = 1453
 
 # Seguridad / IO
 DRY_RUN = False
-CONTINUE_ON_FAILURE = True
+CONTINUE_ON_FAILURE = False
 CLEAR_OUT_DIR_ON_START = False
 
 # Rango piano (A0..C8). Si la transposición sale de rango, se descarta esa combinación.

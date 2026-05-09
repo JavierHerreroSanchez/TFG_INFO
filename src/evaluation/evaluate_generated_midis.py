@@ -19,7 +19,7 @@ from scipy.stats import entropy
 # CONFIGURACION PYCHARM
 # ============================================================
 GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_pretraining_tfg_second")
-OUT_DIR = Path(r"../../output/generation_pretraining_tfg_second/midi_eval")
+OUT_DIR = Path(r"../../output/generation_pretraining_tfg_second/midi_eval_final")
 
 # Modo de referencia:
 # - "single_dir": usa REFERENCE_DIR
@@ -33,12 +33,12 @@ ARIA_DIR = Path(r"../../data/pretraining_raw/ariamidi")
 RECURSIVE = True
 
 # Muestreo aleatorio de referencias
-MAX_REFERENCE_FILES = 4000
-MAESTRO_FRACTION = 0.50
+MAX_REFERENCE_FILES = 30000
+MAESTRO_FRACTION = 0.005
 REFERENCE_RANDOM_SEED = 1453
 
 # Pool local de referencias para score por pieza
-LOCAL_REF_POOL_SIZE = 48
+LOCAL_REF_POOL_SIZE = 200
 LOCAL_REF_DURATION_TOL = 0.30  # +/-30%
 
 # Pesos del score global

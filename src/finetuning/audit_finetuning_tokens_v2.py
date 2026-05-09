@@ -5,7 +5,7 @@ import pandas as pd
 
 # ===== RUTAS (cámbialo si tu carpeta es otra) =====
 TOKENS_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\interim\tokenized_finetuning_v2").resolve()
-OUT_CSV = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\finetuning_v2\audit_tokens_report.csv").resolve()
+OUT_CSV = Path(r"/output/generation_finetuning_tfg_second/audit_tokens_report.csv").resolve()
 OUT_BAD = OUT_CSV.with_suffix(".bad.txt")
 
 TOKEN_FIELD = "ids"      # si tu v5 guarda ids_encoded, pon "ids_encoded"
