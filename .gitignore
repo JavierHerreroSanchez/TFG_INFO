@@ -150,11 +150,16 @@ data/interim/tokenized_json_bpe
 data/interim/tokenized_json_bpe_v2
 data/interim/tokenized_finetuning
 data/interim/tokenized_finetuning_v2
+data/interim/tokenized_finetuning_v3
 data/pretraining_raw
 data/finetuning
 data/finetuning_v2
+data/deprecated
 data/bin
 output/checkpoints/finetuning/samples
+output/checkpoints/finetuning_v2/samples
+
+
 # Spyder project settings
 .spyderproject
 .spyproject

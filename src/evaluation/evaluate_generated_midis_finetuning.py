@@ -19,7 +19,7 @@ OUT_DIR = Path(r"/output/generation_finetuning_tfg_third/best_train\midi_eval")
 # Para finetuning se usa un único conjunto de referencia:
 # subconjunto de GiantPianoMIDI / sonatas aumentadas.
 REFERENCE_MODE = "single_dir"
-REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v3\mozart_sonatas_aug")
+REFERENCE_DIR = Path(r"/data/finetuning_v2\mozart_sonatas_aug")
 
 RECURSIVE = True
 MAX_REFERENCE_FILES = None

@@ -1,0 +1,98 @@
+{
+  "checkpoint": "best",
+  "split": "train",
+  "prompt_len": 250,
+  "max_new_tokens": 2000,
+  "min_new_tokens": 2000,
+  "num_samples_requested": 10,
+  "num_samples_generated": 10,
+  "random_offset": false,
+  "sampling": {
+    "temperature": 0.9,
+    "top_k": 160,
+    "do_sample": true,
+    "stop_on_eos": false
+  },
+  "samples": [
+    {
+      "idx": 0,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\13piano_sonata_333_hisamori_merged_piano__tr+2__ts0p975.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    },
+    {
+      "idx": 1,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\15piano_sonata_593-494_hisamori_merged_piano__tr-1__ts1p025.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    },
+    {
+      "idx": 2,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\mozart_sonata_2-pianos_375_2_cishenko_merged_piano__tr+2__ts1p025.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    },
+    {
+      "idx": 3,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\1piano_sonata_279_hisamori_merged_piano__tr-1__ts0p950.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    },
+    {
+      "idx": 4,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\mozart_sonata_2-pianos_375_2_cishenko_merged_piano__tr0__ts1p000.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    },
+    {
+      "idx": 5,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\5piano_sonata_283_hisamori_merged_piano__tr+2__ts0p975.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    },
+    {
+      "idx": 6,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\13piano_sonata_333_hisamori_merged_piano__tr+1__ts1p025.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    },
+    {
+      "idx": 7,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\7piano_sonata_309_hisamori_merged_piano__tr+3__ts1p000.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    },
+    {
+      "idx": 8,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\3piano_sonata_281_hisamori_merged_piano__tr0__ts1p050.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    },
+    {
+      "idx": 9,
+      "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\7piano_sonata_309_hisamori_merged_piano__tr-3__ts1p050.json",
+      "prompt_start": 0,
+      "prompt_len": 250,
+      "generated_len": 2000,
+      "hit_eos": false
+    }
+  ]
+}

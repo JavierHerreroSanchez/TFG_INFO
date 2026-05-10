@@ -6,7 +6,7 @@ import pretty_midi
 # CONFIGURACIÓN
 # =========================
 INPUT_DIR = Path(r"/data/finetuning_v3/mozart_sonatas_raw")
-OUTPUT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v3\mozart_sonatas_merged")
+OUTPUT_DIR = Path(r"/data/finetuning_v2\mozart_sonatas_merged")
 
 RECURSIVE = True  # True = busca también en subcarpetas
 OVERWRITE = True  # False = salta archivos ya procesados

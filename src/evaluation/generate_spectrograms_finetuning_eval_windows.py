@@ -45,13 +45,13 @@ from scipy.stats import entropy
 # ============================================================
 # CONFIGURACIÓN PYCHARM
 # ============================================================
-GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_finetuning_tfg_third\batch_1")
-OUT_DIR = Path(r"/output/generation_finetuning_tfg_third/batch_1/best_train/midi_spectral_eval_windows")
+GENERATED_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_finetuning_tfg_first")
+OUT_DIR = Path(r"../../output/generation_finetuning_tfg_first/midi_spectral_eval_windows")
 
 # Referencias de finetuning: subconjunto de GiantPianoMIDI / sonatas aumentadas
 USE_REFERENCE = True
 REFERENCE_MODE = "single_dir"
-REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v3\mozart_sonatas_aug")
+REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning\finetuning_sonatas_aug")
 MAESTRO_DIR = None
 ARIA_DIR = None
 

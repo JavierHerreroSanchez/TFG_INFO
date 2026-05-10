@@ -50,8 +50,8 @@ def sanitize_stem(name: str) -> str:
 # =============================================================================
 # RUTAS
 # =============================================================================
-IN_CLEAN_DIR = Path(r"../../data/finetuning_v3/mozart_sonatas_merged")
-OUT_AUG_DIR = Path(r"../../data/finetuning_v3/mozart_sonatas_aug")
+IN_CLEAN_DIR = Path(r"../../data/finetuning_v2/mozart_sonatas_merged")
+OUT_AUG_DIR = Path(r"../../data/finetuning_v2/mozart_sonatas_aug")
 OUT_AUG_INDEX_CSV = Path(r"/output/generation_finetuning_tfg_third/finetuning_aug_index.csv")
 OUT_AUG_REPORT_CSV = Path(r"/output/generation_finetuning_tfg_third/finetuning_aug_report.csv")
 

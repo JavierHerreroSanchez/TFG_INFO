@@ -43,7 +43,7 @@ OUT_DIR = Path(r"/output/generation_finetuning_tfg_third/batch_1/best_train/midi
 # Referencias de finetuning: subconjunto de GiantPianoMIDI / sonatas aumentadas
 USE_REFERENCE = True
 REFERENCE_MODE = "single_dir"  # finetuning: usar solo el subconjunto de sonatas aumentadas
-REFERENCE_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v3\mozart_sonatas_aug")
+REFERENCE_DIR = Path(r"/data/finetuning_v2\mozart_sonatas_aug")
 MAESTRO_DIR = None  # no se usa en finetuning
 ARIA_DIR = None      # no se usa en finetuning
 

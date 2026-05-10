@@ -77,7 +77,7 @@ PIN_MEMORY = True
 USE_AMP = True
 AMP_DTYPE = "bf16"
 
-CKPT_DIR = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\checkpoints\finetuning_v3").resolve()
+CKPT_DIR = Path(r"/output/checkpoints/finetuning_v2").resolve()
 SAMPLES_DIR = CKPT_DIR / "samples"
 
 # ---- Generación de muestras fijas para escucha ----
