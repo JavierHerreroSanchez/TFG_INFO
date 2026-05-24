@@ -70,7 +70,7 @@ DEFAULT_NUM_SAMPLES = 10
 DEFAULT_RANDOM_OFFSET = False
 DEFAULT_STOP_ON_EOS = False
 
-SEED = 100454434
+SEED = 1453
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = (PROJECT_ROOT / "output" / "generation_pretraining_tfg_second").resolve()
 
