@@ -146,18 +146,29 @@ venv.bak/
 
 # Data
 
-data/interim/tokenized_json_bpe
-data/interim/tokenized_json_bpe_v2
-data/interim/tokenized_finetuning
-data/interim/tokenized_finetuning_v2
-data/interim/tokenized_finetuning_v3
-data/pretraining_raw
-data/finetuning
-data/finetuning_v2
+data/interim/tokenized_json_bpe/*
+!data/interim/tokenized_json_bpe/README.md
+data/interim/tokenized_json_bpe_v2/*
+!data/interim/tokenized_json_bpe_v2/README.md
+data/interim/tokenized_finetuning/*
+!data/interim/tokenized_finetuning/README.md
+data/interim/tokenized_finetuning_v2/*
+!data/interim/tokenized_finetuning_v2/README.md
+data/interim/tokenized_finetuning_v3/*
+!data/interim/tokenized_finetuning_v3/README.md
+data/pretraining_raw/*
+!data/pretraining_raw/README.md
+data/finetuning/*
+!data/finetuning/README.md
+data/finetuning_v2/*
+!data/finetuning_v2/README.md
 data/deprecated
-data/bin
-output/checkpoints/finetuning/samples
-output/checkpoints/finetuning_v2/samples
+data/bin/*
+!data/bin/README.md
+output/checkpoints/finetuning/samples/*
+!output/checkpoints/finetuning/samples/README.md
+output/checkpoints/finetuning_v2/samples/*
+!output/checkpoints/finetuning_v2/samples/README.md
 output/checkpoints/finetuning_v2/step_*
 
 # Spyder project settings
