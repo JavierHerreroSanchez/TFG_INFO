@@ -1,15 +1,10 @@
 """
-Aumentación OFFLINE al estilo Music Transformer (sin sobrerrepresentar obras)
+Aumentación offline del corpus de fine-tuning.
 
-Idea
-----
-En Music Transformer se aplica, por ejemplo en Piano-e-Competition:
-  - Transposición uniforme en semitonos: {-batch_3,-batch_2,-1,0,1,batch_2,batch_3}
-  - Time-stretch uniforme: {0.95, 0.975, 1.0, 1.025, 1.05}
-
-En vez de generar el producto cartesiano completo (35 variantes por obra),
-este script genera K variantes *muestreadas* por obra (K pequeño), para
-mantener el espíritu del paper pero evitando sobrerrepresentación.
+El script aplica transposición y estiramiento temporal a las obras limpias del
+corpus objetivo. En lugar de generar todo el producto cartesiano de
+transformaciones, se muestrea un número fijo de variantes por obra para aumentar
+la diversidad sin sobrerrepresentar cada pieza.
 
 Salida
 ------
@@ -60,23 +55,22 @@ PRESERVE_TREE = True
 COMMON_ROOT = IN_CLEAN_DIR
 
 # =============================================================================
-# PARÁMETROS (paper-style, pero muestreado)
+# PARÁMETROS DE AUMENTACIÓN
 # =============================================================================
 TRANSPOSE_SHIFTS = [-3, -2, -1, 0, 1, 2, 3]
 TIME_STRETCH_FACTORS = [0.95, 0.975, 1.0, 1.025, 1.05]
 
-# Nº de variantes por obra
+# Número de variantes por obra.
 K_VARIANTS_PER_FILE = 14
 
 # Si True, siempre incluye (transpose=0, stretch=1.0) como una de las variantes.
 # Si ya está en el muestreo, no se duplica.
 INCLUDE_ORIGINAL = True
 
-# Muestreo sin reemplazo sobre el conjunto de pares válidos (recomendado).
-# Si False, permite repetir combinaciones (normalmente no interesa).
+# Muestreo sin reemplazo sobre el conjunto de pares válidos.
 SAMPLE_WITHOUT_REPLACEMENT = True
 
-# Semilla para reproducibilidad
+# Semilla para reproducibilidad.
 SEED = 1453
 
 # Seguridad / IO
@@ -93,16 +87,34 @@ PITCH_MAX = 108
 # Helpers básicos
 # =============================================================================
 def _ls(obj, attr: str):
+    """
+    Implementa la logica de  ls dentro del pipeline del TFG.
+
+    Parametros principales: obj, attr.
+    """
+
     x = getattr(obj, attr, None)
     return x if x is not None else []
 
 
 def list_midis_recursively(root: Path) -> List[Path]:
+    """
+    Implementa la logica de list midis recursively dentro del pipeline del TFG.
+
+    Parametros principales: root.
+    """
+
     exts = {".mid", ".midi"}
     return sorted([p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in exts])
 
 
 def fmt_transpose(s: int) -> str:
+    """
+    Implementa la logica de fmt transpose dentro del pipeline del TFG.
+
+    Parametros principales: s.
+    """
+
     if s == 0:
         return "tr0"
     sign = "+" if s > 0 else ""
@@ -111,10 +123,22 @@ def fmt_transpose(s: int) -> str:
 
 def fmt_stretch(f: float) -> str:
     # 1.025 -> "ts1p025"
+    """
+    Implementa la logica de fmt stretch dentro del pipeline del TFG.
+
+    Parametros principales: f.
+    """
+
     return "ts" + f"{f:.3f}".replace(".", "p")
 
 
 def make_out_path(src: Path, transpose: int, stretch: float) -> Path:
+    """
+    Implementa la logica de make out path dentro del pipeline del TFG.
+
+    Parametros principales: src, transpose, stretch.
+    """
+
     if PRESERVE_TREE:
         try:
             rel = src.relative_to(COMMON_ROOT)
@@ -131,10 +155,16 @@ def make_out_path(src: Path, transpose: int, stretch: float) -> Path:
 
 
 # =============================================================================
-# Escritura robusta (misma idea que en tu limpieza)
+# Escritura robusta equivalente al flujo de limpieza.
 # =============================================================================
 def sanitize_miditoolkit(m: MidiFile) -> None:
     # tempo
+    """
+    Implementa la logica de sanitize miditoolkit dentro del pipeline del TFG.
+
+    Parametros principales: m.
+    """
+
     m.tempo_changes = [tc for tc in _ls(m, "tempo_changes") if tc.time >= 0]
     m.tempo_changes.sort(key=lambda tc: tc.time)
     if not m.tempo_changes:
@@ -218,6 +248,12 @@ def rebuild_miditoolkit(m: MidiFile) -> MidiFile:
 
 
 def safe_dump_miditoolkit(m: MidiFile, out_path: Path, debug_tag: str = "") -> bool:
+    """
+    Implementa la logica de safe dump miditoolkit dentro del pipeline del TFG.
+
+    Parametros principales: m, out_path, debug_tag.
+    """
+
     try:
         sanitize_miditoolkit(m)
         m.dump(str(out_path))
@@ -240,6 +276,12 @@ def safe_dump_miditoolkit(m: MidiFile, out_path: Path, debug_tag: str = "") -> b
 # Augmentations
 # =============================================================================
 def piano_pitch_range(m: MidiFile) -> Optional[Tuple[int, int]]:
+    """
+    Implementa la logica de piano pitch range dentro del pipeline del TFG.
+
+    Parametros principales: m.
+    """
+
     pitches: List[int] = []
     for inst in _ls(m, "instruments"):
         if getattr(inst, "is_drum", False):
@@ -273,6 +315,12 @@ def transpose_inplace(m: MidiFile, semitones: int) -> bool:
 
 
 def _scale_time_int(x: int, factor: float) -> int:
+    """
+    Implementa la logica de  scale time int dentro del pipeline del TFG.
+
+    Parametros principales: x, factor.
+    """
+
     return int(round(x * factor))
 
 
@@ -322,12 +370,18 @@ def valid_pairs_for_file(m: MidiFile) -> List[Tuple[int, float]]:
 
 
 def sample_pairs(all_pairs: List[Tuple[int, float]], rng: random.Random) -> List[Tuple[int, float]]:
+    """
+    Implementa la logica de sample pairs dentro del pipeline del TFG.
+
+    Parametros principales: all_pairs, rng.
+    """
+
     if not all_pairs:
         return []
 
     pairs = list(all_pairs)
 
-    # fuerza incluir el original si procede
+    # Incluye explícitamente la variante sin transformación si procede.
     original = (0, 1.0)
     chosen: List[Tuple[int, float]] = []
     if INCLUDE_ORIGINAL and original in pairs:
@@ -356,6 +410,8 @@ def sample_pairs(all_pairs: List[Tuple[int, float]], rng: random.Random) -> List
 # Main
 # =============================================================================
 def main() -> None:
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     rng = random.Random(SEED)
 
     if not IN_CLEAN_DIR.exists():
@@ -475,5 +531,6 @@ def main() -> None:
     print(f"[OK] aug dir-> {OUT_AUG_DIR}")
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

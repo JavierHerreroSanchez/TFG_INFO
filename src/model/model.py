@@ -1,3 +1,9 @@
+"""
+Define componentes del modelo Transformer usado para generacion musical simbolica.
+
+Estas clases encapsulan la arquitectura neuronal que despues se reutiliza en preentrenamiento, fine-tuning y generacion.
+"""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
@@ -12,14 +18,16 @@ from src.model.blocks import MTConfig, MTEmbedding, MusicTransformerBlockPreLN
 # =============================================================================
 # Configuración de alto nivel del modelo (GPT decoder-only)
 # -----------------------------------------------------------------------------
-# En esta dataclass definimos los hiperparámetros “macro” del modelo:
+# En esta dataclass se definen los hiperparámetros “macro” del modelo:
 # - tamaño del vocabulario y longitud máxima (block_size)
 # - profundidad (n_layer) y dimensiones internas (d_model, n_heads, d_ff)
 # - decisiones de arquitectura (atar pesos, LayerNorm final)
-# Esta capa de configuración nos permite instanciar el modelo de forma reproducible.
+# Esta capa de configuración permite instanciar el modelo de forma reproducible.
 # =============================================================================
 @dataclass
 class MTModelConfig:
+    """Encapsula la arquitectura MTModelConfig usada por los experimentos."""
+
     vocab_size: int
     block_size: int
     n_layer: int = 6
@@ -35,7 +43,7 @@ class MTModelConfig:
 # =============================================================================
 # MusicTransformerGPT (decoder-only autoregresivo)
 # -----------------------------------------------------------------------------
-# Implementamos un Transformer únicamente con la parte del decoder :
+# Se implementa un Transformer únicamente con la parte del decoder:
 #   idx (B, T) -> embeddings (B, T, D) -> bloques (B, T, D) -> logits (B, T, V)
 # El entrenamiento de pretraining se plantea como modelado autorregresivo:
 # predecimos el siguiente token (next-token prediction) usando máscara causal
@@ -43,20 +51,26 @@ class MTModelConfig:
 # =============================================================================
 class MusicTransformerGPTlike(nn.Module):
     """
-    En esta clase implementamos un modelo decoder-only autorregresivo para música,
+    Modelo decoder-only autorregresivo para música,
     inspirado en la idea de combinar:
       - una pila de bloques tipo Music Transformer (atención relativa + máscara causal),
       - con el objetivo clásico de GPT: predecir el siguiente token en la secuencia.
 
     La interfaz principal es:
       idx (B, T) -> logits (B, T, V)
-    y opcionalmente devolvemos la loss.
+    y opcionalmente devuelve la loss.
     """
     def __init__(self, cfg: MTModelConfig):
+        """
+        Implementa la logica de   init   dentro del pipeline del TFG.
+
+        Parametros principales: cfg.
+        """
+
         super().__init__()
         self.cfg = cfg
 
-        # Convertimos la configuración macro (MTModelConfig) en la configuración
+        # Conversión de la configuración macro (MTModelConfig) en la configuración
         # de bloque (MTConfig) usada por los componentes importados desde `blocks`.
         # Aquí fijamos max_seq_len = block_size para el rango de embeddings relativos.
         bcfg = MTConfig(
@@ -73,18 +87,18 @@ class MusicTransformerGPTlike(nn.Module):
         # 1) Embedding de tokens (sin positional encoding absoluto).
         self.embed = MTEmbedding(cfg.vocab_size, cfg.d_model, cfg.dropout, debug=cfg.debug)
 
-        # batch_2) Pila de bloques decoder (Pre-LN) con atención relativa y FFN.
+        # 2) Pila de bloques decoder (Pre-LN) con atención relativa y FFN.
         self.blocks = nn.ModuleList([MusicTransformerBlockPreLN(bcfg) for _ in range(cfg.n_layer)])
 
-        # batch_3) Normalización final (opcional). En muchos Transformers, un LN final
-        #    mejora estabilidad y calidad; lo dejamos configurable.
+        # 3) Normalización final (opcional). En muchos Transformers, un LN final
+        #    mejora estabilidad y calidad; queda configurable.
         self.ln_f = nn.LayerNorm(cfg.d_model) if cfg.use_final_ln else nn.Identity()
 
         # 4) Proyección a vocabulario (capa “LM head”): (B, T, D) -> (B, T, V).
         self.lm_head = nn.Linear(cfg.d_model, cfg.vocab_size, bias=False)
 
-        # En caso de querer “weight tying”, compartimos los pesos del embedding (input)
-        # con los de la proyección de salida )output), con el objetivo de reducir parámetros
+        # En caso de usar weight tying, se comparten los pesos del embedding de entrada
+        # con la proyección de salida para reducir el número de parámetros.
         if cfg.tie_weights:
             self.lm_head.weight = self.embed.wte.weight
 
@@ -101,11 +115,17 @@ class MusicTransformerGPTlike(nn.Module):
     # =============================================================================
     # Inicialización de pesos
     # -----------------------------------------------------------------------------
-    # Aplicamos una inicialización gaussiana a capas lineales y embeddings, y
+    # Se aplica una inicialización gaussiana a capas lineales y embeddings, y
     # ponemos a cero los sesgos. Este patrón es habitual en implementaciones
     # tipo GPT para estabilizar el arranque del entrenamiento.
     # =============================================================================
     def _init_weights(self, module):
+        """
+        Implementa la logica de  init weights dentro del pipeline del TFG.
+
+        Parametros principales: module.
+        """
+
         if isinstance(module, nn.Linear):
             nn.init.normal_(module.weight, mean=0.0, std=0.02)
             if module.bias is not None:
@@ -121,11 +141,17 @@ class MusicTransformerGPTlike(nn.Module):
     #  - embebemos tokens
     #  - pasamos por la pila de bloques decoder
     #  - proyectamos a logits de vocabulario
-    # Si `targets` está presente, calculamos cross-entropy a nivel de token,
+        # Si `targets` está presente, se calcula cross-entropy a nivel de token,
     # tal y como se hace en next-token prediction (lenguaje/música).
     # =============================================================================
     def forward(self, idx: torch.Tensor, targets: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
         # En PyTorch, los índices de nn.Embedding deben ser enteros (torch.long).
+        """
+        Implementa la logica de forward dentro del pipeline del TFG.
+
+        Parametros principales: idx, targets.
+        """
+
         if idx.dtype != torch.long:
             raise TypeError(f"idx debe ser torch.long, recibido {idx.dtype}")
         B, T = idx.shape
@@ -138,11 +164,11 @@ class MusicTransformerGPTlike(nn.Module):
         # 1) Embedding: (B, T) -> (B, T, D)
         x = self.embed(idx)
 
-        # batch_2) Decoder stack: mantenemos la forma (B, T, D) a lo largo de los bloques.
+        # 2) Decoder stack: la forma (B, T, D) se mantiene a lo largo de los bloques.
         for blk in self.blocks:
             x = blk(x)
 
-        # batch_3) Normalización final (si se habilita).
+        # 3) Normalización final (si se habilita).
         x = self.ln_f(x)
 
         # 4) Logits sobre el vocabulario: (B, T, D) -> (B, T, V)
@@ -162,24 +188,27 @@ class MusicTransformerGPTlike(nn.Module):
     # En esta función generamos tokens iterativamente:
     #  - recortamos el contexto al último block_size
     #  - obtenemos logits del último timestep
-    #  - aplicamos temperatura y (opcionalmente) top-k sampling
+    #  - aplicar temperatura y (opcionalmente) top-k sampling
     #  - muestreamos el siguiente token y lo concatenamos al contexto
     # Este es el patrón estándar de muestreo en modelos GPT.
     # =============================================================================
     @torch.no_grad()
     def generate(self, idx: torch.Tensor, max_new_tokens: int, temperature: float = 1.0, top_k: Optional[int] = None) -> torch.Tensor:
+        """
+        Genera tokens de forma autorregresiva sin calcular gradientes.
+
+        En cada paso se recorta el contexto a `block_size`, se calculan los logits
+        del último token y se muestrea el siguiente id aplicando temperatura y,
+        opcionalmente, top-k sampling.
+        """
         self.eval()
-        """
-        Se hace en no_grad() para ahorrar memoria y tiempo. Esta función implementa la generación autoregresiva, calculando
-        el token p+1 dada una secuencia anterior de tokens.
-        """
         for _ in range(max_new_tokens):
-            # Nos quedamos con el contexto más reciente para respetar block_size.
+            # Conserva el contexto más reciente para respetar block_size.
             idx_cond = idx[:, -self.cfg.block_size:]
 
             # Inferencia: logits para todo el contexto; tomamos el último paso.
             logits, _ = self(idx_cond)
-            logits = logits[:, -1, :] / max(temperature, 1e-8) # El valor de temperature permite que el modelo sea más creativo o más conservador
+            logits = logits[:, -1, :] / max(temperature, 1e-8)
 
             # Top-k sampling: restringimos la masa de probabilidad a los k tokens
             # más probables antes del softmax.
@@ -187,7 +216,7 @@ class MusicTransformerGPTlike(nn.Module):
                 v, _ = torch.topk(logits, top_k)
                 logits[logits < v[:, [-1]]] = -float("inf")
 
-            # Convertimos a distribución y muestreamos el siguiente id.
+            # Conversión a distribución y muestreo del siguiente id.
             probs = torch.softmax(logits, dim=-1)
             next_id = torch.multinomial(probs, num_samples=1)
 

@@ -1,10 +1,16 @@
+"""
+Prepara la representacion simbolica que alimenta al modelo generativo.
+
+El script convierte corpus MIDI en indices, tokens o secuencias de ids para que las fases de entrenamiento trabajen con tensores reproducibles.
+"""
+
 from __future__ import annotations
 
 """
-tokenize_finetuning.py
+Tokenización del corpus de fine-tuning.
 
-Tokeniza recursivamente los MIDIs del fine-tuning (ya aumentados) usando el MISMO tokenizador
-REMI+BPE que en tokenize_corpus_parallel.py.
+El script recorre los MIDIs limpios/aumentados del corpus objetivo y genera JSONs
+con los ids del tokenizador REMI+BPE usado en el resto del proyecto.
 
 Entrada:
   <PROJECT_ROOT>/finetuning/finetuning_sonatas_aug/**/*.mid
@@ -12,11 +18,8 @@ Entrada:
 Salida:
   <PROJECT_ROOT>/data/interim/tokenized_finetuning/**/<mismo_rel_path>.json
 
-Características:
-- Paraleliza con ProcessPoolExecutor
-- Robustez:
-    * si un .json existe pero es inválido, lo borra y rehace
-    * mantiene una lista BAD_LIST para no reintentar MIDIs que fallaron antes
+Incluye paralelización con `ProcessPoolExecutor`, validación de JSONs existentes
+y una lista de MIDIs fallidos para evitar reintentos innecesarios.
 """
 
 import json
@@ -27,7 +30,8 @@ from pathlib import Path
 from miditok.utils import get_score_programs
 from symusic import Score
 
-from src.tokenization.deprecated.tokenizer_train import load_bpe_tokenizer
+from src.tokenization.indexing import build_token_index
+from src.tokenization.tokenizer_train import load_bpe_tokenizer
 
 # ============================================================
 # RUTAS
@@ -37,6 +41,7 @@ PROJECT_ROOT = THIS_FILE.parents[2]
 
 FINETUNING_MIDIS_DIR = PROJECT_ROOT / "data" / "finetuning_v2" / "finetuning_sonatas_aug"
 TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v2"
+INDEX_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_finetuning_v2.csv"
 
 BAD_LIST = PROJECT_ROOT / "tokenizer" / "bad_midis_finetuning.txt"
 TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v5.json"
@@ -52,6 +57,12 @@ TOKENIZER = None
 # UTILIDADES
 # ============================================================
 def find_midis(root: Path) -> list[Path]:
+    """
+    Implementa la logica de find midis dentro del pipeline del TFG.
+
+    Parametros principales: root.
+    """
+
     if not root.exists():
         raise FileNotFoundError(f"No existe el directorio: {root}")
     midi_paths = list(root.rglob("*.mid")) + list(root.rglob("*.midi"))
@@ -59,6 +70,12 @@ def find_midis(root: Path) -> list[Path]:
 
 
 def load_bad_set(path: Path) -> set[str]:
+    """
+    Carga los recursos necesarios para esta fase del pipeline.
+
+    Parametros principales: path.
+    """
+
     if not path.exists():
         return set()
 
@@ -74,6 +91,12 @@ def load_bad_set(path: Path) -> set[str]:
 
 
 def append_bad_lines(path: Path, lines: list[str]) -> None:
+    """
+    Implementa la logica de append bad lines dentro del pipeline del TFG.
+
+    Parametros principales: path, lines.
+    """
+
     if not lines:
         return
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -83,6 +106,12 @@ def append_bad_lines(path: Path, lines: list[str]) -> None:
 
 
 def json_has_valid_tokens(json_path: Path) -> bool:
+    """
+    Implementa la logica de json has valid tokens dentro del pipeline del TFG.
+
+    Parametros principales: json_path.
+    """
+
     if not json_path.exists() or not json_path.is_file():
         return False
 
@@ -100,6 +129,12 @@ def json_has_valid_tokens(json_path: Path) -> bool:
 
 
 def build_output_json_path(midi_path: Path) -> Path:
+    """
+    Construye una estructura auxiliar usada por el resto del flujo.
+
+    Parametros principales: midi_path.
+    """
+
     try:
         rel = midi_path.relative_to(FINETUNING_MIDIS_DIR)
     except ValueError:
@@ -111,6 +146,8 @@ def build_output_json_path(midi_path: Path) -> Path:
 # INIT por worker
 # ============================================================
 def worker_init():
+    """Implementa la logica de worker init dentro del pipeline del TFG."""
+
     global TOKENIZER
     if not TOKENIZER_PATH.exists():
         raise FileNotFoundError(f"No existe el tokenizador: {TOKENIZER_PATH}")
@@ -144,7 +181,7 @@ def process_one(midi_str: str) -> tuple[str, str, str]:
 
         score = Score(midi_path)
         tokens = TOKENIZER.encode(score)
-        # Si encode() devuelve lista con un único stream (caso típico piano), lo dejamos plano
+        # Si encode() devuelve lista con un único stream (caso típico piano), se aplana.
         if isinstance(tokens, list) and len(tokens) == 1:
             tokens = tokens[0]
 
@@ -179,6 +216,8 @@ def process_one(midi_str: str) -> tuple[str, str, str]:
 # MAIN
 # ============================================================
 def main():
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     TOKENS_DIR.mkdir(parents=True, exist_ok=True)
     BAD_LIST.parent.mkdir(parents=True, exist_ok=True)
 
@@ -228,7 +267,9 @@ def main():
     print(f"OK:   {ok}")
     print(f"SKIP: {skip}")
     print(f"BAD:  {bad}")
+    build_token_index(TOKENS_DIR, INDEX_CSV, PROJECT_ROOT)
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

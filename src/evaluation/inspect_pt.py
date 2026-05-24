@@ -1,33 +1,45 @@
+"""
+Utilidad de inspección de checkpoints.
+
+Reconstruye el modelo desde la configuración guardada en el checkpoint y muestra
+metadatos básicos, número de parámetros y estado serializado.
+"""
+
 from pathlib import Path
+
 import torch
 
 from src.model.model import MusicTransformerGPTlike, MTModelConfig
-
 
 # =============================================================================
 # CONFIGURACIÓN
 # =============================================================================
 
-# Ruta del modelo .pt
 CKPT_PATH = Path(r"../../output/checkpoints/pretraining_v2/best.pt")
 
-# "cpu" suele ser suficiente para inspeccionar
 DEVICE = "cpu"
 
-# True si quieres ver también las primeras claves del state_dict
 SHOW_STATE_KEYS = True
 
 
 # =============================================================================
-# CÓDIGO
+# FUNCIONES
 # =============================================================================
 
 def format_num_params(model: torch.nn.Module) -> str:
+    """
+    Implementa la logica de format num params dentro del pipeline del TFG.
+
+    Parametros principales: model.
+    """
+
     n = sum(p.numel() for p in model.parameters())
     return f"{n:,}"
 
 
 def main():
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     if not CKPT_PATH.exists():
         raise FileNotFoundError(f"No existe el checkpoint: {CKPT_PATH.resolve()}")
 
@@ -63,7 +75,7 @@ def main():
     for k, v in cfg_dict.items():
         print(f"{k}: {v}")
 
-    # Reconstrucción del modelo desde la cfg del checkpoint
+    # Reconstrucción del modelo desde la configuración guardada.
     cfg = MTModelConfig(**cfg_dict)
     model = MusicTransformerGPTlike(cfg)
 
@@ -118,5 +130,6 @@ def main():
     print("=" * 90)
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

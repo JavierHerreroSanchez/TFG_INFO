@@ -158,7 +158,7 @@ data/deprecated
 data/bin
 output/checkpoints/finetuning/samples
 output/checkpoints/finetuning_v2/samples
-
+output/checkpoints/finetuning_v2/step_*
 
 # Spyder project settings
 .spyderproject

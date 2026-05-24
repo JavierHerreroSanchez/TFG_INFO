@@ -10,9 +10,9 @@ Objetivo:
 - Sacar un informe legible y una vista previa de tokens.
 
 Uso típico:
-- Lanzas el script después de tokenizar.
-- Revisa el resumen global.
-- Si quieres mirar casos concretos, sube SAMPLE_FILES o SAMPLE_LIMIT.
+- Ejecutar el script despues de tokenizar.
+- Comprobar el resumen global.
+- Para inspeccionar casos concretos, aumentar SAMPLE_FILES o SAMPLE_LIMIT.
 """
 
 from __future__ import annotations
@@ -42,17 +42,41 @@ TOKENS_PREVIEW = 80
 # =============================================================================
 
 def list_json_files(root: Path) -> list[Path]:
+    """
+    Implementa la logica de list json files dentro del pipeline del TFG.
+
+    Parametros principales: root.
+    """
+
     return sorted(p for p in root.rglob("*.json") if p.is_file())
 
 
 def family(tok: str) -> str:
+    """
+    Implementa la logica de family dentro del pipeline del TFG.
+
+    Parametros principales: tok.
+    """
+
     return tok.split("_", 1)[0] if "_" in tok else tok
 
 
 def is_track_ac(tok: str) -> bool:
+    """
+    Implementa la logica de is track ac dentro del pipeline del TFG.
+
+    Parametros principales: tok.
+    """
+
     return tok.startswith("ACTrack")
 
 def is_bar_ac(tok: str) -> bool:
+    """
+    Implementa la logica de is bar ac dentro del pipeline del TFG.
+
+    Parametros principales: tok.
+    """
+
     return tok.startswith("ACBar")
 
 
@@ -76,7 +100,7 @@ def normalize_loaded_tokens(tokenizer: REMI, path: Path) -> list[list[str]]:
         tokenizer.complete_sequence(seq, complete_bytes=False)
         return [seq.tokens or []]
 
-    # Caso batch_2: varias pistas => lista de listas
+    # Caso 2: varias pistas => lista de listas
     if ids and isinstance(ids[0], list):
         tracks_tokens: list[list[str]] = []
         for ids_track in ids:
@@ -93,6 +117,12 @@ def normalize_loaded_tokens(tokenizer: REMI, path: Path) -> list[list[str]]:
 
 
 def inspect_track(tokens: list[str]) -> dict[str, Any]:
+    """
+    Muestra informacion de diagnostico para revisar artefactos del proyecto.
+
+    Parametros principales: tokens.
+    """
+
     fams = Counter(family(t) for t in tokens)
 
     first_bar_idx = next((i for i, t in enumerate(tokens) if t == "Bar_None"), None)
@@ -143,6 +173,8 @@ def inspect_track(tokens: list[str]) -> dict[str, Any]:
 
 
 def main() -> None:
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     print(f"[INFO] TOKENIZER = {TOKENIZER_PATH}")
     print(f"[INFO] TOKENS_DIR = {TOKENS_DIR}")
 
@@ -218,5 +250,6 @@ def main() -> None:
         print(f"  {fam:<20} {cnt}")
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

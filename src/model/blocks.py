@@ -1,3 +1,9 @@
+"""
+Define componentes del modelo Transformer usado para generacion musical simbolica.
+
+Estas clases encapsulan la arquitectura neuronal que despues se reutiliza en preentrenamiento, fine-tuning y generacion.
+"""
+
 from __future__ import annotations
 
 import math
@@ -18,13 +24,15 @@ import torch.nn.functional as F
 # =============================================================================
 @dataclass
 class MTConfig:
+    """Agrupa la configuracion de MTConfig para hacer reproducibles los experimentos."""
+
     vocab_size: int
     d_model: int
     n_heads: int
     max_seq_len: int            # Longitud máxima de secuencia (equivalente a block_size)
     dropout: float = 0.1        # Establecemos a 0.1, siendo el dropout típico
     bias: bool = True
-    d_ff: Optional[int] = None  # Si es None, usamos la heurística típica d_ff = 4*d_model
+    d_ff: Optional[int] = None  # Si es None, se aplica la heurística típica d_ff = 4*d_model
     debug: bool = False
 
 
@@ -33,16 +41,22 @@ class MTConfig:
 # -----------------------------------------------------------------------------
 # En el Music Transformer (Huang et al., 2018), la información de posición puede
 # incorporarse mediante atención relativa; por ello, aquí únicamente embebemos
-# tokens y aplicamos dropout, sin sumar codificación posicional absoluta.
+# tokens y aplicar dropout, sin sumar codificación posicional absoluta.
 # =============================================================================
 class MTEmbedding(nn.Module):
     """
-    En esta clase convertimos ids de tokens en vectores de dimensión d_model.
-    Seguimos el planteamiento del Music Transformer: aplicamos embedding + dropout,
-    y evitamos un positional encoding absoluto en esta etapa para no solapar el
+    Convierte ids de tokens en vectores de dimensión d_model.
+    Sigue el planteamiento del Music Transformer: embedding + dropout,
+    evitando un positional encoding absoluto en esta etapa para no solapar el
     mecanismo de atención relativa.
     """
     def __init__(self, vocab_size: int, d_model: int, dropout: float, debug: bool = False):
+        """
+        Implementa la logica de   init   dentro del pipeline del TFG.
+
+        Parametros principales: vocab_size, d_model, dropout, debug.
+        """
+
         super().__init__()
         self.wte = nn.Embedding(vocab_size, d_model)
         self.drop = nn.Dropout(dropout)
@@ -50,6 +64,12 @@ class MTEmbedding(nn.Module):
         self._printed = False
 
     def forward(self, idx: torch.Tensor) -> torch.Tensor:
+        """
+        Implementa la logica de forward dentro del pipeline del TFG.
+
+        Parametros principales: idx.
+        """
+
         x = self.wte(idx)   # (B,T,D)
         x = self.drop(x)
         if self.debug and not self._printed:
@@ -62,14 +82,14 @@ class MTEmbedding(nn.Module):
 # Skewing (reindexado absoluto-relativo -> absoluto-absoluto)
 # -----------------------------------------------------------------------------
 # Este procedimiento corresponde al “skewing” descrito en Music Transformer
-# (Huang et al., 2018, Sección batch_3.4.1). Su objetivo es transformar una matriz
+# (Huang et al., 2018, Sección 3.4.1). Su objetivo es transformar una matriz
 # indexada por (posición_absoluta, distancia_relativa) en otra indexada por
 # (posición_absoluta, posición_absoluta), alineando cada logit relativo con el
-# par (i, j) correcto sin materializar un tensor O(T^batch_2 * d_head).
+# par (i, j) correcto sin materializar un tensor O(T^2 * d_head).
 # =============================================================================
 def skew(QEr: torch.Tensor) -> torch.Tensor:
     """
-    Aplicamos el “skewing” del Music Transformer para alinear logits relativos.
+    Aplica el “skewing” del Music Transformer para alinear logits relativos.
 
     Entradas:
       QEr: (B, H, T, 2T-1)
@@ -86,19 +106,19 @@ def skew(QEr: torch.Tensor) -> torch.Tensor:
     B, H, T, M = QEr.shape
     assert M == 2 * T - 1, f"Esperaba 2T-1, recibido {M} con T={T}"
 
-    # 1) Añadimos una columna dummy a la izquierda para habilitar el corrimiento.
+    # 1) Columna dummy a la izquierda para habilitar el corrimiento.
     x = F.pad(QEr, (1, 0)).contiguous()  # (B, H, T, 2T)
 
-    # batch_2) Reinterpretamos para desplazar los elementos por filas/columnas.
+    # 2) Reinterpretamos para desplazar los elementos por filas/columnas.
     x = x.view(B, H, 2 * T, T)  # (B, H, 2T, T)
 
-    # batch_3) Eliminamos la primera fila “extra” para completar el corrimiento.
+    # 3) Eliminamos la primera fila “extra” para completar el corrimiento.
     x = x[:, :, 1:, :].contiguous()  # (B, H, 2T-1, T)
 
     # 4) Volvemos a la forma original en la que la última dim es “2T-1”.
     x = x.view(B, H, T, 2 * T - 1)  # (B, H, T, 2T-1)
 
-    # 5) Nos quedamos con las T columnas que corresponden a j en [0, T-1].
+    # 5) Conserva las T columnas que corresponden a j en [0, T-1].
     x = x[:, :, :, :T]  # (B, H, T, T)
 
     return x
@@ -107,11 +127,11 @@ def skew(QEr: torch.Tensor) -> torch.Tensor:
 # =============================================================================
 # Relative Masked Multi-Head Self-Attention (global, causal)
 # -----------------------------------------------------------------------------
-# Implementamos la autoatención con posiciones relativas (Music Transformer).
+# Autoatención con posiciones relativas (Music Transformer).
 # La puntuación de atención combina:
 #   - contenido: QK^T
 #   - término relativo: S_rel = skew(Q * Er^T)
-# y aplicamos máscara causal para evitar atender al futuro (modelo autoregresivo).
+# y máscara causal para evitar atención al futuro (modelo autoregresivo).
 # =============================================================================
 class RelativeMaskedMHA(nn.Module):
     """
@@ -125,9 +145,15 @@ class RelativeMaskedMHA(nn.Module):
       S_rel = skew(Q * Er^T),
     y Er contiene embeddings para distancias relativas en el rango [-T+1, T-1]
     (almacenadas como 2T-1 embeddings).
-    Además, aplicamos máscara causal para garantizar generación autorregresiva.
+    Además, aplica máscara causal para garantizar generación autorregresiva.
     """
     def __init__(self, cfg: MTConfig):
+        """
+        Implementa la logica de   init   dentro del pipeline del TFG.
+
+        Parametros principales: cfg.
+        """
+
         super().__init__()
         assert cfg.d_model % cfg.n_heads == 0
         self.cfg = cfg
@@ -154,7 +180,7 @@ class RelativeMaskedMHA(nn.Module):
         """
         x: (B, T, D)
 
-        Devolvemos:
+        Devuelve:
           y: (B, T, D)
           attn: (B, H, T, T) si return_attn=True (útil para debugear/inspección/visualización)
         """
@@ -167,7 +193,7 @@ class RelativeMaskedMHA(nn.Module):
                 f"[RelMHA] x={tuple(x.shape)} heads={self.n_heads} d_head={self.d_head} max_seq_len={self.cfg.max_seq_len}")
             self._printed = True
 
-        # 1) Calculamos Q, K, V y los reordenamos a (B, H, T, Dh).
+        # 1) Cálculo de Q, K, V y reordenación a (B, H, T, Dh).
         qkv = self.qkv(x)  # (B, T, 3D)
         q, k, v = qkv.split(D, dim=-1)  # (B, T, D) cada uno
 
@@ -175,10 +201,10 @@ class RelativeMaskedMHA(nn.Module):
         k = k.view(B, T, self.n_heads, self.d_head).transpose(1, 2)  # (B, H, T, Dh)
         v = v.view(B, T, self.n_heads, self.d_head).transpose(1, 2)  # (B, H, T, Dh)
 
-        # batch_2) Término de contenido (estándar): QK^T.
+        # 2) Término de contenido (estándar): QK^T.
         content = q @ k.transpose(-2, -1)  # (B, H, T, T)
 
-        # batch_3) Término relativo (Music Transformer):
+        # 3) Término relativo (Music Transformer):
         center = self.cfg.max_seq_len - 1
         start = center - (T - 1)
         end = center + (T - 1) + 1
@@ -186,7 +212,7 @@ class RelativeMaskedMHA(nn.Module):
         Er_flat = self.rel_emb.weight[start:end]  # (2T-1, H*Dh)
         Er = Er_flat.view(2 * T - 1, self.n_heads, self.d_head).permute(1, 2, 0)  # (H,2T-1,Dh)
 
-        # Proyectamos Q contra Er^T -> (B, H, T, 2T-1) y aplicamos skew.
+        # Proyección de Q contra Er^T -> (B, H, T, 2T-1) y aplicación de skew.
         QEr = torch.matmul(q, Er)  # (B,H,T,2T-1)
         rel = skew(QEr)  # (B,H,T,T)
 
@@ -225,13 +251,19 @@ class RelativeMaskedMHA(nn.Module):
 # =============================================================================
 class FeedForward(nn.Module):
     """
-    En esta clase implementamos el bloque FFN por posición del Transformer.
+    Bloque FFN por posición del Transformer.
 
     A diferencia de la atención, que mezcla información entre posiciones, el FFN
     actúa de manera independiente en cada timestep: aplica dos proyecciones lineales
     (con una no linealidad intermedia) sobre la dimensión de características.
     """
     def __init__(self, cfg: MTConfig):
+        """
+        Implementa la logica de   init   dentro del pipeline del TFG.
+
+        Parametros principales: cfg.
+        """
+
         super().__init__()
         d_ff = cfg.d_ff if cfg.d_ff is not None else 4 * cfg.d_model
         self.fc1 = nn.Linear(cfg.d_model, d_ff, bias=cfg.bias)
@@ -242,6 +274,12 @@ class FeedForward(nn.Module):
         self._printed = False
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
+        """
+        Implementa la logica de forward dentro del pipeline del TFG.
+
+        Parametros principales: x.
+        """
+
         if self.cfg.debug and not self._printed:
             print(f"[FFN] x={tuple(x.shape)} d_ff={self.fc1.out_features}")
             self._printed = True
@@ -256,7 +294,7 @@ class FeedForward(nn.Module):
 # =============================================================================
 # Bloque completo tipo Music Transformer (Pre-LN)
 # -----------------------------------------------------------------------------
-# Usamos la variante Pre-LayerNorm (común en implementaciones modernas):
+# Variante Pre-LayerNorm (común en implementaciones modernas):
 #   x = x + Dropout( Attn( LN(x) ) )
 #   x = x + Dropout(  FFN( LN(x) ) )
 # Esta formulación suele estabilizar el entrenamiento en Transformers profundos.
@@ -265,13 +303,19 @@ class MusicTransformerBlockPreLN(nn.Module):
     """
     En este bloque combinamos:
       1) Autoatención (con posiciones relativas y máscara causal)
-      batch_2) Feed-Forward (FFN)
+      2) Feed-Forward (FFN)
     y envolvemos ambos submódulos con residual connections.
 
-    Elegimos el esquema Pre-LN (normalizar antes de cada subcapa), que suele mejorar
+    El esquema Pre-LN (normalizar antes de cada subcapa) suele mejorar
     la estabilidad numérica y el flujo de gradiente en comparación con Post-LN.
     """
     def __init__(self, cfg: MTConfig):
+        """
+        Implementa la logica de   init   dentro del pipeline del TFG.
+
+        Parametros principales: cfg.
+        """
+
         super().__init__()
         self.cfg = cfg
         self.ln1 = nn.LayerNorm(cfg.d_model)
@@ -285,10 +329,16 @@ class MusicTransformerBlockPreLN(nn.Module):
 
     def forward(self, x: torch.Tensor, return_attn: bool = False):
         # Subcapa 1: atención (primero normalizamos, luego atendemos, luego residual).
+        """
+        Implementa la logica de forward dentro del pipeline del TFG.
+
+        Parametros principales: x, return_attn.
+        """
+
         attn_out, attn_w = self.attn(self.ln1(x), return_attn=return_attn)
         x = x + self.resid_drop1(attn_out)
 
-        # Subcapa batch_2: FFN (mismo patrón: LN -> FFN -> dropout -> residual).
+        # Subcapa 2: FFN (mismo patrón: LN -> FFN -> dropout -> residual).
         ffn_out = self.ffn(self.ln2(x))
         x = x + self.resid_drop2(ffn_out)
 

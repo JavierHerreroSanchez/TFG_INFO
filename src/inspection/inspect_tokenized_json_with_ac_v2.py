@@ -2,21 +2,12 @@
 # -*- coding: utf-8 -*-
 
 """
-inspect_tokenized_json_with_ac_v2.py
+Inspección de JSONs tokenizados con attribute controls.
 
-Qué hace este script:
-1. Carga cada JSON tokenizado.
-batch_2. Usa el campo `source_midi` guardado dentro del JSON para volver a tokenizar el MIDI
-   con el MISMO tokenizer.
-batch_3. Hace dos tokenizaciones:
-   - encode_ids=True  -> para comprobar que los ids guardados coinciden exactamente.
-   - encode_ids=False -> para obtener tokens legibles (AC, Chord, Bar, Rest, etc.).
-4. Muestra un resumen por archivo y un resumen global.
-
-Por qué esta versión evita el KeyError:
-- No intenta reconstruir tokens base a partir de ids BPE con una ruta frágil.
-- En su lugar, usa el `source_midi` y la metadata guardada en el JSON.
-- Así inspeccionas la tokenización real de forma robusta.
+El script carga cada JSON tokenizado, usa el campo `source_midi` para volver a
+tokenizar el MIDI con el mismo tokenizador y compara los ids guardados con los
+ids reconstruidos. También obtiene una representación legible de tokens base
+para comprobar AC, acordes, barras, silencios y otros eventos musicales.
 
 Importante:
 - Este script asume que el JSON fue generado por tokenize_maestro_with_ac.py
@@ -39,7 +30,7 @@ from symusic import Score
 
 
 # =============================================================================
-# CONFIGURA ESTAS RUTAS
+# CONFIGURACIÓN
 # =============================================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -47,8 +38,8 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 TOKENIZER_PATH = (PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v4.json").resolve()
 TOKENS_DIR = (PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe_v2").resolve()
 
-# Limita archivos para prueba rápida
-SAMPLE_LIMIT = None  # pon None para todos
+# Límite opcional de archivos a inspeccionar. None procesa todos.
+SAMPLE_LIMIT = None
 TOKENS_PREVIEW = 200
 
 
@@ -57,24 +48,54 @@ TOKENS_PREVIEW = 200
 # =============================================================================
 
 def list_json_files(root: Path) -> list[Path]:
+    """
+    Implementa la logica de list json files dentro del pipeline del TFG.
+
+    Parametros principales: root.
+    """
+
     return sorted(p for p in root.rglob("*.json") if p.is_file())
 
 
 def token_family(tok: str) -> str:
+    """
+    Implementa la logica de token family dentro del pipeline del TFG.
+
+    Parametros principales: tok.
+    """
+
     if "_" not in tok:
         return tok
     return tok.split("_", 1)[0]
 
 
 def is_track_ac(tok: str) -> bool:
+    """
+    Implementa la logica de is track ac dentro del pipeline del TFG.
+
+    Parametros principales: tok.
+    """
+
     return tok.startswith("ACTrack")
 
 
 def is_bar_ac(tok: str) -> bool:
+    """
+    Implementa la logica de is bar ac dentro del pipeline del TFG.
+
+    Parametros principales: tok.
+    """
+
     return tok.startswith("ACBar")
 
 
 def normalize_tokseq_list(tokseq_or_list: Any) -> list[Any]:
+    """
+    Implementa la logica de normalize tokseq list dentro del pipeline del TFG.
+
+    Parametros principales: tokseq_or_list.
+    """
+
     if isinstance(tokseq_or_list, list):
         return tokseq_or_list
     return [tokseq_or_list]
@@ -118,6 +139,12 @@ def normalize_attr_indexes(attr: Any) -> dict[int, dict[int, Any]] | None:
 
 
 def compare_ids(saved_ids_nested: list[list[int]], generated_ids_nested: list[list[int]]) -> tuple[bool, str]:
+    """
+    Implementa la logica de compare ids dentro del pipeline del TFG.
+
+    Parametros principales: saved_ids_nested, generated_ids_nested.
+    """
+
     if len(saved_ids_nested) != len(generated_ids_nested):
         return False, f"n_streams distinto: saved={len(saved_ids_nested)} generated={len(generated_ids_nested)}"
 
@@ -133,6 +160,12 @@ def compare_ids(saved_ids_nested: list[list[int]], generated_ids_nested: list[li
 
 
 def inspect_track(tokens: list[str]) -> dict[str, Any]:
+    """
+    Muestra informacion de diagnostico para revisar artefactos del proyecto.
+
+    Parametros principales: tokens.
+    """
+
     fams = Counter(token_family(t) for t in tokens)
 
     bar_positions = [i for i, t in enumerate(tokens) if t == "Bar_None"]
@@ -172,6 +205,12 @@ def inspect_track(tokens: list[str]) -> dict[str, Any]:
 
 
 def load_json(path: Path) -> dict[str, Any]:
+    """
+    Carga los recursos necesarios para esta fase del pipeline.
+
+    Parametros principales: path.
+    """
+
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -181,6 +220,8 @@ def load_json(path: Path) -> dict[str, Any]:
 # =============================================================================
 
 def main() -> None:
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     print(f"[INFO] TOKENIZER = {TOKENIZER_PATH}")
     print(f"[INFO] TOKENS_DIR = {TOKENS_DIR}")
 
@@ -236,7 +277,7 @@ def main() -> None:
 
             exact_match, exact_msg = compare_ids(saved_ids_nested, gen_ids_nested)
 
-            # batch_2) Re-tokenización legible sin BPE
+            # 2) Re-tokenización legible sin BPE
             seq_plain = tokenizer.encode(
                 score_pre,
                 encode_ids=False,
@@ -307,5 +348,6 @@ def main() -> None:
         print(f"  {fam:<20} {cnt}")
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

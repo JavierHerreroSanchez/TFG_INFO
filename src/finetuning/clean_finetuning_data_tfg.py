@@ -1,5 +1,5 @@
 """
-Limpieza y filtrado de un corpus MIDI (piano) para fine-tuning
+Limpieza y filtrado del corpus MIDI de piano para fine-tuning.
 
 Objetivo
 --------
@@ -10,8 +10,8 @@ Los datasets MIDI masivos (p. ej., GiantMIDI) suelen contener:
 
 Este script recorre recursivamente un directorio de MIDIs y genera un corpus "clean":
   1) Filtrado (hard gate) por calidad mínima (duración, nº de notas, densidad, ratio de silencio).
-  batch_2) Recorte del silencio inicial y compresión de gaps largos.
-  batch_3) Split opcional si se detecta un gap muy grande (p. ej., dos piezas pegadas).
+  2) Recorte del silencio inicial y compresión de gaps largos.
+  3) Split opcional si se detecta un gap muy grande (p. ej., dos piezas pegadas).
   4) Escritura robusta (evita errores de mido por tiempos negativos).
 
 Salidas
@@ -33,14 +33,14 @@ import pandas as pd
 from miditoolkit import MidiFile, Instrument, Note, TempoChange, ControlChange, PitchBend
 
 # =============================================================================
-# RUTAS (MANDATORIO: al principio)
+# RUTAS
 # =============================================================================
 INPUT_ROOT_DIR = Path(r"../../data/finetuning/finetuning_sonatas_raw")
 OUT_CLEAN_DIR = Path(r"../../data/finetuning/finetuning_sonatas_clean")
 OUT_CLEAN_INDEX_CSV = Path(r"/output/generation_finetuning_tfg_first/finetuning_clean_index.csv")
 OUT_REPORT_CSV = Path(r"/output/generation_finetuning_tfg_first/finetuning_clean_report.csv")
 
-# Mantener la estructura de carpetas de INPUT_ROOT_DIR en OUT_CLEAN_DIR
+# Mantiene la estructura de carpetas de INPUT_ROOT_DIR en OUT_CLEAN_DIR.
 PRESERVE_TREE = True
 COMMON_ROOT = INPUT_ROOT_DIR
 
@@ -94,16 +94,34 @@ TINY_FILE_BYTES = 10_000
 # =============================================================================
 
 def _ls(obj, attr: str):
+    """
+    Implementa la logica de  ls dentro del pipeline del TFG.
+
+    Parametros principales: obj, attr.
+    """
+
     x = getattr(obj, attr, None)
     return x if x is not None else []
 
 
 def list_midis_recursively(root: Path) -> List[Path]:
+    """
+    Implementa la logica de list midis recursively dentro del pipeline del TFG.
+
+    Parametros principales: root.
+    """
+
     exts = {".mid", ".midi"}
     return sorted([p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in exts])
 
 
 def canonical_hash(items: List[Tuple[int, int, int, int]]) -> str:
+    """
+    Implementa la logica de canonical hash dentro del pipeline del TFG.
+
+    Parametros principales: items.
+    """
+
     h = hashlib.md5()
     for s, e, p, v in items:
         h.update(s.to_bytes(4, "little", signed=False))
@@ -114,6 +132,12 @@ def canonical_hash(items: List[Tuple[int, int, int, int]]) -> str:
 
 
 def content_hash(m: MidiFile) -> str:
+    """
+    Implementa la logica de content hash dentro del pipeline del TFG.
+
+    Parametros principales: m.
+    """
+
     items = []
 
     # Notas
@@ -149,6 +173,12 @@ def content_hash(m: MidiFile) -> str:
 # =============================================================================
 
 def build_tick_to_sec_map(m: MidiFile) -> Tuple[List[int], List[float], List[float], int]:
+    """
+    Construye una estructura auxiliar usada por el resto del flujo.
+
+    Parametros principales: m.
+    """
+
     tpq = m.ticks_per_beat or 480
     tcs = sorted(_ls(m, "tempo_changes"), key=lambda x: x.time)
 
@@ -173,6 +203,12 @@ def build_tick_to_sec_map(m: MidiFile) -> Tuple[List[int], List[float], List[flo
 
 
 def tick_to_sec(tick: int, tempo_ticks: List[int], tempo_bpms: List[float], sec_at_tick: List[float], tpq: int) -> float:
+    """
+    Implementa la logica de tick to sec dentro del pipeline del TFG.
+
+    Parametros principales: tick, tempo_ticks, tempo_bpms, sec_at_tick, tpq.
+    """
+
     lo, hi = 0, len(tempo_ticks) - 1
     while lo < hi:
         mid = (lo + hi + 1) // 2
@@ -186,6 +222,12 @@ def tick_to_sec(tick: int, tempo_ticks: List[int], tempo_bpms: List[float], sec_
 
 
 def sec_to_tick(sec: float, tempo_ticks: List[int], tempo_bpms: List[float], sec_at_tick: List[float], tpq: int) -> int:
+    """
+    Implementa la logica de sec to tick dentro del pipeline del TFG.
+
+    Parametros principales: sec, tempo_ticks, tempo_bpms, sec_at_tick, tpq.
+    """
+
     lo, hi = 0, len(sec_at_tick) - 1
     while lo < hi:
         mid = (lo + hi + 1) // 2
@@ -271,6 +313,12 @@ def compute_gaps_seconds(m: MidiFile) -> Tuple[float, float, List[Tuple[float, f
 
 
 def compute_quality_features(m: MidiFile, src: Path) -> Dict:
+    """
+    Implementa la logica de compute quality features dentro del pipeline del TFG.
+
+    Parametros principales: m, src.
+    """
+
     ns_full = notes_full(m)
     first_onset_s, duration_s, gaps = compute_gaps_seconds(m)
 
@@ -374,7 +422,7 @@ def suspect_score(feat: Dict, dup_seen: bool) -> Tuple[int, List[str]]:
 
 
 # =============================================================================
-# Limpieza temporal
+# Limpieza de estructura temporal.
 # =============================================================================
 
 def shift_all_events(m: MidiFile, shift_ticks: int) -> None:
@@ -435,6 +483,12 @@ def compress_gaps_inplace(m: MidiFile) -> int:
     cuts.sort(key=lambda x: x[0])
 
     def total_shift(t: int) -> int:
+        """
+        Implementa la logica de total shift dentro del pipeline del TFG.
+
+        Parametros principales: t.
+        """
+
         s = 0
         for ct, rt in cuts:
             if t > ct:
@@ -490,6 +544,12 @@ def split_on_clear_gap(m: MidiFile) -> List[MidiFile]:
     last_tick = max(e for _, e in ns)
 
     def clone_segment(start_tick: int, end_tick: int) -> MidiFile:
+        """
+        Implementa la logica de clone segment dentro del pipeline del TFG.
+
+        Parametros principales: start_tick, end_tick.
+        """
+
         m2 = MidiFile()
         m2.ticks_per_beat = m.ticks_per_beat
 
@@ -628,6 +688,12 @@ def safe_dump_miditoolkit(m: MidiFile, out_path: Path, debug_tag: str = "") -> b
 # =============================================================================
 
 def make_out_path(src: Path, part_idx: int) -> Path:
+    """
+    Implementa la logica de make out path dentro del pipeline del TFG.
+
+    Parametros principales: src, part_idx.
+    """
+
     if PRESERVE_TREE:
         try:
             rel = src.relative_to(COMMON_ROOT)
@@ -643,6 +709,8 @@ def make_out_path(src: Path, part_idx: int) -> Path:
 
 
 def main():
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     if not INPUT_ROOT_DIR.exists():
         raise FileNotFoundError(f"No existe INPUT_ROOT_DIR: {INPUT_ROOT_DIR}")
 
@@ -689,7 +757,7 @@ def main():
                     continue
                 seen_hash[h] = str(src)
 
-        # batch_2) Métricas + filtrado de calidad
+        # 2) Métricas + filtrado de calidad
         feat = compute_quality_features(midi, src)
         row.update(feat)
 
@@ -706,7 +774,7 @@ def main():
             report_rows.append(row)
             continue
 
-        # batch_3) Limpieza temporal
+        # 3) Limpieza de estructura temporal.
         actions: List[str] = []
 
         if feat["first_onset_s"] > LEADING_SILENCE_TRIM_S:
@@ -775,5 +843,6 @@ def main():
     print(f"[OK] clean dir -> {OUT_CLEAN_DIR}")
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

@@ -9,7 +9,7 @@ Carga un JSON tokenizado por MidiTok y muestra secuencialmente:
 - id
 - token legible
 
-Pensado para tus JSONs tokenizados con tokenizer_REMI_BPE_v4.json.
+Pensado para JSONs tokenizados con tokenizer_REMI_BPE_v4.json.
 
 Soporta:
 - JSON con "ids": [int, int, ...]
@@ -43,11 +43,11 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 TOKENIZER_PATH = (PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v5.json").resolve()
 
-# Cambia esta ruta al JSON que quieras inspeccionar
+# Ruta del JSON a inspeccionar.
 JSON_PATH = (PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe_v2" / "ariamidi"  / "aa" / "000002_0.json"
 ).resolve()
 
-# Si el JSON tiene varios streams, elige cuál imprimir
+# Stream a imprimir cuando el JSON contiene varios streams.
 STREAM_INDEX = 0
 
 # None => imprime todos
@@ -62,6 +62,12 @@ PRINT_METADATA = True
 # =============================================================================
 
 def load_json(path: Path) -> dict[str, Any]:
+    """
+    Carga los recursos necesarios para esta fase del pipeline.
+
+    Parametros principales: path.
+    """
+
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
@@ -90,8 +96,8 @@ def ids_to_tokens(tokenizer: REMI, ids: list[int]) -> list[str]:
     """
     Convierte ids a tokens legibles de forma robusta:
     1) crea TokSequence(ids=...)
-    batch_2) decode_token_ids => deshace BPE / modelo
-    batch_3) complete_sequence => rellena .tokens
+    2) decode_token_ids => deshace BPE / modelo
+    3) complete_sequence => rellena .tokens
     """
     seq = TokSequence(ids=ids)
     tokenizer.decode_token_ids(seq)
@@ -108,6 +114,8 @@ def ids_to_tokens(tokenizer: REMI, ids: list[int]) -> list[str]:
 # =============================================================================
 
 def main() -> None:
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     print(f"[INFO] TOKENIZER_PATH = {TOKENIZER_PATH}")
     print(f"[INFO] JSON_PATH      = {JSON_PATH}")
 
@@ -175,8 +183,9 @@ def main() -> None:
     if limit < len(tokens):
         print("\n" + "=" * 100)
         print(f"[INFO] Mostrados {limit} de {len(tokens)} tokens.")
-        print("Pon MAX_TOKENS = None para imprimirlos todos.")
+        print("Establecer MAX_TOKENS = None para imprimirlos todos.")
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

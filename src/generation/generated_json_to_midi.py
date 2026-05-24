@@ -1,4 +1,11 @@
 
+"""
+Conversión de una muestra generada en JSON a MIDI.
+
+El script carga una secuencia de ids generada por el modelo, reconstruye la
+secuencia de tokens con el tokenizador REMI+BPE y exporta el resultado como MIDI.
+"""
+
 from pathlib import Path
 import json
 
@@ -12,9 +19,7 @@ from miditok import REMI, TokSequence
 # Tokenizer entrenado/guardado con MidiTok
 TOKENIZER_PATH = Path(r"../../tokenizer/tokenizer_REMI_BPE_v3.json")
 
-# JSON generado por evaluation.py
-
-#GENERATED_JSON_PATH = Path(r"C:\Users\herre\PycharmProjects\TFG_INFO\output\generation_v2\best_test\sample_009.json")
+# JSON generado por el script de generación.
 GENERATED_JSON_PATH = Path(r"/output/generation_finetuning_tfg_first/sample_009.json")
 # Campo del JSON a convertir
 # Opciones típicas:
@@ -22,10 +27,8 @@ GENERATED_JSON_PATH = Path(r"/output/generation_finetuning_tfg_first/sample_009.
 #   - "generated_tokens" -> solo lo generado
 #   - "prompt_tokens" -> solo el prompt
 JSON_TOKEN_FIELD = "full_generated_tokens"
-# JSON_TOKEN_FIELD = "full_ids"
 
 # MIDI de salida
-#OUTPUT_MIDI_PATH = Path(r"../../output/generation_v2/best_test/generated_from_json9.mid")
 OUTPUT_MIDI_PATH = Path(r"../../output/generation_finetuning_tfg_first/generated_from_json9.mid")
 
 # Si True, elimina PAD / BOS / MASK y un EOS final si aparece
@@ -40,6 +43,12 @@ PREVIEW_LEN = 80
 # =============================================================================
 
 def load_generated_ids(json_path: Path, token_field: str) -> list[int]:
+    """
+    Carga los recursos necesarios para esta fase del pipeline.
+
+    Parametros principales: json_path, token_field.
+    """
+
     if not json_path.exists():
         raise FileNotFoundError(f"No existe el JSON generado: {json_path.resolve()}")
 
@@ -59,6 +68,12 @@ def load_generated_ids(json_path: Path, token_field: str) -> list[int]:
 
 
 def load_tokenizer(tokenizer_path: Path) -> REMI:
+    """
+    Carga los recursos necesarios para esta fase del pipeline.
+
+    Parametros principales: tokenizer_path.
+    """
+
     if not tokenizer_path.exists():
         raise FileNotFoundError(f"No existe el tokenizer: {tokenizer_path.resolve()}")
 
@@ -140,14 +155,14 @@ def decode_json_to_midi(
     """
     output_midi_path = Path(output_midi_path)
 
-    # Si te pasan una carpeta o una ruta sin sufijo, añadimos nombre de archivo
+    # Si se recibe una carpeta o una ruta sin sufijo, se añade nombre de archivo.
     if output_midi_path.suffix.lower() != ".mid":
         output_midi_path = output_midi_path / "generated_from_json.mid"
 
     output_midi_path = output_midi_path.resolve()
     output_midi_path.parent.mkdir(parents=True, exist_ok=True)
 
-    print(f"[DEBUG] Ruta final de salida MIDI: {output_midi_path}")
+    print(f"[INFO] Ruta final de salida MIDI: {output_midi_path}")
 
     seq = TokSequence(ids=token_ids, are_ids_encoded=True)
 
@@ -165,6 +180,8 @@ def decode_json_to_midi(
 # =============================================================================
 
 def main():
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     print("=" * 90)
     print("JSON -> MIDI CON MIDITOK")
     print("=" * 90)
@@ -199,9 +216,9 @@ def main():
     except Exception as e:
         print("\n[ERROR] Falló la conversión JSON -> MIDI.")
         print("Pistas de depuración:")
-        print("  - Comprueba que GENERATED_JSON_PATH apunta a un JSON generado con ESTE tokenizer.")
-        print("  - Comprueba si debes usar 'full_generated_tokens' o 'generated_tokens'.")
-        print("  - Si el JSON ya estuviera en ids básicos y no BPE, cambia are_ids_encoded=True a False.")
+        print("  - Verificar que GENERATED_JSON_PATH apunta a un JSON generado con ESTE tokenizer.")
+        print("  - Verificar si corresponde usar 'full_generated_tokens' o 'generated_tokens'.")
+        print("  - Si el JSON ya estuviera en ids básicos y no BPE, establecer are_ids_encoded=True a False.")
         raise
 
     print("\n" + "=" * 90)
@@ -218,5 +235,6 @@ def main():
     print(f"[INFO] Nº tracks en score: {num_tracks}")
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

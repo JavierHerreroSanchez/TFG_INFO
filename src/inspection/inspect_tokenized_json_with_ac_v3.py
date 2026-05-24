@@ -52,15 +52,33 @@ WINDOW_RADIUS = 20          # tokens alrededor de eventos importantes
 # =============================================================================
 
 def list_json_files(root: Path) -> list[Path]:
+    """
+    Implementa la logica de list json files dentro del pipeline del TFG.
+
+    Parametros principales: root.
+    """
+
     return sorted(p for p in root.rglob("*.json") if p.is_file())
 
 
 def load_json(path: Path) -> dict[str, Any]:
+    """
+    Carga los recursos necesarios para esta fase del pipeline.
+
+    Parametros principales: path.
+    """
+
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 
 
 def normalize_saved_ids(ids: Any) -> list[list[int]]:
+    """
+    Implementa la logica de normalize saved ids dentro del pipeline del TFG.
+
+    Parametros principales: ids.
+    """
+
     if not isinstance(ids, list):
         raise TypeError(f"'ids' debe ser list, no {type(ids)}")
 
@@ -77,6 +95,12 @@ def normalize_saved_ids(ids: Any) -> list[list[int]]:
 
 
 def normalize_attr_indexes(attr: Any) -> dict[int, dict[int, Any]] | None:
+    """
+    Implementa la logica de normalize attr indexes dentro del pipeline del TFG.
+
+    Parametros principales: attr.
+    """
+
     if not attr:
         return None
 
@@ -90,12 +114,24 @@ def normalize_attr_indexes(attr: Any) -> dict[int, dict[int, Any]] | None:
 
 
 def normalize_tokseq_list(tokseq_or_list: Any) -> list[Any]:
+    """
+    Implementa la logica de normalize tokseq list dentro del pipeline del TFG.
+
+    Parametros principales: tokseq_or_list.
+    """
+
     if isinstance(tokseq_or_list, list):
         return tokseq_or_list
     return [tokseq_or_list]
 
 
 def compare_ids(saved_ids_nested: list[list[int]], generated_ids_nested: list[list[int]]) -> tuple[bool, str]:
+    """
+    Implementa la logica de compare ids dentro del pipeline del TFG.
+
+    Parametros principales: saved_ids_nested, generated_ids_nested.
+    """
+
     if len(saved_ids_nested) != len(generated_ids_nested):
         return False, f"n_streams distinto: saved={len(saved_ids_nested)} generated={len(generated_ids_nested)}"
 
@@ -111,24 +147,54 @@ def compare_ids(saved_ids_nested: list[list[int]], generated_ids_nested: list[li
 
 
 def token_family(tok: str) -> str:
+    """
+    Implementa la logica de token family dentro del pipeline del TFG.
+
+    Parametros principales: tok.
+    """
+
     if "_" not in tok:
         return tok
     return tok.split("_", 1)[0]
 
 
 def is_track_ac(tok: str) -> bool:
+    """
+    Implementa la logica de is track ac dentro del pipeline del TFG.
+
+    Parametros principales: tok.
+    """
+
     return tok.startswith("ACTrack")
 
 
 def is_bar_ac(tok: str) -> bool:
+    """
+    Implementa la logica de is bar ac dentro del pipeline del TFG.
+
+    Parametros principales: tok.
+    """
+
     return tok.startswith("ACBar")
 
 
 def pct(num: int, den: int) -> float:
+    """
+    Implementa la logica de pct dentro del pipeline del TFG.
+
+    Parametros principales: num, den.
+    """
+
     return 0.0 if den == 0 else (100.0 * num / den)
 
 
 def format_top(counter: Counter, total: int, top_k: int = TOP_K_FAMILIES) -> list[str]:
+    """
+    Implementa la logica de format top dentro del pipeline del TFG.
+
+    Parametros principales: counter, total, top_k.
+    """
+
     out = []
     for fam, cnt in counter.most_common(top_k):
         out.append(f"{fam:<18} {cnt:>6}  ({pct(cnt, total):6.2f}%)")
@@ -136,6 +202,12 @@ def format_top(counter: Counter, total: int, top_k: int = TOP_K_FAMILIES) -> lis
 
 
 def first_positions(tokens: list[str], pred, limit: int = FIRST_N_SPECIAL_POS) -> list[int]:
+    """
+    Implementa la logica de first positions dentro del pipeline del TFG.
+
+    Parametros principales: tokens, pred, limit.
+    """
+
     out = []
     for i, tok in enumerate(tokens):
         if pred(tok):
@@ -146,6 +218,12 @@ def first_positions(tokens: list[str], pred, limit: int = FIRST_N_SPECIAL_POS) -
 
 
 def windows_around_positions(tokens: list[str], positions: list[int], radius: int = WINDOW_RADIUS, max_windows: int = 5) -> list[str]:
+    """
+    Implementa la logica de windows around positions dentro del pipeline del TFG.
+
+    Parametros principales: tokens, positions, radius, max_windows.
+    """
+
     windows = []
     for pos in positions[:max_windows]:
         lo = max(0, pos - radius)
@@ -159,10 +237,22 @@ def windows_around_positions(tokens: list[str], positions: list[int], radius: in
 
 
 def family_counter(tokens: list[str]) -> Counter:
+    """
+    Implementa la logica de family counter dentro del pipeline del TFG.
+
+    Parametros principales: tokens.
+    """
+
     return Counter(token_family(t) for t in tokens)
 
 
 def specific_token_stats(tokens: list[str]) -> dict[str, int]:
+    """
+    Implementa la logica de specific token stats dentro del pipeline del TFG.
+
+    Parametros principales: tokens.
+    """
+
     fams = family_counter(tokens)
     return {
         "Bar": fams.get("Bar", 0),
@@ -183,6 +273,12 @@ def specific_token_stats(tokens: list[str]) -> dict[str, int]:
 
 
 def ac_family_counter(tokens: list[str]) -> Counter:
+    """
+    Implementa la logica de ac family counter dentro del pipeline del TFG.
+
+    Parametros principales: tokens.
+    """
+
     c = Counter()
     for tok in tokens:
         if tok.startswith("ACTrack"):
@@ -193,6 +289,12 @@ def ac_family_counter(tokens: list[str]) -> Counter:
 
 
 def inspect_track(tokens: list[str]) -> dict[str, Any]:
+    """
+    Muestra informacion de diagnostico para revisar artefactos del proyecto.
+
+    Parametros principales: tokens.
+    """
+
     fams = family_counter(tokens)
     specific = specific_token_stats(tokens)
     acs = ac_family_counter(tokens)
@@ -246,6 +348,12 @@ def inspect_track(tokens: list[str]) -> dict[str, Any]:
 
 
 def print_section(title: str) -> None:
+    """
+    Implementa la logica de print section dentro del pipeline del TFG.
+
+    Parametros principales: title.
+    """
+
     print("\n" + "-" * 100)
     print(title)
     print("-" * 100)
@@ -256,6 +364,8 @@ def print_section(title: str) -> None:
 # =============================================================================
 
 def main() -> None:
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     print(f"[INFO] TOKENIZER = {TOKENIZER_PATH}")
     print(f"[INFO] TOKENS_DIR = {TOKENS_DIR}")
 
@@ -467,5 +577,6 @@ def main() -> None:
         print(f"{k:<24} {v:>8}  ({pct(v, total_global):6.2f}%)")
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

@@ -1,3 +1,9 @@
+"""
+Genera muestras musicales y las convierte entre formatos intermedios y MIDI.
+
+El objetivo es transformar la salida autoregresiva del modelo en artefactos audibles y evaluables.
+"""
+
 from __future__ import annotations
 
 import argparse
@@ -10,6 +16,7 @@ import torch
 import torch.nn.functional as F
 
 from src.finetuning.finetuning import (
+    INDEX_CSV,
     TOKENS_DIR,
     ANCHOR,
     TOKEN_FIELD,
@@ -23,14 +30,30 @@ from src.finetuning.finetuning import (
     DEVICE,
     EVAL_BATCHES,
     CKPT_DIR,
-    seed_all,
-    split_train_val_test,
-    resolve_json_paths,
-    prepare_cache_and_splits,
+    cache_config,
+)
+from src.training import common as training_common
+from src.training.common import (
     MemmapRandomCropDataset,
     evaluate,
+    resolve_json_paths,
+    seed_all,
+    split_train_val_test,
 )
 from src.model.model import MusicTransformerGPTlike, MTModelConfig
+
+
+def prepare_cache_and_splits():
+    """Implementa la logica de prepare cache and splits dentro del pipeline del TFG."""
+
+    return training_common.prepare_cache_and_splits(cache_config())
+
+"""
+Generación autorregresiva a partir del modelo de fine-tuning.
+
+Se conserva como script activo para reproducir el flujo de generación asociado
+a la configuración base de fine-tuning.
+"""
 
 
 # =============================================================================
@@ -41,17 +64,16 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 #   - misma resolución de JSON tokenizados
 #   - mismo caché binario memmap para loss teacher-forced
 #   - misma carga de checkpoints best.pt / last.pt
-#
 # Tiene dos usos principales:
 #   1) Evaluar loss en train / val / test con random crops sobre memmap.
-#   batch_2) Generar continuaciones autorregresivas a partir de prompts tomados de
+#   2) Generar continuaciones autorregresivas a partir de prompts tomados de
 #      MIDIs YA TOKENIZADOS en los JSON del split correspondiente.
 # =============================================================================
 
 DEFAULT_PROMPT_LEN = 100
 DEFAULT_MIN_NEW_TOKENS = 1400
 DEFAULT_MAX_NEW_TOKENS = 2100
-DEFAULT_TEMPERATURE = 0.9 # default a 0.9
+DEFAULT_TEMPERATURE = 0.9
 DEFAULT_TOP_K = 100
 DEFAULT_NUM_SAMPLES = 5
 DEFAULT_RANDOM_OFFSET = True
@@ -59,7 +81,7 @@ DEFAULT_STOP_ON_EOS = True
 SEED = 1984
 
 INDEX_CSV = Path(r"/output/generation_finetuning_tfg_first/finetuning_aug_index.csv")
-OUTPUT_DIR = Path("../../output/deprecated/finetuning/evaluation/batch_2").resolve()
+OUTPUT_DIR = Path("../../output/generation_finetuning_tfg_first").resolve()
 
 def get_model_block_size(model: torch.nn.Module) -> int:
     """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerGPTlike."""
@@ -105,12 +127,18 @@ def load_checkpoint_and_model(ckpt_name: str, device: str) -> Tuple[MusicTransfo
 # =============================================================================
 # Split real por ficheros JSON (no memmap)
 # -----------------------------------------------------------------------------
-# Para generación condicionada queremos seleccionar una pieza/tokenized JSON real
+# Para generación condicionada se selecciona una pieza/tokenized JSON real.
 # del split train/val/test, tomar un prompt y dejar que el modelo continúe.
 # Esto es diferente del memmap aleatorio del entrenamiento.
 # =============================================================================
 
 def get_split_files(split: str) -> List[Path]:
+    """
+    Implementa la logica de get split files dentro del pipeline del TFG.
+
+    Parametros principales: split.
+    """
+
     if split not in {"train", "val", "test"}:
         raise ValueError("split debe ser 'train', 'val' o 'test'.")
 
@@ -186,6 +214,12 @@ def has_valid_prompt_start(
         require_after_eos: bool,
         eos_token_id: int | None,
 ) -> bool:
+    """
+    Implementa la logica de has valid prompt start dentro del pipeline del TFG.
+
+    Parametros principales: ids, prompt_len, require_after_eos, eos_token_id.
+    """
+
     return len(find_valid_prompt_starts(
         ids=ids,
         prompt_len=prompt_len,
@@ -241,6 +275,12 @@ def choose_prompt_from_song(
 # =============================================================================
 
 def build_memmap_loader(split: str, block_size: int):
+    """
+    Construye una estructura auxiliar usada por el resto del flujo.
+
+    Parametros principales: split, block_size.
+    """
+
     cache = prepare_cache_and_splits()
     dtype = cache["dtype"]
 
@@ -261,6 +301,12 @@ def build_memmap_loader(split: str, block_size: int):
 
 
 def evaluate_split_loss(model: torch.nn.Module, split: str, block_size: int, device: str, max_batches: int):
+    """
+    Evalua las salidas generadas mediante metricas del proyecto.
+
+    Parametros principales: model, split, block_size, device, max_batches.
+    """
+
     loader = build_memmap_loader(split, block_size)
     loss = evaluate(model, loader, device=device, max_batches=max_batches)
     print(f"[LOSS] split={split} | loss={loss:.4f}")
@@ -401,6 +447,12 @@ def save_generation_result(
         top_k: int | None,
         do_sample: bool,
 ):
+    """
+    Guarda resultados intermedios o finales en disco.
+
+    Parametros principales: out_dir, sample_idx, split, ckpt_name, source_path, prompt_start, prompt_tokens, gt_continuation, full_generated_tokens, hit_eos, temperature, top_k, do_sample.
+    """
+
     out_dir.mkdir(parents=True, exist_ok=True)
 
     generated_only = full_generated_tokens[len(prompt_tokens):]
@@ -448,6 +500,12 @@ def run_generation(
         stop_on_eos: bool,
         device: str,
 ):
+    """
+    Implementa la logica de run generation dentro del pipeline del TFG.
+
+    Parametros principales: model, ckpt_name, split, prompt_len, max_new_tokens, min_new_tokens, num_samples, random_offset, temperature, top_k, do_sample, stop_on_eos, device.
+    """
+
     files = get_split_files(split)
 
     valid_files = []
@@ -556,6 +614,8 @@ def run_generation(
 # =============================================================================
 
 def parse_args():
+    """Implementa la logica de parse args dentro del pipeline del TFG."""
+
     parser = argparse.ArgumentParser(
         description="Evaluación y generación para el pretraining del Music Transformer GPT-like."
     )
@@ -570,13 +630,13 @@ def parse_args():
     parser.add_argument("--num-samples", type=int, default=DEFAULT_NUM_SAMPLES)
     parser.add_argument("--temperature", type=float, default=DEFAULT_TEMPERATURE)
     parser.add_argument("--top-k", type=int, default=DEFAULT_TOP_K)
-    parser.add_argument("--greedy", action="store_true", help="Usa argmax en lugar de sampling.")
+    parser.add_argument("--greedy", action="store_true", help="Activa argmax en lugar de sampling.")
 
     parser.add_argument(
         "--random-offset",
         action=argparse.BooleanOptionalAction,
         default=DEFAULT_RANDOM_OFFSET,
-        help="Usa un offset aleatorio válido para el prompt."
+        help="Activa un offset aleatorio valido para el prompt."
     )
 
     parser.add_argument(
@@ -603,6 +663,8 @@ def parse_args():
 
 
 def main():
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     args = parse_args()
     seed_all(SEED)
 
@@ -643,5 +705,6 @@ def main():
             device=args.device,
         )
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()

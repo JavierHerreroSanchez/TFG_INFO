@@ -1,3 +1,10 @@
+"""
+Inspección comparativa de cachés binarias de entrenamiento.
+
+Muestra tamaño, presencia de splits y metadatos de varias cachés candidatas para
+verificar qué corpus tokenizado se está usando en el entrenamiento.
+"""
+
 from pathlib import Path
 import json
 
@@ -11,6 +18,12 @@ BIN_NAMES = ["train.bin", "val.bin", "test.bin", "meta.json"]
 
 
 def human_size(num_bytes: int) -> str:
+    """
+    Implementa la logica de human size dentro del pipeline del TFG.
+
+    Parametros principales: num_bytes.
+    """
+
     units = ["B", "KB", "MB", "GB", "TB"]
     size = float(num_bytes)
     for unit in units:
@@ -20,6 +33,12 @@ def human_size(num_bytes: int) -> str:
 
 
 def inspect_cache_dir(cache_dir: Path) -> None:
+    """
+    Muestra informacion de diagnostico para revisar artefactos del proyecto.
+
+    Parametros principales: cache_dir.
+    """
+
     print("\n" + "=" * 80)
     print(f"CACHE_DIR: {cache_dir}")
     print("=" * 80)
@@ -86,9 +105,12 @@ def inspect_cache_dir(cache_dir: Path) -> None:
 
 
 def main():
+    """Punto de entrada del script cuando se ejecuta desde consola."""
+
     for cache_dir in CANDIDATE_DIRS:
         inspect_cache_dir(cache_dir)
 
 
+# Ejecucion directa del script.
 if __name__ == "__main__":
     main()
