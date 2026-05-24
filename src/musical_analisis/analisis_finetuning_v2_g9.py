@@ -9,8 +9,11 @@ import pretty_midi
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
 
-MIDI_PATH = Path(r'../../output/generation_finetuning_tfg_second/generated_from_json9.mid')
-OUT_PATH = Path(r'../musical_analisis/musical_analisis_finetuning_v2_generated_from_json9.png')
+SCRIPT_DIR = Path(__file__).resolve().parent
+ROOT_DIR = SCRIPT_DIR.parents[1]
+
+MIDI_PATH = ROOT_DIR / "output" / "generation_finetuning_tfg_second" / "generated_from_json9.mid"
+OUT_PATH = SCRIPT_DIR / "musical_analisis_finetuning_v2_generated_from_json9.png"
 
 # Estructura formal aproximada, en segundos.
 SECTIONS = [
@@ -83,11 +86,6 @@ def draw_subsections(ax, subsections, y):
         )
 
 def collect_notes(pm):
-    """
-    Implementa la logica de collect notes dentro del pipeline del TFG.
-
-    Parametros principales: pm.
-    """
 
     notes = []
     for inst_i, inst in enumerate(pm.instruments):
@@ -107,11 +105,6 @@ def collect_notes(pm):
 
 
 def top_voice_note_ids(notes, start, end):
-    """
-    Implementa la logica de top voice note ids dentro del pipeline del TFG.
-
-    Parametros principales: notes, start, end.
-    """
 
     candidates = [
         (i, n) for i, n in enumerate(notes)
@@ -137,11 +130,6 @@ def top_voice_note_ids(notes, start, end):
 
 
 def lower_note_ids(notes, start, end, pitch_max=60):
-    """
-    Implementa la logica de lower note ids dentro del pipeline del TFG.
-
-    Parametros principales: notes, start, end, pitch_max.
-    """
 
     return {
         i for i, n in enumerate(notes)
@@ -153,7 +141,6 @@ def build_note_annotations(notes):
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: notes.
     """
 
     note_styles = {}

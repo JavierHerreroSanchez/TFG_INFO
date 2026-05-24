@@ -6,15 +6,6 @@ Los resultados producidos aqui sirven para justificar experimentalmente la calid
 
 from __future__ import annotations
 
-"""
-Evaluación simbólica de MIDIs generados durante el pretraining.
-
-El script extrae métricas musicales con MusPy y métricas auxiliares propias para
-comparar las piezas generadas con el corpus de referencia. La puntuación combina
-una parte reference-based, que mide cercanía estadística al corpus, y una parte
-reference-free, que penaliza patrones musicalmente problemáticos.
-"""
-
 import json
 import math
 import os
@@ -34,17 +25,19 @@ from scipy.stats import entropy
 # ============================================================
 # CONFIGURACIÓN
 # ============================================================
-GENERATED_DIR = Path(r"../../output/generation_pretraining_tfg_second")
-OUT_DIR = Path(r"../../output/generation_pretraining_tfg_second/midi_eval")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+GENERATED_DIR = PROJECT_ROOT / "output" / "generation_pretraining_tfg_second"
+OUT_DIR = PROJECT_ROOT / "output" / "generation_pretraining_tfg_second" / "midi_eval"
 
 # Modo de referencia:
 # - "single_dir": usa REFERENCE_DIR
 # - "mixed_random": mezcla MAESTRO y ARIA aleatoriamente
 REFERENCE_MODE = "mixed_random"
 
-REFERENCE_DIR = Path(r"../../data/pretraining_raw/maestro-v3.0.0")
-MAESTRO_DIR = Path(r"../../data/pretraining_raw/maestro-v3.0.0")
-ARIA_DIR = Path(r"../../data/pretraining_raw/ariamidi")
+REFERENCE_DIR = PROJECT_ROOT / "data" / "pretraining_raw" / "maestro-v3.0.0"
+MAESTRO_DIR = PROJECT_ROOT / "data" / "pretraining_raw" / "maestro-v3.0.0"
+ARIA_DIR = PROJECT_ROOT / "data" / "pretraining_raw" / "ariamidi"
 
 RECURSIVE = True
 
@@ -117,11 +110,6 @@ PER_PIECE_COLUMNS = [
 # UTILIDADES GENERALES
 # ============================================================
 def find_midi_files(root: Path, recursive: bool = True) -> List[Path]:
-    """
-    Implementa la logica de find midi files dentro del pipeline del TFG.
-
-    Parametros principales: root, recursive.
-    """
 
     pats = ["*.mid", "*.midi"]
     files: List[Path] = []
@@ -131,11 +119,6 @@ def find_midi_files(root: Path, recursive: bool = True) -> List[Path]:
 
 
 def safe_float(x, default=np.nan) -> float:
-    """
-    Implementa la logica de safe float dentro del pipeline del TFG.
-
-    Parametros principales: x, default.
-    """
 
     try:
         if x is None:
@@ -149,11 +132,6 @@ def safe_float(x, default=np.nan) -> float:
 
 
 def piece_label(score: float) -> str:
-    """
-    Implementa la logica de piece label dentro del pipeline del TFG.
-
-    Parametros principales: score.
-    """
 
     for th, label in QUAL_LABELS:
         if score >= th:
@@ -162,32 +140,17 @@ def piece_label(score: float) -> str:
 
 
 def sanitize_text(parts: List[str]) -> str:
-    """
-    Implementa la logica de sanitize text dentro del pipeline del TFG.
-
-    Parametros principales: parts.
-    """
 
     return " | ".join(p for p in parts if p)
 
 
 def finite_values(arr: np.ndarray) -> np.ndarray:
-    """
-    Implementa la logica de finite values dentro del pipeline del TFG.
-
-    Parametros principales: arr.
-    """
 
     arr = np.asarray(arr, dtype=float)
     return arr[np.isfinite(arr)]
 
 
 def finite_stats(arr: np.ndarray) -> Tuple[float, float, int]:
-    """
-    Implementa la logica de finite stats dentro del pipeline del TFG.
-
-    Parametros principales: arr.
-    """
 
     arr = finite_values(arr)
     if arr.size == 0:
@@ -198,7 +161,6 @@ def finite_stats(arr: np.ndarray) -> Tuple[float, float, int]:
 
 
 def choose_reference_files() -> List[Path]:
-    """Implementa la logica de choose reference files dentro del pipeline del TFG."""
 
     if REFERENCE_MODE == "single_dir":
         files = find_midi_files(REFERENCE_DIR, RECURSIVE)
@@ -247,12 +209,7 @@ def choose_reference_files() -> List[Path]:
 # CONVERSION Y FILTRADO MUSPY
 # ============================================================
 def load_music(path: Path) -> muspy.Music:
-    """
-    Carga los recursos necesarios para esta fase del pipeline.
-
-    Parametros principales: path.
-    """
-
+    """Carga un MIDI como objeto MusPy con resolución conocida."""
     music = muspy.read_midi(path)
     if music.resolution is None:
         music.resolution = MUSPY_RESOLUTION
@@ -260,11 +217,6 @@ def load_music(path: Path) -> muspy.Music:
 
 
 def keep_only_piano_tracks(music: muspy.Music) -> muspy.Music:
-    """
-    Implementa la logica de keep only piano tracks dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     piano_programs = set(range(0, 8))
     kept = []
@@ -280,11 +232,6 @@ def keep_only_piano_tracks(music: muspy.Music) -> muspy.Music:
 # FEATURES CUSTOM MINIMAS
 # ============================================================
 def iter_notes(music: muspy.Music):
-    """
-    Implementa la logica de iter notes dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     for track in music.tracks:
         for note in track.notes:
@@ -292,11 +239,6 @@ def iter_notes(music: muspy.Music):
 
 
 def all_notes_sorted(music: muspy.Music) -> List:
-    """
-    Implementa la logica de all notes sorted dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     notes = list(iter_notes(music))
     notes.sort(key=lambda n: (n.time, n.pitch, getattr(n, "velocity", 64)))
@@ -304,11 +246,6 @@ def all_notes_sorted(music: muspy.Music) -> List:
 
 
 def pitch_histogram_entropy_custom(music: muspy.Music) -> float:
-    """
-    Implementa la logica de pitch histogram entropy custom dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     notes = all_notes_sorted(music)
     if not notes:
@@ -321,11 +258,6 @@ def pitch_histogram_entropy_custom(music: muspy.Music) -> float:
 
 
 def consecutive_pitch_repetition_ratio_custom(music: muspy.Music) -> float:
-    """
-    Implementa la logica de consecutive pitch repetition ratio custom dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     notes = all_notes_sorted(music)
     if len(notes) < 2:
@@ -342,11 +274,6 @@ def consecutive_pitch_repetition_ratio_custom(music: muspy.Music) -> float:
 
 
 def note_durations_beats(music: muspy.Music) -> np.ndarray:
-    """
-    Implementa la logica de note durations beats dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     notes = all_notes_sorted(music)
     if not notes:
@@ -356,11 +283,6 @@ def note_durations_beats(music: muspy.Music) -> np.ndarray:
 
 
 def note_velocities(music: muspy.Music) -> np.ndarray:
-    """
-    Implementa la logica de note velocities dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     notes = all_notes_sorted(music)
     if not notes:
@@ -369,11 +291,6 @@ def note_velocities(music: muspy.Music) -> np.ndarray:
 
 
 def duration_beats_custom(music: muspy.Music) -> float:
-    """
-    Implementa la logica de duration beats custom dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     end_time = 0
     for n in all_notes_sorted(music):
@@ -383,65 +300,35 @@ def duration_beats_custom(music: muspy.Music) -> float:
 
 
 def n_notes_custom(music: muspy.Music) -> float:
-    """
-    Implementa la logica de n notes custom dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     return float(len(all_notes_sorted(music)))
 
 
 def mean_velocity_custom(music: muspy.Music) -> float:
-    """
-    Implementa la logica de mean velocity custom dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     arr = note_velocities(music)
     return float(np.mean(arr)) if arr.size else np.nan
 
 
 def std_velocity_custom(music: muspy.Music) -> float:
-    """
-    Implementa la logica de std velocity custom dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     arr = note_velocities(music)
     return float(np.std(arr)) if arr.size else np.nan
 
 
 def mean_duration_beats_custom(music: muspy.Music) -> float:
-    """
-    Implementa la logica de mean duration beats custom dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     arr = note_durations_beats(music)
     return float(np.mean(arr)) if arr.size else np.nan
 
 
 def std_duration_beats_custom(music: muspy.Music) -> float:
-    """
-    Implementa la logica de std duration beats custom dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     arr = note_durations_beats(music)
     return float(np.std(arr)) if arr.size else np.nan
 
 
 def pitch_histogram_12(music: muspy.Music) -> np.ndarray:
-    """
-    Implementa la logica de pitch histogram 12 dentro del pipeline del TFG.
-
-    Parametros principales: music.
-    """
 
     notes = all_notes_sorted(music)
     hist = np.zeros(12, dtype=float)
@@ -457,11 +344,6 @@ def pitch_histogram_12(music: muspy.Music) -> np.ndarray:
 # WRAPPERS METRICAS MUSPY
 # ============================================================
 def muspy_metric_safe(name: str, music: muspy.Music) -> float:
-    """
-    Implementa la logica de muspy metric safe dentro del pipeline del TFG.
-
-    Parametros principales: name, music.
-    """
 
     fn = getattr(muspy.metrics, name)
     try:
@@ -476,11 +358,6 @@ def muspy_metric_safe(name: str, music: muspy.Music) -> float:
 # EXTRACCION FEATURES POR PIEZA
 # ============================================================
 def extract_features(path: Path) -> Dict[str, float | str]:
-    """
-    Implementa la logica de extract features dentro del pipeline del TFG.
-
-    Parametros principales: path.
-    """
 
     music = load_music(path)
     music = keep_only_piano_tracks(music)
@@ -515,7 +392,6 @@ def build_feature_table(files: List[Path], tag: str) -> pd.DataFrame:
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: files, tag.
     """
 
     total = len(files)
@@ -548,11 +424,6 @@ def build_feature_table(files: List[Path], tag: str) -> pd.DataFrame:
 # OA / KLD CON SCIPY + HISTOGRAMAS
 # ============================================================
 def normalized_hist_pair(a: np.ndarray, b: np.ndarray, bins: int | str = "auto") -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Implementa la logica de normalized hist pair dentro del pipeline del TFG.
-
-    Parametros principales: a, b, bins.
-    """
 
     a = finite_values(a)
     b = finite_values(b)
@@ -582,11 +453,6 @@ def normalized_hist_pair(a: np.ndarray, b: np.ndarray, bins: int | str = "auto")
 
 
 def overlap_area(p: np.ndarray, q: np.ndarray) -> float:
-    """
-    Implementa la logica de overlap area dentro del pipeline del TFG.
-
-    Parametros principales: p, q.
-    """
 
     if p.size == 0 or q.size == 0:
         return np.nan
@@ -594,11 +460,6 @@ def overlap_area(p: np.ndarray, q: np.ndarray) -> float:
 
 
 def kld_real_to_gen(p_real: np.ndarray, q_gen: np.ndarray) -> float:
-    """
-    Implementa la logica de kld real to gen dentro del pipeline del TFG.
-
-    Parametros principales: p_real, q_gen.
-    """
 
     if p_real.size == 0 or q_gen.size == 0:
         return np.nan
@@ -606,11 +467,6 @@ def kld_real_to_gen(p_real: np.ndarray, q_gen: np.ndarray) -> float:
 
 
 def global_distribution_report(ref_df: pd.DataFrame, gen_df: pd.DataFrame, features: List[str]) -> pd.DataFrame:
-    """
-    Implementa la logica de global distribution report dentro del pipeline del TFG.
-
-    Parametros principales: ref_df, gen_df, features.
-    """
 
     rows = []
     for feat in features:
@@ -662,11 +518,6 @@ def select_reference_pool(duration_beats: float, ref_df: pd.DataFrame) -> pd.Dat
 
 
 def pitch_hist_similarity_from_json(hist_json_a: str, hist_json_b: str) -> float:
-    """
-    Implementa la logica de pitch hist similarity from json dentro del pipeline del TFG.
-
-    Parametros principales: hist_json_a, hist_json_b.
-    """
 
     a = np.asarray(json.loads(hist_json_a), dtype=float)
     b = np.asarray(json.loads(hist_json_b), dtype=float)
@@ -713,11 +564,6 @@ def strict_feature_score(x: float, ref_vals: np.ndarray, eps: float = 1e-8) -> f
 
 
 def per_piece_reference_based(gen_row: pd.Series, ref_df: pd.DataFrame, ref_pitch_hists: Optional[np.ndarray] = None) -> Dict:
-    """
-    Implementa la logica de per piece reference based dentro del pipeline del TFG.
-
-    Parametros principales: gen_row, local_ref_df.
-    """
 
     used_features = [
         "pitch_range",
@@ -813,11 +659,6 @@ def range_acceptance_score(x: float, lo: float, hi: float, softness: float | Non
 
 
 def per_piece_reference_free(gen_row: pd.Series) -> Dict:
-    """
-    Implementa la logica de per piece reference free dentro del pipeline del TFG.
-
-    Parametros principales: gen_row.
-    """
 
     checks = {
         "pitch_class_entropy": range_acceptance_score(safe_float(gen_row.get("pitch_class_entropy", np.nan)), 2.9, 3.45),
@@ -841,11 +682,6 @@ def per_piece_reference_free(gen_row: pd.Series) -> Dict:
 # DESCRIPCION CUALITATIVA
 # ============================================================
 def describe_piece(ref_based: Dict, ref_free: Dict) -> Tuple[List[str], List[str]]:
-    """
-    Implementa la logica de describe piece dentro del pipeline del TFG.
-
-    Parametros principales: ref_based, ref_free.
-    """
 
     strengths: List[str] = []
     issues: List[str] = []

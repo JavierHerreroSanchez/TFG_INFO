@@ -57,11 +57,6 @@ TOKENIZER = None
 # UTILIDADES
 # ============================================================
 def find_midis(root: Path) -> list[Path]:
-    """
-    Implementa la logica de find midis dentro del pipeline del TFG.
-
-    Parametros principales: root.
-    """
 
     if not root.exists():
         raise FileNotFoundError(f"No existe el directorio: {root}")
@@ -70,12 +65,7 @@ def find_midis(root: Path) -> list[Path]:
 
 
 def load_bad_set(path: Path) -> set[str]:
-    """
-    Carga los recursos necesarios para esta fase del pipeline.
-
-    Parametros principales: path.
-    """
-
+    """Lee la lista de MIDIs descartados en ejecuciones anteriores."""
     if not path.exists():
         return set()
 
@@ -91,11 +81,6 @@ def load_bad_set(path: Path) -> set[str]:
 
 
 def append_bad_lines(path: Path, lines: list[str]) -> None:
-    """
-    Implementa la logica de append bad lines dentro del pipeline del TFG.
-
-    Parametros principales: path, lines.
-    """
 
     if not lines:
         return
@@ -106,11 +91,6 @@ def append_bad_lines(path: Path, lines: list[str]) -> None:
 
 
 def json_has_valid_tokens(json_path: Path) -> bool:
-    """
-    Implementa la logica de json has valid tokens dentro del pipeline del TFG.
-
-    Parametros principales: json_path.
-    """
 
     if not json_path.exists() or not json_path.is_file():
         return False
@@ -132,7 +112,6 @@ def build_output_json_path(midi_path: Path) -> Path:
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: midi_path.
     """
 
     try:
@@ -146,7 +125,6 @@ def build_output_json_path(midi_path: Path) -> Path:
 # INIT por worker
 # ============================================================
 def worker_init():
-    """Implementa la logica de worker init dentro del pipeline del TFG."""
 
     global TOKENIZER
     if not TOKENIZER_PATH.exists():

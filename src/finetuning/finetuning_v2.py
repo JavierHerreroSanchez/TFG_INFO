@@ -29,21 +29,14 @@ from src.training.common import (
     seed_all,
 )
 
-"""
-Fine-tuning del modelo preentrenado sobre el corpus objetivo.
-
-El script carga el checkpoint de pretraining, prepara los splits tokenizados del
-corpus de sonatas y ajusta el modelo manteniendo la misma arquitectura. Incluye
-evaluacion periodica, early stopping, muestras de escucha y checkpoints.
-"""
-
-
 # =============================================================================
 # CONFIGURACION DE FINETUNING
 # =============================================================================
 
-INDEX_CSV = Path(r"../../data/interim/indexes\index_finetuning_v3.csv")
-TOKENS_DIR = Path(r"../../data/interim/tokenized_finetuning_v3")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+INDEX_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_finetuning_v3.csv"
+TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v3"
 ANCHOR = r"data\interim\tokenized_finetuning_v3"
 
 TOKEN_FIELD = "ids"
@@ -53,12 +46,12 @@ VAL_RATIO = 0.10
 TEST_RATIO = 0.10
 SEED = 1453
 
-CACHE_DIR = Path(r"../../data/bin/bin_for_finetuning_v3").resolve()
+CACHE_DIR = (PROJECT_ROOT / "data" / "bin" / "bin_for_finetuning_v3").resolve()
 ADD_EOS = True
 EOS_ID = 2
 USE_UINT16 = True
 
-PRETRAINED_CKPT = Path(r"../../output/checkpoints/pretraining_v2/best.pt").resolve()
+PRETRAINED_CKPT = (PROJECT_ROOT / "output" / "checkpoints" / "pretraining_v2" / "best.pt").resolve()
 
 BLOCK_SIZE = 2048
 D_MODEL = 512
@@ -97,7 +90,7 @@ PIN_MEMORY = True
 USE_AMP = True
 AMP_DTYPE = "bf16"
 
-CKPT_DIR = Path(r"../../output/checkpoints/finetuning_v2").resolve()
+CKPT_DIR = (PROJECT_ROOT / "output" / "checkpoints" / "finetuning_v2").resolve()
 SAMPLES_DIR = CKPT_DIR / "samples"
 
 N_LISTEN_SAMPLES = 4

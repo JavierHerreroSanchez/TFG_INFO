@@ -15,7 +15,9 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 # CONFIGURACIÓN
 # =============================================================================
 
-CKPT_PATH = Path(r"../../output/checkpoints/pretraining_v2/best.pt")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+CKPT_PATH = PROJECT_ROOT / "output" / "checkpoints" / "pretraining_v2" / "best.pt"
 
 DEVICE = "cpu"
 
@@ -27,11 +29,6 @@ SHOW_STATE_KEYS = True
 # =============================================================================
 
 def format_num_params(model: torch.nn.Module) -> str:
-    """
-    Implementa la logica de format num params dentro del pipeline del TFG.
-
-    Parametros principales: model.
-    """
 
     n = sum(p.numel() for p in model.parameters())
     return f"{n:,}"

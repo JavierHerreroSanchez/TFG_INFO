@@ -19,9 +19,6 @@ ROOT_DIR = SCRIPT_DIR.parents[1]
 MIDI_PATH = ROOT_DIR / "output" / "generation_pretraining_tfg_first" / "generated_from_json2.mid"
 OUT_PATH = SCRIPT_DIR / "musical_analisis_pretraining_v1_generated_from_json2.png"
 
-SANDBOX_MIDI_PATH = Path("/mnt/data/generated_from_json2.mid")
-SANDBOX_OUT_PATH = Path("/mnt/data/analisis_generated_from_json2_motivo_here_comes.png")
-
 # Notas concretas del motivo. Se usan tiempos aproximados de ataque y altura
 # MIDI para no depender de filtros generales que puedan coger notas ajenas.
 MOTIF_OCCURRENCES = [
@@ -228,10 +225,8 @@ def plot_from_midi(midi_path: Path, out_path: Path):
 def plot():
     if MIDI_PATH.exists():
         plot_from_midi(MIDI_PATH, OUT_PATH)
-    elif SANDBOX_MIDI_PATH.exists():
-        plot_from_midi(SANDBOX_MIDI_PATH, SANDBOX_OUT_PATH)
     else:
-        raise FileNotFoundError("No se encontro el MIDI de entrada.")
+        raise FileNotFoundError(f"No se encontro el MIDI de entrada: {MIDI_PATH}")
 
 
 if __name__ == "__main__":

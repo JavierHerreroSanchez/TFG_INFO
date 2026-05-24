@@ -48,21 +48,11 @@ TOKENS_PREVIEW = 200
 # =============================================================================
 
 def list_json_files(root: Path) -> list[Path]:
-    """
-    Implementa la logica de list json files dentro del pipeline del TFG.
-
-    Parametros principales: root.
-    """
 
     return sorted(p for p in root.rglob("*.json") if p.is_file())
 
 
 def token_family(tok: str) -> str:
-    """
-    Implementa la logica de token family dentro del pipeline del TFG.
-
-    Parametros principales: tok.
-    """
 
     if "_" not in tok:
         return tok
@@ -70,31 +60,16 @@ def token_family(tok: str) -> str:
 
 
 def is_track_ac(tok: str) -> bool:
-    """
-    Implementa la logica de is track ac dentro del pipeline del TFG.
-
-    Parametros principales: tok.
-    """
 
     return tok.startswith("ACTrack")
 
 
 def is_bar_ac(tok: str) -> bool:
-    """
-    Implementa la logica de is bar ac dentro del pipeline del TFG.
-
-    Parametros principales: tok.
-    """
 
     return tok.startswith("ACBar")
 
 
 def normalize_tokseq_list(tokseq_or_list: Any) -> list[Any]:
-    """
-    Implementa la logica de normalize tokseq list dentro del pipeline del TFG.
-
-    Parametros principales: tokseq_or_list.
-    """
 
     if isinstance(tokseq_or_list, list):
         return tokseq_or_list
@@ -139,11 +114,6 @@ def normalize_attr_indexes(attr: Any) -> dict[int, dict[int, Any]] | None:
 
 
 def compare_ids(saved_ids_nested: list[list[int]], generated_ids_nested: list[list[int]]) -> tuple[bool, str]:
-    """
-    Implementa la logica de compare ids dentro del pipeline del TFG.
-
-    Parametros principales: saved_ids_nested, generated_ids_nested.
-    """
 
     if len(saved_ids_nested) != len(generated_ids_nested):
         return False, f"n_streams distinto: saved={len(saved_ids_nested)} generated={len(generated_ids_nested)}"
@@ -163,7 +133,6 @@ def inspect_track(tokens: list[str]) -> dict[str, Any]:
     """
     Muestra informacion de diagnostico para revisar artefactos del proyecto.
 
-    Parametros principales: tokens.
     """
 
     fams = Counter(token_family(t) for t in tokens)
@@ -205,12 +174,7 @@ def inspect_track(tokens: list[str]) -> dict[str, Any]:
 
 
 def load_json(path: Path) -> dict[str, Any]:
-    """
-    Carga los recursos necesarios para esta fase del pipeline.
-
-    Parametros principales: path.
-    """
-
+    """Carga un JSON tokenizado para compararlo con la retokenización."""
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 

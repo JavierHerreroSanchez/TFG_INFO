@@ -45,10 +45,12 @@ def sanitize_stem(name: str) -> str:
 # =============================================================================
 # RUTAS
 # =============================================================================
-IN_CLEAN_DIR = Path(r"../../data/finetuning_v2/mozart_sonatas_merged")
-OUT_AUG_DIR = Path(r"../../data/finetuning_v2/mozart_sonatas_aug")
-OUT_AUG_INDEX_CSV = Path(r"/output/generation_finetuning_tfg_third/finetuning_aug_index.csv")
-OUT_AUG_REPORT_CSV = Path(r"/output/generation_finetuning_tfg_third/finetuning_aug_report.csv")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+IN_CLEAN_DIR = PROJECT_ROOT / "data" / "finetuning_v2" / "mozart_sonatas_merged"
+OUT_AUG_DIR = PROJECT_ROOT / "data" / "finetuning_v2" / "mozart_sonatas_aug"
+OUT_AUG_INDEX_CSV = PROJECT_ROOT / "output" / "generation_finetuning_tfg_second" / "finetuning_aug_index.csv"
+OUT_AUG_REPORT_CSV = PROJECT_ROOT / "output" / "generation_finetuning_tfg_second" / "finetuning_aug_report.csv"
 
 # Mantener estructura de carpetas dentro de OUT_AUG_DIR
 PRESERVE_TREE = True
@@ -87,33 +89,18 @@ PITCH_MAX = 108
 # Helpers básicos
 # =============================================================================
 def _ls(obj, attr: str):
-    """
-    Implementa la logica de  ls dentro del pipeline del TFG.
-
-    Parametros principales: obj, attr.
-    """
 
     x = getattr(obj, attr, None)
     return x if x is not None else []
 
 
 def list_midis_recursively(root: Path) -> List[Path]:
-    """
-    Implementa la logica de list midis recursively dentro del pipeline del TFG.
-
-    Parametros principales: root.
-    """
 
     exts = {".mid", ".midi"}
     return sorted([p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in exts])
 
 
 def fmt_transpose(s: int) -> str:
-    """
-    Implementa la logica de fmt transpose dentro del pipeline del TFG.
-
-    Parametros principales: s.
-    """
 
     if s == 0:
         return "tr0"
@@ -123,21 +110,11 @@ def fmt_transpose(s: int) -> str:
 
 def fmt_stretch(f: float) -> str:
     # 1.025 -> "ts1p025"
-    """
-    Implementa la logica de fmt stretch dentro del pipeline del TFG.
-
-    Parametros principales: f.
-    """
 
     return "ts" + f"{f:.3f}".replace(".", "p")
 
 
 def make_out_path(src: Path, transpose: int, stretch: float) -> Path:
-    """
-    Implementa la logica de make out path dentro del pipeline del TFG.
-
-    Parametros principales: src, transpose, stretch.
-    """
 
     if PRESERVE_TREE:
         try:
@@ -159,11 +136,6 @@ def make_out_path(src: Path, transpose: int, stretch: float) -> Path:
 # =============================================================================
 def sanitize_miditoolkit(m: MidiFile) -> None:
     # tempo
-    """
-    Implementa la logica de sanitize miditoolkit dentro del pipeline del TFG.
-
-    Parametros principales: m.
-    """
 
     m.tempo_changes = [tc for tc in _ls(m, "tempo_changes") if tc.time >= 0]
     m.tempo_changes.sort(key=lambda tc: tc.time)
@@ -248,11 +220,6 @@ def rebuild_miditoolkit(m: MidiFile) -> MidiFile:
 
 
 def safe_dump_miditoolkit(m: MidiFile, out_path: Path, debug_tag: str = "") -> bool:
-    """
-    Implementa la logica de safe dump miditoolkit dentro del pipeline del TFG.
-
-    Parametros principales: m, out_path, debug_tag.
-    """
 
     try:
         sanitize_miditoolkit(m)
@@ -276,11 +243,6 @@ def safe_dump_miditoolkit(m: MidiFile, out_path: Path, debug_tag: str = "") -> b
 # Augmentations
 # =============================================================================
 def piano_pitch_range(m: MidiFile) -> Optional[Tuple[int, int]]:
-    """
-    Implementa la logica de piano pitch range dentro del pipeline del TFG.
-
-    Parametros principales: m.
-    """
 
     pitches: List[int] = []
     for inst in _ls(m, "instruments"):
@@ -315,11 +277,6 @@ def transpose_inplace(m: MidiFile, semitones: int) -> bool:
 
 
 def _scale_time_int(x: int, factor: float) -> int:
-    """
-    Implementa la logica de  scale time int dentro del pipeline del TFG.
-
-    Parametros principales: x, factor.
-    """
 
     return int(round(x * factor))
 
@@ -370,11 +327,6 @@ def valid_pairs_for_file(m: MidiFile) -> List[Tuple[int, float]]:
 
 
 def sample_pairs(all_pairs: List[Tuple[int, float]], rng: random.Random) -> List[Tuple[int, float]]:
-    """
-    Implementa la logica de sample pairs dentro del pipeline del TFG.
-
-    Parametros principales: all_pairs, rng.
-    """
 
     if not all_pairs:
         return []

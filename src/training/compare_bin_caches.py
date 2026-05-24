@@ -18,11 +18,6 @@ BIN_NAMES = ["train.bin", "val.bin", "test.bin", "meta.json"]
 
 
 def human_size(num_bytes: int) -> str:
-    """
-    Implementa la logica de human size dentro del pipeline del TFG.
-
-    Parametros principales: num_bytes.
-    """
 
     units = ["B", "KB", "MB", "GB", "TB"]
     size = float(num_bytes)
@@ -36,7 +31,6 @@ def inspect_cache_dir(cache_dir: Path) -> None:
     """
     Muestra informacion de diagnostico para revisar artefactos del proyecto.
 
-    Parametros principales: cache_dir.
     """
 
     print("\n" + "=" * 80)

@@ -12,7 +12,6 @@ import random
 from pathlib import Path
 from typing import Dict, List, Tuple
 
-import numpy as np
 import torch
 import torch.nn.functional as F
 
@@ -45,17 +44,8 @@ from src.model.model import MusicTransformerGPTlike, MTModelConfig
 
 
 def prepare_cache_and_splits():
-    """Implementa la logica de prepare cache and splits dentro del pipeline del TFG."""
 
     return training_common.prepare_cache_and_splits(cache_config())
-
-"""
-Generación autorregresiva a partir del modelo de pretraining.
-
-El script reutiliza los splits, la resolución de JSON tokenizados y la caché
-memmap del entrenamiento para evaluar loss teacher-forced y generar
-continuaciones condicionadas por prompts reales del corpus.
-"""
 
 # =============================================================================
 # CONFIGURACIÓN POR DEFECTO
@@ -81,7 +71,8 @@ DEFAULT_RANDOM_OFFSET = False
 DEFAULT_STOP_ON_EOS = False
 
 SEED = 100454434
-OUTPUT_DIR = Path("../../output/generation_pretraining_tfg_second/").resolve()
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+OUTPUT_DIR = (PROJECT_ROOT / "output" / "generation_pretraining_tfg_second").resolve()
 
 def get_model_block_size(model: torch.nn.Module) -> int:
     """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerGPTlike."""
@@ -133,11 +124,6 @@ def load_checkpoint_and_model(ckpt_name: str, device: str) -> Tuple[MusicTransfo
 # =============================================================================
 
 def get_split_files(split: str) -> List[Path]:
-    """
-    Implementa la logica de get split files dentro del pipeline del TFG.
-
-    Parametros principales: split.
-    """
 
     if split not in {"train", "val", "test"}:
         raise ValueError("split debe ser 'train', 'val' o 'test'.")
@@ -214,11 +200,6 @@ def has_valid_prompt_start(
         require_after_eos: bool,
         eos_token_id: int | None,
 ) -> bool:
-    """
-    Implementa la logica de has valid prompt start dentro del pipeline del TFG.
-
-    Parametros principales: ids, prompt_len, require_after_eos, eos_token_id.
-    """
 
     return len(find_valid_prompt_starts(
         ids=ids,
@@ -278,7 +259,6 @@ def build_memmap_loader(split: str, block_size: int):
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: split, block_size.
     """
 
     cache = prepare_cache_and_splits()
@@ -304,7 +284,6 @@ def evaluate_split_loss(model: torch.nn.Module, split: str, block_size: int, dev
     """
     Evalua las salidas generadas mediante metricas del proyecto.
 
-    Parametros principales: model, split, block_size, device, max_batches.
     """
 
     loader = build_memmap_loader(split, block_size)
@@ -450,7 +429,6 @@ def save_generation_result(
     """
     Guarda resultados intermedios o finales en disco.
 
-    Parametros principales: out_dir, sample_idx, split, ckpt_name, source_path, prompt_start, prompt_tokens, gt_continuation, full_generated_tokens, hit_eos, temperature, top_k, do_sample.
     """
 
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -500,11 +478,6 @@ def run_generation(
         stop_on_eos: bool,
         device: str,
 ):
-    """
-    Implementa la logica de run generation dentro del pipeline del TFG.
-
-    Parametros principales: model, ckpt_name, split, prompt_len, max_new_tokens, min_new_tokens, num_samples, random_offset, temperature, top_k, do_sample, stop_on_eos, device.
-    """
 
     files = get_split_files(split)
 
@@ -614,7 +587,6 @@ def run_generation(
 # =============================================================================
 
 def parse_args():
-    """Implementa la logica de parse args dentro del pipeline del TFG."""
 
     parser = argparse.ArgumentParser(
         description="Evaluación y generación para el pretraining del Music Transformer GPT-like."

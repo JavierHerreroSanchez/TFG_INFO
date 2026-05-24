@@ -51,11 +51,6 @@ class MTEmbedding(nn.Module):
     mecanismo de atención relativa.
     """
     def __init__(self, vocab_size: int, d_model: int, dropout: float, debug: bool = False):
-        """
-        Implementa la logica de   init   dentro del pipeline del TFG.
-
-        Parametros principales: vocab_size, d_model, dropout, debug.
-        """
 
         super().__init__()
         self.wte = nn.Embedding(vocab_size, d_model)
@@ -64,11 +59,6 @@ class MTEmbedding(nn.Module):
         self._printed = False
 
     def forward(self, idx: torch.Tensor) -> torch.Tensor:
-        """
-        Implementa la logica de forward dentro del pipeline del TFG.
-
-        Parametros principales: idx.
-        """
 
         x = self.wte(idx)   # (B,T,D)
         x = self.drop(x)
@@ -148,11 +138,6 @@ class RelativeMaskedMHA(nn.Module):
     Además, aplica máscara causal para garantizar generación autorregresiva.
     """
     def __init__(self, cfg: MTConfig):
-        """
-        Implementa la logica de   init   dentro del pipeline del TFG.
-
-        Parametros principales: cfg.
-        """
 
         super().__init__()
         assert cfg.d_model % cfg.n_heads == 0
@@ -258,11 +243,6 @@ class FeedForward(nn.Module):
     (con una no linealidad intermedia) sobre la dimensión de características.
     """
     def __init__(self, cfg: MTConfig):
-        """
-        Implementa la logica de   init   dentro del pipeline del TFG.
-
-        Parametros principales: cfg.
-        """
 
         super().__init__()
         d_ff = cfg.d_ff if cfg.d_ff is not None else 4 * cfg.d_model
@@ -274,11 +254,6 @@ class FeedForward(nn.Module):
         self._printed = False
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
-        """
-        Implementa la logica de forward dentro del pipeline del TFG.
-
-        Parametros principales: x.
-        """
 
         if self.cfg.debug and not self._printed:
             print(f"[FFN] x={tuple(x.shape)} d_ff={self.fc1.out_features}")
@@ -310,11 +285,6 @@ class MusicTransformerBlockPreLN(nn.Module):
     la estabilidad numérica y el flujo de gradiente en comparación con Post-LN.
     """
     def __init__(self, cfg: MTConfig):
-        """
-        Implementa la logica de   init   dentro del pipeline del TFG.
-
-        Parametros principales: cfg.
-        """
 
         super().__init__()
         self.cfg = cfg
@@ -329,11 +299,6 @@ class MusicTransformerBlockPreLN(nn.Module):
 
     def forward(self, x: torch.Tensor, return_attn: bool = False):
         # Subcapa 1: atención (primero normalizamos, luego atendemos, luego residual).
-        """
-        Implementa la logica de forward dentro del pipeline del TFG.
-
-        Parametros principales: x, return_attn.
-        """
 
         attn_out, attn_w = self.attn(self.ln1(x), return_attn=return_attn)
         x = x + self.resid_drop1(attn_out)

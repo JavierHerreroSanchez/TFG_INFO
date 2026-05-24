@@ -16,11 +16,13 @@ from miditok import REMI, TokSequence
 # CONFIGURACIÓN
 # =============================================================================
 
-# Tokenizer entrenado/guardado con MidiTok
-TOKENIZER_PATH = Path(r"../../tokenizer/tokenizer_REMI_BPE_v3.json")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+# Tokenizador usado para generar los ids del JSON.
+TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v3.json"
 
 # JSON generado por el script de generación.
-GENERATED_JSON_PATH = Path(r"/output/generation_finetuning_tfg_first/sample_009.json")
+GENERATED_JSON_PATH = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first" / "sample_009.json"
 # Campo del JSON a convertir
 # Opciones típicas:
 #   - "full_generated_tokens" -> prompt + continuación
@@ -29,7 +31,7 @@ GENERATED_JSON_PATH = Path(r"/output/generation_finetuning_tfg_first/sample_009.
 JSON_TOKEN_FIELD = "full_generated_tokens"
 
 # MIDI de salida
-OUTPUT_MIDI_PATH = Path(r"../../output/generation_finetuning_tfg_first/generated_from_json9.mid")
+OUTPUT_MIDI_PATH = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first" / "generated_from_json9.mid"
 
 # Si True, elimina PAD / BOS / MASK y un EOS final si aparece
 FILTER_SPECIAL_TOKENS = True
@@ -43,12 +45,7 @@ PREVIEW_LEN = 80
 # =============================================================================
 
 def load_generated_ids(json_path: Path, token_field: str) -> list[int]:
-    """
-    Carga los recursos necesarios para esta fase del pipeline.
-
-    Parametros principales: json_path, token_field.
-    """
-
+    """Lee del JSON el campo que contiene la secuencia de ids."""
     if not json_path.exists():
         raise FileNotFoundError(f"No existe el JSON generado: {json_path.resolve()}")
 
@@ -68,12 +65,7 @@ def load_generated_ids(json_path: Path, token_field: str) -> list[int]:
 
 
 def load_tokenizer(tokenizer_path: Path) -> REMI:
-    """
-    Carga los recursos necesarios para esta fase del pipeline.
-
-    Parametros principales: tokenizer_path.
-    """
-
+    """Carga el tokenizador REMI+BPE usado en el experimento."""
     if not tokenizer_path.exists():
         raise FileNotFoundError(f"No existe el tokenizer: {tokenizer_path.resolve()}")
 

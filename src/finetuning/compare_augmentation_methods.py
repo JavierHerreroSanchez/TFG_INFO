@@ -27,11 +27,6 @@ K_VARIANTS = 4
 
 
 def note_stats_miditoolkit(midi: MidiFile) -> Dict[str, float | int | None]:
-    """
-    Implementa la logica de note stats miditoolkit dentro del pipeline del TFG.
-
-    Parametros principales: midi.
-    """
 
     notes = [n for inst in midi.instruments if not inst.is_drum for n in inst.notes]
     if not notes:
@@ -50,11 +45,6 @@ def note_stats_miditoolkit(midi: MidiFile) -> Dict[str, float | int | None]:
 
 
 def run_manual_sample(files: List[Path]) -> pd.DataFrame:
-    """
-    Implementa la logica de run manual sample dentro del pipeline del TFG.
-
-    Parametros principales: files.
-    """
 
     out_dir = OUT_DIR / "manual_miditoolkit"
     out_dir.mkdir(parents=True, exist_ok=True)
@@ -102,11 +92,6 @@ def run_manual_sample(files: List[Path]) -> pd.DataFrame:
 
 
 def run_miditok_sample(files: List[Path]) -> pd.DataFrame:
-    """
-    Implementa la logica de run miditok sample dentro del pipeline del TFG.
-
-    Parametros principales: files.
-    """
 
     out_dir = OUT_DIR / "miditok"
     miditok_aug.OUT_AUG_DIR = out_dir

@@ -6,33 +6,6 @@ Los resultados producidos aqui sirven para justificar experimentalmente la calid
 
 from __future__ import annotations
 
-"""
-Genera los 7 graficos de evaluacion simbolica/espectral del TFG.
-
-Preparado para PyCharm:
-1) Ajusta SYMBOLIC_DATA_DIR y SPECTRAL_DATA_DIR, o pasalos por consola.
-2) Ejecuta el script directamente desde PyCharm.
-3) Los PNG se guardan en OUTPUT_DIR.
-
-Ejemplo por consola:
-python src/evaluation/generar_graficos_evaluacion.py ^
-  --symbolic-dir "output/generation_finetuning_tfg_second/midi_eval_windows" ^
-  --spectral-dir "output/generation_finetuning_tfg_second/midi_spectral_eval_windows" ^
-  --output-dir "output/graficos_finetuning_v2"
-
-Ficheros simbolicos esperados:
-- per_piece_details.json
-- per_piece_evaluation.csv
-- reference_features.csv
-- summary_compact.csv
-
-Ficheros espectrales esperados:
-- spectral_features_all.csv
-- spectral_per_piece_details.json
-- spectral_summary.json
-- spectral_evaluation.csv
-"""
-
 import json
 import math
 import re
@@ -56,11 +29,12 @@ except Exception:
 
 # Opcion 1: si este script esta en la misma carpeta que los CSV/JSON, deja esto asi.
 DATA_DIR = Path(__file__).resolve().parent
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 # Opcion 2: si los datos estan en carpetas separadas, ajusta estas dos rutas.
 # Tambien puedes pasarlas por consola con --symbolic-dir y --spectral-dir.
-SYMBOLIC_DATA_DIR = Path(r"../../output/generation_finetuning_tfg_second/midi_eval_windows")
-SPECTRAL_DATA_DIR = Path(r"../../output/generation_finetuning_tfg_second/midi_spectral_eval_windows")
+SYMBOLIC_DATA_DIR = PROJECT_ROOT / "output" / "generation_finetuning_tfg_second" / "midi_eval_windows"
+SPECTRAL_DATA_DIR = PROJECT_ROOT / "output" / "generation_finetuning_tfg_second" / "midi_spectral_eval_windows"
 
 # Si es None, se usa SYMBOLIC_DATA_DIR / "graficos_evaluacion".
 OUTPUT_DIR: Path | None = None
@@ -180,11 +154,6 @@ SPECTRAL_REQUIRED_FILES = [
 # ============================================================
 
 def check_required_files(data_dir: Path, required_files: List[str], label: str) -> None:
-    """
-    Implementa la logica de check required files dentro del pipeline del TFG.
-
-    Parametros principales: data_dir, required_files, label.
-    """
 
     missing = [name for name in required_files if not (data_dir / name).exists()]
     if missing:
@@ -250,7 +219,6 @@ def read_json(path: Path):
     """
     Lee datos de entrada y los normaliza para el procesamiento posterior.
 
-    Parametros principales: path.
     """
 
     with path.open("r", encoding="utf-8") as f:
@@ -258,11 +226,6 @@ def read_json(path: Path):
 
 
 def extract_piece_id(path_or_name: str) -> int | None:
-    """
-    Implementa la logica de extract piece id dentro del pipeline del TFG.
-
-    Parametros principales: path_or_name.
-    """
 
     s = str(path_or_name).replace("\\", "/")
     patterns = [
@@ -279,11 +242,6 @@ def extract_piece_id(path_or_name: str) -> int | None:
 
 
 def add_piece_id(df: pd.DataFrame, file_col: str = "file") -> pd.DataFrame:
-    """
-    Implementa la logica de add piece id dentro del pipeline del TFG.
-
-    Parametros principales: df, file_col.
-    """
 
     out = df.copy()
     out["piece_id"] = out[file_col].apply(extract_piece_id)
@@ -293,22 +251,12 @@ def add_piece_id(df: pd.DataFrame, file_col: str = "file") -> pd.DataFrame:
 
 
 def finite_values(arr: Iterable[float]) -> np.ndarray:
-    """
-    Implementa la logica de finite values dentro del pipeline del TFG.
-
-    Parametros principales: arr.
-    """
 
     a = np.asarray(list(arr), dtype=float)
     return a[np.isfinite(a)]
 
 
 def safe_float(x, default=np.nan) -> float:
-    """
-    Implementa la logica de safe float dentro del pipeline del TFG.
-
-    Parametros principales: x, default.
-    """
 
     try:
         v = float(x)
@@ -318,11 +266,6 @@ def safe_float(x, default=np.nan) -> float:
 
 
 def finite_stats(arr: Iterable[float]) -> Tuple[float, float, int]:
-    """
-    Implementa la logica de finite stats dentro del pipeline del TFG.
-
-    Parametros principales: arr.
-    """
 
     a = finite_values(arr)
     if a.size == 0:
@@ -331,11 +274,6 @@ def finite_stats(arr: Iterable[float]) -> Tuple[float, float, int]:
 
 
 def entropy_real_to_gen(p_real: np.ndarray, q_gen: np.ndarray) -> float:
-    """
-    Implementa la logica de entropy real to gen dentro del pipeline del TFG.
-
-    Parametros principales: p_real, q_gen.
-    """
 
     if p_real.size == 0 or q_gen.size == 0:
         return np.nan
@@ -347,11 +285,6 @@ def entropy_real_to_gen(p_real: np.ndarray, q_gen: np.ndarray) -> float:
 
 
 def normalized_hist_pair(a: Iterable[float], b: Iterable[float], bins: int | str = "auto", max_auto_bins: int = 48):
-    """
-    Implementa la logica de normalized hist pair dentro del pipeline del TFG.
-
-    Parametros principales: a, b, bins, max_auto_bins.
-    """
 
     a = finite_values(a)
     b = finite_values(b)
@@ -381,11 +314,6 @@ def normalized_hist_pair(a: Iterable[float], b: Iterable[float], bins: int | str
 
 
 def global_distribution_report(ref_df: pd.DataFrame, gen_df: pd.DataFrame, features: List[str], max_auto_bins: int) -> pd.DataFrame:
-    """
-    Implementa la logica de global distribution report dentro del pipeline del TFG.
-
-    Parametros principales: ref_df, gen_df, features, max_auto_bins.
-    """
 
     rows = []
     for feat in features:
@@ -412,11 +340,6 @@ def global_distribution_report(ref_df: pd.DataFrame, gen_df: pd.DataFrame, featu
 
 
 def parse_json_metric_payload(value: str) -> dict | None:
-    """
-    Implementa la logica de parse json metric payload dentro del pipeline del TFG.
-
-    Parametros principales: value.
-    """
 
     try:
         payload = json.loads(value)
@@ -426,11 +349,6 @@ def parse_json_metric_payload(value: str) -> dict | None:
 
 
 def parse_summary_compact(summary_compact: pd.DataFrame, section_prefix: str = "global_report") -> pd.DataFrame:
-    """
-    Implementa la logica de parse summary compact dentro del pipeline del TFG.
-
-    Parametros principales: summary_compact, section_prefix.
-    """
 
     rows = []
     for _, row in summary_compact.iterrows():
@@ -448,11 +366,6 @@ def parse_summary_compact(summary_compact: pd.DataFrame, section_prefix: str = "
 
 
 def symbolic_generated_features_from_details(per_piece_details: list, per_piece_eval: pd.DataFrame) -> pd.DataFrame:
-    """
-    Implementa la logica de symbolic generated features from details dentro del pipeline del TFG.
-
-    Parametros principales: per_piece_details, per_piece_eval.
-    """
 
     rows = []
     for item in per_piece_details:
@@ -475,11 +388,6 @@ def symbolic_generated_features_from_details(per_piece_details: list, per_piece_
 
 
 def spectral_global_report_from_evaluation(spectral_eval: pd.DataFrame) -> pd.DataFrame:
-    """
-    Implementa la logica de spectral global report from evaluation dentro del pipeline del TFG.
-
-    Parametros principales: spectral_eval.
-    """
 
     rows = []
     global_rows = spectral_eval[spectral_eval["section"].eq("global_metric")]
@@ -494,11 +402,6 @@ def spectral_global_report_from_evaluation(spectral_eval: pd.DataFrame) -> pd.Da
 
 
 def spectral_global_report_from_summary(spectral_summary: dict) -> pd.DataFrame:
-    """
-    Implementa la logica de spectral global report from summary dentro del pipeline del TFG.
-
-    Parametros principales: spectral_summary.
-    """
 
     rows = []
     for payload in spectral_summary.get("top_global_matches", []):
@@ -508,11 +411,6 @@ def spectral_global_report_from_summary(spectral_summary: dict) -> pd.DataFrame:
 
 
 def spectral_global_report_from_features(spectral_features_all: pd.DataFrame) -> pd.DataFrame:
-    """
-    Implementa la logica de spectral global report from features dentro del pipeline del TFG.
-
-    Parametros principales: spectral_features_all.
-    """
 
     gen_df = spectral_features_all[spectral_features_all["set_type"].eq("generated")].copy()
     ref_df = spectral_features_all[spectral_features_all["set_type"].eq("reference")].copy()
@@ -520,11 +418,6 @@ def spectral_global_report_from_features(spectral_features_all: pd.DataFrame) ->
 
 
 def ensure_ordered_report(report: pd.DataFrame, order: List[str]) -> pd.DataFrame:
-    """
-    Implementa la logica de ensure ordered report dentro del pipeline del TFG.
-
-    Parametros principales: report, order.
-    """
 
     if report.empty:
         raise ValueError("El reporte global esta vacio.")
@@ -545,11 +438,6 @@ def ensure_ordered_report(report: pd.DataFrame, order: List[str]) -> pd.DataFram
 # ============================================================
 
 def add_plausibility_bands(ax) -> None:
-    """
-    Implementa la logica de add plausibility bands dentro del pipeline del TFG.
-
-    Parametros principales: ax.
-    """
 
     ax.axhspan(0, 45, color="#efefef", alpha=0.65, zorder=0)
     ax.axhspan(45, 58, color="#ead6d6", alpha=0.60, zorder=0)
@@ -577,11 +465,6 @@ def add_plausibility_bands(ax) -> None:
 
 
 def annotate_vertical_bars(ax, bars) -> None:
-    """
-    Implementa la logica de annotate vertical bars dentro del pipeline del TFG.
-
-    Parametros principales: ax, bars.
-    """
 
     for bar in bars:
         h = float(bar.get_height())
@@ -597,11 +480,6 @@ def annotate_vertical_bars(ax, bars) -> None:
 
 
 def annotate_horizontal_bars(ax, bars, fmt: str, offset: float) -> None:
-    """
-    Implementa la logica de annotate horizontal bars dentro del pipeline del TFG.
-
-    Parametros principales: ax, bars, fmt, offset.
-    """
 
     for bar in bars:
         value = float(bar.get_width())
@@ -616,11 +494,6 @@ def annotate_horizontal_bars(ax, bars, fmt: str, offset: float) -> None:
 
 
 def style_hbar_axis(ax) -> None:
-    """
-    Implementa la logica de style hbar axis dentro del pipeline del TFG.
-
-    Parametros principales: ax.
-    """
 
     ax.grid(axis="x", linestyle="--", alpha=0.30)
     ax.set_axisbelow(True)
@@ -636,7 +509,6 @@ def plot_score_comparison(piece_df: pd.DataFrame, out_path: Path) -> None:
     """
     Dibuja una visualizacion usada durante la evaluacion.
 
-    Parametros principales: piece_df, out_path.
     """
 
     x = np.arange(len(piece_df))
@@ -668,7 +540,6 @@ def plot_componentes(piece_df: pd.DataFrame, out_path: Path, kind: str) -> None:
     """
     Dibuja una visualizacion usada durante la evaluacion.
 
-    Parametros principales: piece_df, out_path, kind.
     """
 
     x = np.arange(len(piece_df))
@@ -712,7 +583,6 @@ def plot_hbar(report: pd.DataFrame, order: List[str], labels_map: Dict[str, str]
     """
     Dibuja una visualizacion usada durante la evaluacion.
 
-    Parametros principales: report, order, labels_map, value_col, title, xlabel, fmt, out_path.
     """
 
     plot_df = ensure_ordered_report(report, order)

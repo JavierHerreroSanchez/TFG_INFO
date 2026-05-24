@@ -218,7 +218,6 @@ def run_generation_and_midi(
 
 
 def parse_args() -> argparse.Namespace:
-    """Implementa la logica de parse args dentro del pipeline del TFG."""
 
     parser = argparse.ArgumentParser(
         description="Genera muestras de fine-tuning en JSON y MIDI en una sola ejecución."

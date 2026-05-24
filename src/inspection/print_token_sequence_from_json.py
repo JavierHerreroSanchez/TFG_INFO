@@ -62,12 +62,7 @@ PRINT_METADATA = True
 # =============================================================================
 
 def load_json(path: Path) -> dict[str, Any]:
-    """
-    Carga los recursos necesarios para esta fase del pipeline.
-
-    Parametros principales: path.
-    """
-
+    """Carga un JSON tokenizado para inspeccionarlo."""
     with path.open("r", encoding="utf-8") as f:
         return json.load(f)
 

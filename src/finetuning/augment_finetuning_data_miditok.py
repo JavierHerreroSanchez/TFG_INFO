@@ -17,7 +17,7 @@ import json
 import random
 import re
 from pathlib import Path
-from typing import Dict, List, Optional, Tuple
+from typing import Dict, List, Tuple
 
 import pandas as pd
 from miditok.data_augmentation import augment_score_multiple_offsets
@@ -60,11 +60,6 @@ CLEAR_OUT_DIR_ON_START = False
 
 
 def sanitize_stem(name: str) -> str:
-    """
-    Implementa la logica de sanitize stem dentro del pipeline del TFG.
-
-    Parametros principales: name.
-    """
 
     s = name.replace(",", "")
     s = re.sub(r"\s+", " ", s).strip()
@@ -73,22 +68,12 @@ def sanitize_stem(name: str) -> str:
 
 
 def list_midis_recursively(root: Path) -> List[Path]:
-    """
-    Implementa la logica de list midis recursively dentro del pipeline del TFG.
-
-    Parametros principales: root.
-    """
 
     exts = {".mid", ".midi"}
     return sorted(p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in exts)
 
 
 def fmt_offset(name: str, value: int | float) -> str:
-    """
-    Implementa la logica de fmt offset dentro del pipeline del TFG.
-
-    Parametros principales: name, value.
-    """
 
     if isinstance(value, float):
         value_text = f"{value:.3f}".replace(".", "p")
@@ -100,11 +85,6 @@ def fmt_offset(name: str, value: int | float) -> str:
 
 
 def make_out_path(src: Path, pitch: int, velocity: int, duration: int | float) -> Path:
-    """
-    Implementa la logica de make out path dentro del pipeline del TFG.
-
-    Parametros principales: src, pitch, velocity, duration.
-    """
 
     if PRESERVE_TREE:
         try:
@@ -127,11 +107,6 @@ def make_out_path(src: Path, pitch: int, velocity: int, duration: int | float) -
 
 
 def score_note_stats(score: Score) -> Dict[str, float | int | None]:
-    """
-    Implementa la logica de score note stats dentro del pipeline del TFG.
-
-    Parametros principales: score.
-    """
 
     pitches: List[int] = []
     velocities: List[int] = []
@@ -163,22 +138,12 @@ def score_note_stats(score: Score) -> Dict[str, float | int | None]:
 
 
 def score_to_midi(score: Score, out_path: Path) -> None:
-    """
-    Implementa la logica de score to midi dentro del pipeline del TFG.
-
-    Parametros principales: score, out_path.
-    """
 
     out_path.parent.mkdir(parents=True, exist_ok=True)
     score.dump_midi(out_path)
 
 
 def available_augmented_scores(score: Score) -> List[Tuple[Tuple[int, int, int | float], Score]]:
-    """
-    Implementa la logica de available augmented scores dentro del pipeline del TFG.
-
-    Parametros principales: score.
-    """
 
     return augment_score_multiple_offsets(
         score,
@@ -197,11 +162,6 @@ def sample_augmented_scores(
     augmented_scores: List[Tuple[Tuple[int, int, int | float], Score]],
     rng: random.Random,
 ) -> List[Tuple[Tuple[int, int, int | float], Score]]:
-    """
-    Implementa la logica de sample augmented scores dentro del pipeline del TFG.
-
-    Parametros principales: augmented_scores, rng.
-    """
 
     if not augmented_scores:
         return []
@@ -239,11 +199,6 @@ def run_miditok_augmentation(
     out_report_csv: Path = OUT_AUG_REPORT_CSV,
     max_files: int | None = None,
 ) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    """
-    Implementa la logica de run miditok augmentation dentro del pipeline del TFG.
-
-    Parametros principales: in_clean_dir, out_aug_dir, out_index_csv, out_report_csv, max_files.
-    """
 
     rng = random.Random(SEED)
 

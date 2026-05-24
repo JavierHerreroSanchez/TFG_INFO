@@ -29,21 +29,14 @@ from src.training.common import (
     seed_all,
 )
 
-"""
-Fine-tuning base del modelo preentrenado.
-
-Esta version conserva los parametros del primer flujo de ajuste fino, pero usa
-la infraestructura comun para que el codigo sea comparable con finetuning_v2 y
-mas facil de leer, mantener y explicar.
-"""
-
-
 # =============================================================================
 # CONFIGURACION DEL EXPERIMENTO
 # =============================================================================
 
-INDEX_CSV = Path(r"../../output/generation_finetuning_tfg_first/finetuning_aug_index.csv")
-TOKENS_DIR = Path(r"../../data/interim/tokenized_finetuning")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+INDEX_CSV = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first" / "finetuning_aug_index.csv"
+TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning"
 ANCHOR = r"data\interim\tokenized_finetuning"
 
 TOKEN_FIELD = "ids"
@@ -53,12 +46,12 @@ VAL_RATIO = 0.10
 TEST_RATIO = 0.10
 SEED = 1453
 
-CACHE_DIR = Path(r"../../data/bin/bin_for_finetuning").resolve()
+CACHE_DIR = (PROJECT_ROOT / "data" / "bin" / "bin_for_finetuning").resolve()
 ADD_EOS = True
 EOS_ID = 2
 USE_UINT16 = True
 
-PRETRAINED_CKPT = Path(r"../../output/checkpoints/pretraining/best.pt").resolve()
+PRETRAINED_CKPT = (PROJECT_ROOT / "output" / "checkpoints" / "pretraining" / "best.pt").resolve()
 
 BLOCK_SIZE = 2048
 D_MODEL = 512
@@ -97,7 +90,7 @@ PIN_MEMORY = True
 USE_AMP = True
 AMP_DTYPE = "bf16"
 
-CKPT_DIR = Path(r"../../output/checkpoints/finetuning").resolve()
+CKPT_DIR = (PROJECT_ROOT / "output" / "checkpoints" / "finetuning").resolve()
 SAMPLES_DIR = CKPT_DIR / "samples"
 
 N_LISTEN_SAMPLES = 4

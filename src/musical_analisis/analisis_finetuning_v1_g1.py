@@ -19,9 +19,6 @@ ROOT_DIR = SCRIPT_DIR.parents[1]
 MIDI_PATH = ROOT_DIR / "output" / "generation_finetuning_tfg_first" / "generated_from_json1.mid"
 OUT_PATH = SCRIPT_DIR / "musical_analisis_finetuning_v1_generated_from_json1.png"
 
-SANDBOX_MIDI_PATH = Path("/mnt/data/generated_from_json1.mid")
-SANDBOX_OUT_PATH = Path("/mnt/data/analisis_generated_from_json1_sonata.png")
-
 # Estructura tentativa segun la escucha: no se fuerza reexposicion clara.
 FORM_SECTIONS = [
     {"label": "Exposicion", "start": 0.0, "end": 154.0, "color": "#d9edf7"},
@@ -261,10 +258,8 @@ def plot_from_midi(midi_path: Path, out_path: Path):
 def plot():
     if MIDI_PATH.exists():
         plot_from_midi(MIDI_PATH, OUT_PATH)
-    elif SANDBOX_MIDI_PATH.exists():
-        plot_from_midi(SANDBOX_MIDI_PATH, SANDBOX_OUT_PATH)
     else:
-        raise FileNotFoundError("No se encontro el MIDI de entrada.")
+        raise FileNotFoundError(f"No se encontro el MIDI de entrada: {MIDI_PATH}")
 
 
 if __name__ == "__main__":

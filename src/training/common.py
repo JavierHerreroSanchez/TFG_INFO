@@ -135,11 +135,6 @@ def file_size_multiple_of_dtype(path: Path, dtype) -> bool:
 
 
 def safe_remove(path: Path) -> None:
-    """
-    Implementa la logica de safe remove dentro del pipeline del TFG.
-
-    Parametros principales: path.
-    """
 
     if path.exists():
         path.unlink()
@@ -215,11 +210,6 @@ class MemmapRandomCropDataset(torch.utils.data.Dataset):
     """Dataset virtual que samplea ventanas aleatorias de longitud block_size + 1."""
 
     def __init__(self, bin_path: Path, block_size: int, dtype, virtual_size: int = 1_000_000):
-        """
-        Implementa la logica de   init   dentro del pipeline del TFG.
-
-        Parametros principales: bin_path, block_size, dtype, virtual_size.
-        """
 
         if not bin_path.exists():
             raise FileNotFoundError(f"Bin no existe: {bin_path}")
@@ -236,16 +226,10 @@ class MemmapRandomCropDataset(torch.utils.data.Dataset):
         self.max_start = self.n - (block_size + 1)
 
     def __len__(self) -> int:
-        """Implementa la logica de   len   dentro del pipeline del TFG."""
 
         return self.virtual_size
 
     def __getitem__(self, idx):
-        """
-        Implementa la logica de   getitem   dentro del pipeline del TFG.
-
-        Parametros principales: idx.
-        """
 
         del idx
         start = random.randint(0, self.max_start)
@@ -314,7 +298,6 @@ def build_memmap_for_config(files: List[Path], out_bin: Path, config: CacheConfi
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: files, out_bin, config, dtype.
     """
 
     return build_memmap(

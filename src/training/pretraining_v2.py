@@ -32,27 +32,15 @@ class Tee:
     """Duplica stdout/stderr a un fichero con buffering."""
 
     def __init__(self, console_stream, file_stream):
-        """
-        Implementa la logica de   init   dentro del pipeline del TFG.
-
-        Parametros principales: console_stream, file_stream.
-        """
 
         self.console = console_stream
         self.file = file_stream
 
     def write(self, data):
-        """
-        Escribe en disco los artefactos generados por el script.
-
-        Parametros principales: data.
-        """
-
         self.console.write(data)
         self.file.write(data)
 
     def flush(self):
-        """Implementa la logica de flush dentro del pipeline del TFG."""
 
         for stream in (self.console, self.file):
             try:
@@ -65,8 +53,10 @@ class Tee:
 # CONFIGURACION
 # =============================================================================
 
-INDEX_CSV = Path(r"../../data/interim/indexes/index_pretraining_v2.csv")
-TOKENS_DIR = Path(r"../../data/interim/tokenized_json_bpe_v2")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+INDEX_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_pretraining_v2.csv"
+TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe_v2"
 ANCHOR = r"data\interim\tokenized_json_bpe_v2"
 
 TOKEN_FIELD = "ids"
@@ -76,7 +66,7 @@ VAL_RATIO = 0.05
 TEST_RATIO = 0.05
 SEED = 1453
 
-CACHE_DIR = Path(r"../../data/bin/bin_for_pretraining_v2").resolve()
+CACHE_DIR = (PROJECT_ROOT / "data" / "bin" / "bin_for_pretraining_v2").resolve()
 ADD_BOS = True
 BOS_ID = 1
 ADD_EOS = True
@@ -113,7 +103,7 @@ ES_MIN_DELTA = 1e-3
 ES_WARMUP_EVALS = 2
 
 SAVE_EVERY = 500
-CKPT_DIR = Path(r"../../output/checkpoints/pretraining_v2").resolve()
+CKPT_DIR = (PROJECT_ROOT / "output" / "checkpoints" / "pretraining_v2").resolve()
 
 LOG_DIR = CKPT_DIR / "logs"
 STDOUT_LOG = LOG_DIR / "stdout.log"

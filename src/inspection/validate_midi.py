@@ -32,7 +32,7 @@ import json
 import math
 import os
 from dataclasses import dataclass, asdict
-from typing import Dict, List, Optional, Sequence, Tuple
+from typing import Dict, List, Sequence, Tuple
 
 import numpy as np
 import pretty_midi
@@ -102,21 +102,11 @@ def midi_key_number_to_name(key_number: int) -> str:
 
 
 def safe_mean(values: Sequence[float]) -> float:
-    """
-    Implementa la logica de safe mean dentro del pipeline del TFG.
-
-    Parametros principales: values.
-    """
 
     return float(np.mean(values)) if values else 0.0
 
 
 def gather_midi_files(path: str, recursive: bool) -> List[str]:
-    """
-    Implementa la logica de gather midi files dentro del pipeline del TFG.
-
-    Parametros principales: path, recursive.
-    """
 
     if os.path.isfile(path):
         return [path]
@@ -201,11 +191,6 @@ def estimate_key_from_notes(pm: pretty_midi.PrettyMIDI) -> Tuple[str, float, int
 
 
 def get_declared_key(pm: pretty_midi.PrettyMIDI) -> str:
-    """
-    Implementa la logica de get declared key dentro del pipeline del TFG.
-
-    Parametros principales: pm.
-    """
 
     if not pm.key_signature_changes:
         return ""
@@ -304,7 +289,6 @@ def evaluate_midi(
     """
     Evalua las salidas generadas mediante metricas del proyecto.
 
-    Parametros principales: path, min_piano_pitch, max_piano_pitch.
     """
 
     warnings = []
@@ -491,11 +475,6 @@ def evaluate_midi(
 
 
 def print_pretty_summary(results: List[MidiValidationResult]) -> None:
-    """
-    Implementa la logica de print pretty summary dentro del pipeline del TFG.
-
-    Parametros principales: results.
-    """
 
     if not results:
         print("No se encontraron archivos MIDI.")
@@ -544,7 +523,6 @@ def save_csv(results: List[MidiValidationResult], path: str) -> None:
     """
     Guarda resultados intermedios o finales en disco.
 
-    Parametros principales: results, path.
     """
 
     if not results:
@@ -561,7 +539,6 @@ def save_json(results: List[MidiValidationResult], path: str) -> None:
     """
     Guarda resultados intermedios o finales en disco.
 
-    Parametros principales: results, path.
     """
 
     with open(path, "w", encoding="utf-8") as f:

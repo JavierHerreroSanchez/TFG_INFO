@@ -17,7 +17,6 @@ Uso típico:
 
 from __future__ import annotations
 
-import json
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -42,40 +41,20 @@ TOKENS_PREVIEW = 80
 # =============================================================================
 
 def list_json_files(root: Path) -> list[Path]:
-    """
-    Implementa la logica de list json files dentro del pipeline del TFG.
-
-    Parametros principales: root.
-    """
 
     return sorted(p for p in root.rglob("*.json") if p.is_file())
 
 
 def family(tok: str) -> str:
-    """
-    Implementa la logica de family dentro del pipeline del TFG.
-
-    Parametros principales: tok.
-    """
 
     return tok.split("_", 1)[0] if "_" in tok else tok
 
 
 def is_track_ac(tok: str) -> bool:
-    """
-    Implementa la logica de is track ac dentro del pipeline del TFG.
-
-    Parametros principales: tok.
-    """
 
     return tok.startswith("ACTrack")
 
 def is_bar_ac(tok: str) -> bool:
-    """
-    Implementa la logica de is bar ac dentro del pipeline del TFG.
-
-    Parametros principales: tok.
-    """
 
     return tok.startswith("ACBar")
 
@@ -120,7 +99,6 @@ def inspect_track(tokens: list[str]) -> dict[str, Any]:
     """
     Muestra informacion de diagnostico para revisar artefactos del proyecto.
 
-    Parametros principales: tokens.
     """
 
     fams = Counter(family(t) for t in tokens)

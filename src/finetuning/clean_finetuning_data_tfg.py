@@ -35,10 +35,12 @@ from miditoolkit import MidiFile, Instrument, Note, TempoChange, ControlChange, 
 # =============================================================================
 # RUTAS
 # =============================================================================
-INPUT_ROOT_DIR = Path(r"../../data/finetuning/finetuning_sonatas_raw")
-OUT_CLEAN_DIR = Path(r"../../data/finetuning/finetuning_sonatas_clean")
-OUT_CLEAN_INDEX_CSV = Path(r"/output/generation_finetuning_tfg_first/finetuning_clean_index.csv")
-OUT_REPORT_CSV = Path(r"/output/generation_finetuning_tfg_first/finetuning_clean_report.csv")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+INPUT_ROOT_DIR = PROJECT_ROOT / "data" / "finetuning" / "finetuning_sonatas_raw"
+OUT_CLEAN_DIR = PROJECT_ROOT / "data" / "finetuning" / "finetuning_sonatas_clean"
+OUT_CLEAN_INDEX_CSV = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first" / "finetuning_clean_index.csv"
+OUT_REPORT_CSV = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first" / "finetuning_clean_report.csv"
 
 # Mantiene la estructura de carpetas de INPUT_ROOT_DIR en OUT_CLEAN_DIR.
 PRESERVE_TREE = True
@@ -94,33 +96,18 @@ TINY_FILE_BYTES = 10_000
 # =============================================================================
 
 def _ls(obj, attr: str):
-    """
-    Implementa la logica de  ls dentro del pipeline del TFG.
-
-    Parametros principales: obj, attr.
-    """
 
     x = getattr(obj, attr, None)
     return x if x is not None else []
 
 
 def list_midis_recursively(root: Path) -> List[Path]:
-    """
-    Implementa la logica de list midis recursively dentro del pipeline del TFG.
-
-    Parametros principales: root.
-    """
 
     exts = {".mid", ".midi"}
     return sorted([p for p in root.rglob("*") if p.is_file() and p.suffix.lower() in exts])
 
 
 def canonical_hash(items: List[Tuple[int, int, int, int]]) -> str:
-    """
-    Implementa la logica de canonical hash dentro del pipeline del TFG.
-
-    Parametros principales: items.
-    """
 
     h = hashlib.md5()
     for s, e, p, v in items:
@@ -132,11 +119,6 @@ def canonical_hash(items: List[Tuple[int, int, int, int]]) -> str:
 
 
 def content_hash(m: MidiFile) -> str:
-    """
-    Implementa la logica de content hash dentro del pipeline del TFG.
-
-    Parametros principales: m.
-    """
 
     items = []
 
@@ -176,7 +158,6 @@ def build_tick_to_sec_map(m: MidiFile) -> Tuple[List[int], List[float], List[flo
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: m.
     """
 
     tpq = m.ticks_per_beat or 480
@@ -203,11 +184,6 @@ def build_tick_to_sec_map(m: MidiFile) -> Tuple[List[int], List[float], List[flo
 
 
 def tick_to_sec(tick: int, tempo_ticks: List[int], tempo_bpms: List[float], sec_at_tick: List[float], tpq: int) -> float:
-    """
-    Implementa la logica de tick to sec dentro del pipeline del TFG.
-
-    Parametros principales: tick, tempo_ticks, tempo_bpms, sec_at_tick, tpq.
-    """
 
     lo, hi = 0, len(tempo_ticks) - 1
     while lo < hi:
@@ -222,11 +198,6 @@ def tick_to_sec(tick: int, tempo_ticks: List[int], tempo_bpms: List[float], sec_
 
 
 def sec_to_tick(sec: float, tempo_ticks: List[int], tempo_bpms: List[float], sec_at_tick: List[float], tpq: int) -> int:
-    """
-    Implementa la logica de sec to tick dentro del pipeline del TFG.
-
-    Parametros principales: sec, tempo_ticks, tempo_bpms, sec_at_tick, tpq.
-    """
 
     lo, hi = 0, len(sec_at_tick) - 1
     while lo < hi:
@@ -313,11 +284,6 @@ def compute_gaps_seconds(m: MidiFile) -> Tuple[float, float, List[Tuple[float, f
 
 
 def compute_quality_features(m: MidiFile, src: Path) -> Dict:
-    """
-    Implementa la logica de compute quality features dentro del pipeline del TFG.
-
-    Parametros principales: m, src.
-    """
 
     ns_full = notes_full(m)
     first_onset_s, duration_s, gaps = compute_gaps_seconds(m)
@@ -483,11 +449,6 @@ def compress_gaps_inplace(m: MidiFile) -> int:
     cuts.sort(key=lambda x: x[0])
 
     def total_shift(t: int) -> int:
-        """
-        Implementa la logica de total shift dentro del pipeline del TFG.
-
-        Parametros principales: t.
-        """
 
         s = 0
         for ct, rt in cuts:
@@ -544,11 +505,6 @@ def split_on_clear_gap(m: MidiFile) -> List[MidiFile]:
     last_tick = max(e for _, e in ns)
 
     def clone_segment(start_tick: int, end_tick: int) -> MidiFile:
-        """
-        Implementa la logica de clone segment dentro del pipeline del TFG.
-
-        Parametros principales: start_tick, end_tick.
-        """
 
         m2 = MidiFile()
         m2.ticks_per_beat = m.ticks_per_beat
@@ -688,11 +644,6 @@ def safe_dump_miditoolkit(m: MidiFile, out_path: Path, debug_tag: str = "") -> b
 # =============================================================================
 
 def make_out_path(src: Path, part_idx: int) -> Path:
-    """
-    Implementa la logica de make out path dentro del pipeline del TFG.
-
-    Parametros principales: src, part_idx.
-    """
 
     if PRESERVE_TREE:
         try:

@@ -26,22 +26,14 @@ from src.training.common import (
     seed_all,
 )
 
-"""
-Pretraining base del modelo autoregresivo.
-
-Esta version mantiene los parametros historicos del primer experimento, pero
-reutiliza las utilidades compartidas para cache, loaders, optimizador,
-evaluacion y checkpoints. Asi el script queda como una receta legible del
-experimento en lugar de mezclar toda la infraestructura en el main.
-"""
-
-
 # =============================================================================
 # CONFIGURACION DEL EXPERIMENTO
 # =============================================================================
 
-INDEX_CSV = Path(r"../../data/interim/indexes/index_pretraining_v1.csv")
-TOKENS_DIR = Path(r"../../data/interim/tokenized_json_bpe")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+INDEX_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_pretraining.csv"
+TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe"
 ANCHOR = r"data\interim\tokenized_json_bpe"
 
 TOKEN_FIELD = "ids"
@@ -51,7 +43,7 @@ VAL_RATIO = 0.1
 TEST_RATIO = 0.1
 SEED = 1453
 
-CACHE_DIR = Path(r"../../data/bin/bin_for_pretraining").resolve()
+CACHE_DIR = (PROJECT_ROOT / "data" / "bin" / "bin_for_pretraining").resolve()
 ADD_EOS = True
 EOS_ID = 2
 USE_UINT16 = True
@@ -86,7 +78,7 @@ PATIENCE_EVALS = 10
 MIN_DELTA = 0.005
 START_EARLY_AFTER = 5000
 
-CKPT_DIR = Path(r"../../output/checkpoints/pretraining").resolve()
+CKPT_DIR = (PROJECT_ROOT / "output" / "checkpoints" / "pretraining").resolve()
 
 NUM_WORKERS = 2
 PIN_MEMORY = True

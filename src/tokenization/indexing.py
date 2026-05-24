@@ -53,11 +53,6 @@ def path_for_index(json_path: Path, project_root: Path | None) -> str:
 
 
 def iter_token_jsons(tokens_dir: Path) -> Iterable[Path]:
-    """
-    Implementa la logica de iter token jsons dentro del pipeline del TFG.
-
-    Parametros principales: tokens_dir.
-    """
 
     return sorted(p for p in tokens_dir.rglob("*.json") if p.is_file())
 

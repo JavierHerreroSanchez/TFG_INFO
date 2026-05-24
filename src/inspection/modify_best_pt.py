@@ -7,7 +7,9 @@ Estos scripts ayudan a auditar el comportamiento del pipeline durante el desarro
 import torch
 from pathlib import Path
 
-src = Path(r"../../output/checkpoints/pretraining_v2/last.pt")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+src = PROJECT_ROOT / "output" / "checkpoints" / "pretraining_v2" / "last.pt"
 dst = src.with_name("last.pt")
 
 ckpt = torch.load(src, map_location="cpu")

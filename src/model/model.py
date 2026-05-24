@@ -61,11 +61,6 @@ class MusicTransformerGPTlike(nn.Module):
     y opcionalmente devuelve la loss.
     """
     def __init__(self, cfg: MTModelConfig):
-        """
-        Implementa la logica de   init   dentro del pipeline del TFG.
-
-        Parametros principales: cfg.
-        """
 
         super().__init__()
         self.cfg = cfg
@@ -120,11 +115,6 @@ class MusicTransformerGPTlike(nn.Module):
     # tipo GPT para estabilizar el arranque del entrenamiento.
     # =============================================================================
     def _init_weights(self, module):
-        """
-        Implementa la logica de  init weights dentro del pipeline del TFG.
-
-        Parametros principales: module.
-        """
 
         if isinstance(module, nn.Linear):
             nn.init.normal_(module.weight, mean=0.0, std=0.02)
@@ -146,11 +136,6 @@ class MusicTransformerGPTlike(nn.Module):
     # =============================================================================
     def forward(self, idx: torch.Tensor, targets: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
         # En PyTorch, los índices de nn.Embedding deben ser enteros (torch.long).
-        """
-        Implementa la logica de forward dentro del pipeline del TFG.
-
-        Parametros principales: idx, targets.
-        """
 
         if idx.dtype != torch.long:
             raise TypeError(f"idx debe ser torch.long, recibido {idx.dtype}")

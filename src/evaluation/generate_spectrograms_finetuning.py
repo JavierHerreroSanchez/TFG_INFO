@@ -6,23 +6,6 @@ Los resultados producidos aqui sirven para justificar experimentalmente la calid
 
 from __future__ import annotations
 
-"""
-Evaluación espectral de MIDIs generados tras el fine-tuning.
-
-Las referencias del corpus objetivo se segmentan en ventanas de audio con duración
-comparable a las piezas generadas. La puntuación mide cercanía espectral al corpus
-de referencia y se complementa con métricas globales OA/KLD y un diagnóstico
-separado contra las obras completas.
-
-Salidas principales:
-- `spectral_features_all.csv`: generados y ventanas de referencia.
-- `spectral_reference_full_piece_features.csv`: obras completas, solo diagnóstico.
-- `spectral_reference_window_features.csv`: ventanas usadas para scoring.
-- `spectral_evaluation.csv`: puntuación por pieza y bloque global compacto.
-- `spectral_per_piece_details.json`: detalle de métricas por muestra.
-- `spectral_summary.json`: configuración y resumen de ejecución.
-"""
-
 import json
 import math
 import random
@@ -40,13 +23,15 @@ from scipy.stats import entropy
 # ============================================================
 # CONFIGURACIÓN
 # ============================================================
-GENERATED_DIR = Path(r"../../output/generation_finetuning_tfg_first")
-OUT_DIR = Path(r"../../output/generation_finetuning_tfg_first/midi_spectral_eval_windows")
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+GENERATED_DIR = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first"
+OUT_DIR = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first" / "midi_spectral_eval_windows"
 
 # Referencias de fine-tuning: subconjunto musical objetivo.
 USE_REFERENCE = True
 REFERENCE_MODE = "single_dir"
-REFERENCE_DIR = Path(r"../../data/finetuning/finetuning_sonatas_aug")
+REFERENCE_DIR = PROJECT_ROOT / "data" / "finetuning" / "finetuning_sonatas_aug"
 MAESTRO_DIR = None
 ARIA_DIR = None
 
@@ -152,11 +137,6 @@ GLOBAL_REPORT_COLUMNS = [
 # UTILIDADES
 # ============================================================
 def find_midi_files(root: Path, recursive: bool = True) -> List[Path]:
-    """
-    Implementa la logica de find midi files dentro del pipeline del TFG.
-
-    Parametros principales: root, recursive.
-    """
 
     pats = ["*.mid", "*.midi"]
     files: List[Path] = []
@@ -166,11 +146,6 @@ def find_midi_files(root: Path, recursive: bool = True) -> List[Path]:
 
 
 def safe_float(x, default=np.nan) -> float:
-    """
-    Implementa la logica de safe float dentro del pipeline del TFG.
-
-    Parametros principales: x, default.
-    """
 
     try:
         v = float(x)
@@ -180,32 +155,17 @@ def safe_float(x, default=np.nan) -> float:
 
 
 def sanitize_text(parts: List[str]) -> str:
-    """
-    Implementa la logica de sanitize text dentro del pipeline del TFG.
-
-    Parametros principales: parts.
-    """
 
     return " | ".join(p for p in parts if p)
 
 
 def finite_values(arr: np.ndarray) -> np.ndarray:
-    """
-    Implementa la logica de finite values dentro del pipeline del TFG.
-
-    Parametros principales: arr.
-    """
 
     arr = np.asarray(arr, dtype=float)
     return arr[np.isfinite(arr)]
 
 
 def finite_stats(arr: np.ndarray) -> Tuple[float, float, int]:
-    """
-    Implementa la logica de finite stats dentro del pipeline del TFG.
-
-    Parametros principales: arr.
-    """
 
     arr = finite_values(arr)
     if arr.size == 0:
@@ -216,11 +176,6 @@ def finite_stats(arr: np.ndarray) -> Tuple[float, float, int]:
 
 
 def piece_label(score: float) -> str:
-    """
-    Implementa la logica de piece label dentro del pipeline del TFG.
-
-    Parametros principales: score.
-    """
 
     for th, label in QUAL_LABELS:
         if score >= th:
@@ -251,11 +206,6 @@ def choose_reference_files() -> List[Path]:
 # MIDI -> AUDIO SIMPLE
 # ============================================================
 def synthesize_midi_simple(midi_path: Path, sample_rate: int) -> np.ndarray:
-    """
-    Implementa la logica de synthesize midi simple dentro del pipeline del TFG.
-
-    Parametros principales: midi_path, sample_rate.
-    """
 
     pm = pretty_midi.PrettyMIDI(str(midi_path))
     y = pm.synthesize(fs=sample_rate)
@@ -270,11 +220,6 @@ def synthesize_midi_simple(midi_path: Path, sample_rate: int) -> np.ndarray:
 # ESPECTROGRAMA
 # ============================================================
 def compute_logmel(y: np.ndarray, sr: int) -> np.ndarray:
-    """
-    Implementa la logica de compute logmel dentro del pipeline del TFG.
-
-    Parametros principales: y, sr.
-    """
 
     mel = librosa.feature.melspectrogram(
         y=y,
@@ -291,11 +236,6 @@ def compute_logmel(y: np.ndarray, sr: int) -> np.ndarray:
 
 
 def compute_onset_envelope(y: np.ndarray, sr: int) -> np.ndarray:
-    """
-    Implementa la logica de compute onset envelope dentro del pipeline del TFG.
-
-    Parametros principales: y, sr.
-    """
 
     return librosa.onset.onset_strength(y=y, sr=sr, hop_length=HOP_LENGTH)
 
@@ -311,7 +251,6 @@ def save_professional_spectrogram(
     """
     Guarda resultados intermedios o finales en disco.
 
-    Parametros principales: mel_db, y, sr, png_path, title, extra_info.
     """
 
     png_path.parent.mkdir(parents=True, exist_ok=True)
@@ -375,11 +314,6 @@ def save_professional_spectrogram(
 # FEATURES ESPECTRALES
 # ============================================================
 def extract_spectral_features(y: np.ndarray, sr: int) -> Dict[str, float]:
-    """
-    Implementa la logica de extract spectral features dentro del pipeline del TFG.
-
-    Parametros principales: y, sr.
-    """
 
     if y.size == 0:
         return {k: np.nan for k in SPECTRAL_FEATURES}
@@ -392,11 +326,6 @@ def extract_spectral_features(y: np.ndarray, sr: int) -> Dict[str, float]:
     contrast = librosa.feature.spectral_contrast(y=y, sr=sr, n_fft=N_FFT, hop_length=HOP_LENGTH)
 
     def ms(arr: np.ndarray) -> Tuple[float, float]:
-        """
-        Implementa la logica de ms dentro del pipeline del TFG.
-
-        Parametros principales: arr.
-        """
 
         arr = np.asarray(arr, dtype=float).ravel()
         arr = arr[np.isfinite(arr)]
@@ -438,11 +367,6 @@ def process_midi_file(
     spec_dir: Optional[Path],
     generate_png: bool,
 ) -> Dict[str, float | str]:
-    """
-    Implementa la logica de process midi file dentro del pipeline del TFG.
-
-    Parametros principales: midi_path, spec_dir, generate_png.
-    """
 
     stem = midi_path.stem
     png_path = spec_dir / f"{stem}_logmel.png" if (generate_png and spec_dir is not None) else None
@@ -479,7 +403,6 @@ def build_feature_table(
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: files, spec_dir, tag, generate_png.
     """
 
     rows = []
@@ -498,11 +421,6 @@ def build_feature_table(
 # PIPELINE DE VENTANAS DE REFERENCIA
 # ============================================================
 def generated_duration_bins(gen_df: pd.DataFrame) -> List[float]:
-    """
-    Implementa la logica de generated duration bins dentro del pipeline del TFG.
-
-    Parametros principales: gen_df.
-    """
 
     vals = finite_values(gen_df["duration_s"].to_numpy(dtype=float))
     vals = vals[(vals >= MIN_REFERENCE_WINDOW_SECONDS) & (vals <= MAX_REFERENCE_WINDOW_SECONDS)]
@@ -521,11 +439,6 @@ def generated_duration_bins(gen_df: pd.DataFrame) -> List[float]:
 
 
 def iter_audio_windows(y: np.ndarray, sr: int, window_seconds: float) -> List[Tuple[int, int]]:
-    """
-    Implementa la logica de iter audio windows dentro del pipeline del TFG.
-
-    Parametros principales: y, sr, window_seconds.
-    """
 
     window_samples = int(round(window_seconds * sr))
     if window_samples <= 0 or y.size < window_samples:
@@ -545,11 +458,6 @@ def process_reference_windows_for_file(
     window_lengths_seconds: List[float],
     rng: random.Random,
 ) -> List[Dict[str, float | str]]:
-    """
-    Implementa la logica de process reference windows for file dentro del pipeline del TFG.
-
-    Parametros principales: midi_path, window_lengths_seconds, rng.
-    """
 
     rows: List[Dict[str, float | str]] = []
 
@@ -598,7 +506,6 @@ def build_reference_window_table(
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: files, window_lengths_seconds, tag.
     """
 
     rows: List[Dict[str, float | str]] = []
@@ -621,11 +528,6 @@ def build_reference_window_table(
 # COMPARACIÓN GLOBAL
 # ============================================================
 def normalized_hist_pair(a: np.ndarray, b: np.ndarray, bins: int | str = "auto") -> Tuple[np.ndarray, np.ndarray]:
-    """
-    Implementa la logica de normalized hist pair dentro del pipeline del TFG.
-
-    Parametros principales: a, b, bins.
-    """
 
     a = finite_values(a)
     b = finite_values(b)
@@ -655,11 +557,6 @@ def normalized_hist_pair(a: np.ndarray, b: np.ndarray, bins: int | str = "auto")
 
 
 def overlap_area(p: np.ndarray, q: np.ndarray) -> float:
-    """
-    Implementa la logica de overlap area dentro del pipeline del TFG.
-
-    Parametros principales: p, q.
-    """
 
     if p.size == 0 or q.size == 0:
         return np.nan
@@ -667,11 +564,6 @@ def overlap_area(p: np.ndarray, q: np.ndarray) -> float:
 
 
 def kld_real_to_gen(p_real: np.ndarray, q_gen: np.ndarray) -> float:
-    """
-    Implementa la logica de kld real to gen dentro del pipeline del TFG.
-
-    Parametros principales: p_real, q_gen.
-    """
 
     if p_real.size == 0 or q_gen.size == 0:
         return np.nan
@@ -679,11 +571,6 @@ def kld_real_to_gen(p_real: np.ndarray, q_gen: np.ndarray) -> float:
 
 
 def global_distribution_report(ref_df: pd.DataFrame, gen_df: pd.DataFrame, features: List[str]) -> pd.DataFrame:
-    """
-    Implementa la logica de global distribution report dentro del pipeline del TFG.
-
-    Parametros principales: ref_df, gen_df, features.
-    """
 
     rows = []
     for feat in features:
@@ -715,11 +602,6 @@ def global_distribution_report(ref_df: pd.DataFrame, gen_df: pd.DataFrame, featu
 # SCORE POR PIEZA
 # ============================================================
 def select_local_reference_pool(duration_s: float, ref_df: pd.DataFrame) -> pd.DataFrame:
-    """
-    Implementa la logica de select local reference pool dentro del pipeline del TFG.
-
-    Parametros principales: duration_s, ref_df.
-    """
 
     if ref_df.empty or not np.isfinite(duration_s):
         return ref_df.head(LOCAL_REF_POOL_SIZE)
@@ -745,11 +627,6 @@ def select_local_reference_pool(duration_s: float, ref_df: pd.DataFrame) -> pd.D
 
 
 def strict_feature_score(x: float, ref_vals: np.ndarray, eps: float = 1e-8) -> float:
-    """
-    Implementa la logica de strict feature score dentro del pipeline del TFG.
-
-    Parametros principales: x, ref_vals, eps.
-    """
 
     if not np.isfinite(x):
         return np.nan
@@ -766,11 +643,6 @@ def strict_feature_score(x: float, ref_vals: np.ndarray, eps: float = 1e-8) -> f
 
 
 def per_piece_reference_based(gen_row: pd.Series, local_ref_df: pd.DataFrame) -> Dict:
-    """
-    Implementa la logica de per piece reference based dentro del pipeline del TFG.
-
-    Parametros principales: gen_row, local_ref_df.
-    """
 
     detail_scores = {}
     vals = []
@@ -808,11 +680,6 @@ def per_piece_reference_based(gen_row: pd.Series, local_ref_df: pd.DataFrame) ->
 
 
 def range_acceptance_score(x: float, lo: float, hi: float, softness: float | None = None) -> float:
-    """
-    Implementa la logica de range acceptance score dentro del pipeline del TFG.
-
-    Parametros principales: x, lo, hi, softness.
-    """
 
     if not np.isfinite(x):
         return np.nan
@@ -826,11 +693,6 @@ def range_acceptance_score(x: float, lo: float, hi: float, softness: float | Non
 
 
 def per_piece_reference_free(gen_row: pd.Series) -> Dict:
-    """
-    Implementa la logica de per piece reference free dentro del pipeline del TFG.
-
-    Parametros principales: gen_row.
-    """
 
     checks = {
         "rms_mean": range_acceptance_score(safe_float(gen_row.get("rms_mean", np.nan)), 0.02, 0.22),
@@ -846,11 +708,6 @@ def per_piece_reference_free(gen_row: pd.Series) -> Dict:
 
 
 def describe_piece(ref_based: Dict, ref_free: Dict) -> Tuple[List[str], List[str]]:
-    """
-    Implementa la logica de describe piece dentro del pipeline del TFG.
-
-    Parametros principales: ref_based, ref_free.
-    """
 
     strengths: List[str] = []
     issues: List[str] = []
@@ -886,7 +743,6 @@ def build_features_all_csv(gen_df: pd.DataFrame, ref_df: pd.DataFrame) -> pd.Dat
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: gen_df, ref_df.
     """
 
     gen2 = gen_df.copy()
@@ -904,7 +760,6 @@ def build_compact_evaluation_csv(per_piece_df: pd.DataFrame, global_report: pd.D
     """
     Construye una estructura auxiliar usada por el resto del flujo.
 
-    Parametros principales: per_piece_df, global_report.
     """
 
     rows = []

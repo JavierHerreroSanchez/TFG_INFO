@@ -61,7 +61,6 @@ _TOKENIZER: REMI | None = None
 # =============================================================================
 
 def get_tokenizer() -> REMI:
-    """Implementa la logica de get tokenizer dentro del pipeline del TFG."""
 
     global _TOKENIZER
     if _TOKENIZER is None:
@@ -70,11 +69,6 @@ def get_tokenizer() -> REMI:
 
 
 def list_midi_files(root: Path) -> list[Path]:
-    """
-    Implementa la logica de list midi files dentro del pipeline del TFG.
-
-    Parametros principales: root.
-    """
 
     return sorted(
         p for p in root.rglob("*")
@@ -115,11 +109,6 @@ def is_bar_level_ac(ac_obj: Any) -> bool:
 
 
 def normalize_tokseq_list(tokseq_or_list: Any) -> list[Any]:
-    """
-    Implementa la logica de normalize tokseq list dentro del pipeline del TFG.
-
-    Parametros principales: tokseq_or_list.
-    """
 
     if isinstance(tokseq_or_list, list):
         return tokseq_or_list
@@ -182,7 +171,6 @@ def save_bad_line(midi_path: Path, reason: str) -> None:
     """
     Guarda resultados intermedios o finales en disco.
 
-    Parametros principales: midi_path, reason.
     """
 
     BAD_LIST_PATH.parent.mkdir(parents=True, exist_ok=True)
@@ -191,22 +179,12 @@ def save_bad_line(midi_path: Path, reason: str) -> None:
 
 
 def output_json_path(midi_path: Path, dataset_root: Path, out_dir: Path) -> Path:
-    """
-    Implementa la logica de output json path dentro del pipeline del TFG.
-
-    Parametros principales: midi_path, dataset_root, out_dir.
-    """
 
     rel = midi_path.relative_to(dataset_root)
     return (out_dir / rel).with_suffix(".json")
 
 
 def token_family_counts_from_tokens(tokens: list[str]) -> dict[str, int]:
-    """
-    Implementa la logica de token family counts from tokens dentro del pipeline del TFG.
-
-    Parametros principales: tokens.
-    """
 
     counts: dict[str, int] = {}
     for tok in tokens:
@@ -230,11 +208,6 @@ class FileResult:
 
 
 def process_one_file(midi_path_str: str) -> FileResult:
-    """
-    Implementa la logica de process one file dentro del pipeline del TFG.
-
-    Parametros principales: midi_path_str.
-    """
 
     midi_path = Path(midi_path_str)
     tokenizer = get_tokenizer()
