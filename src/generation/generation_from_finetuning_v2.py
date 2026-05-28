@@ -40,7 +40,7 @@ from src.training.common import (
     seed_all,
     split_train_val_test,
 )
-from src.model.model import MusicTransformerGPTlike, MTModelConfig
+from src.model.model import MusicTransformerAutoregressive, MTModelConfig
 
 
 def prepare_cache_and_splits():
@@ -75,7 +75,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 OUTPUT_DIR = (PROJECT_ROOT / "output" / "generation_finetuning_tfg_second").resolve()
 
 def get_model_block_size(model: torch.nn.Module) -> int:
-    """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerGPTlike."""
+    """Obtiene block_size desde model.cfg, que es donde vive en MusicTransformerAutoregressive."""
     cfg = getattr(model, "cfg", None)
     if cfg is None or not hasattr(cfg, "block_size"):
         raise AttributeError("El modelo no expone cfg.block_size.")
@@ -86,7 +86,7 @@ def get_model_block_size(model: torch.nn.Module) -> int:
 # Utilidades de checkpoints / modelo
 # =============================================================================
 
-def load_checkpoint_and_model(ckpt_name: str, device: str) -> Tuple[MusicTransformerGPTlike, Dict]:
+def load_checkpoint_and_model(ckpt_name: str, device: str) -> Tuple[MusicTransformerAutoregressive, Dict]:
     """
     Carga best.pt o last.pt y reconstruye el modelo desde el cfg guardado
     dentro del checkpoint del pretraining.
@@ -104,7 +104,7 @@ def load_checkpoint_and_model(ckpt_name: str, device: str) -> Tuple[MusicTransfo
         raise KeyError(f"El checkpoint {ckpt_path} no contiene 'cfg'.")
 
     cfg = MTModelConfig(**ckpt["cfg"])
-    model = MusicTransformerGPTlike(cfg).to(device)
+    model = MusicTransformerAutoregressive(cfg).to(device)
     model.load_state_dict(ckpt["model"])
     model.eval()
 
@@ -589,7 +589,7 @@ def run_generation(
 def parse_args():
 
     parser = argparse.ArgumentParser(
-        description="Evaluación y generación para el pretraining del Music Transformer GPT-like."
+        description="Evaluación y generación para el pretraining del Music Transformer autoregresivo."
     )
 
     parser.add_argument("--mode", choices=["loss", "generate", "all"], default="all")

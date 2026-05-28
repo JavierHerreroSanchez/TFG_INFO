@@ -20,7 +20,7 @@ MAESTRO_ROOT = (PROJECT_ROOT / "data" / "pretraining_raw" / "maestro-v3.0.0").re
 ARIA_ROOT = (PROJECT_ROOT / "data" / "pretraining_raw" / "ariamidi").resolve()
 
 OUT_ROOT = (PROJECT_ROOT / "tokenizer").resolve()
-TOKENIZER_FILENAME = "tokenizer_REMI_BPE_v5.json"
+TOKENIZER_FILENAME = "tokenizer_REMI_BPE_v2.json"
 
 VOCAB_SIZE = 18000
 ENCODE_IDS_SPLIT: Literal["bar", "beat", "no"] = "bar"

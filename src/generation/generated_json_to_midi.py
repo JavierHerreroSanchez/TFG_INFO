@@ -4,6 +4,8 @@ Conversión de una muestra generada en JSON a MIDI.
 
 El script carga una secuencia de ids generada por el modelo, reconstruye la
 secuencia de tokens con el tokenizador REMI+BPE y exporta el resultado como MIDI.
+
+Este archivo funciona tanto para el primer pretraining como para el primer finetuning
 """
 
 from pathlib import Path
@@ -19,10 +21,10 @@ from miditok import REMI, TokSequence
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 # Tokenizador usado para generar los ids del JSON.
-TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v3.json"
+TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v2.json"
 
 # JSON generado por el script de generación.
-GENERATED_JSON_PATH = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first" / "sample_009.json"
+GENERATED_JSON_PATH = PROJECT_ROOT / "output" / "generation_finetuning_tfg_second" / "sample_009.json"
 # Campo del JSON a convertir
 # Opciones típicas:
 #   - "full_generated_tokens" -> prompt + continuación
@@ -31,7 +33,7 @@ GENERATED_JSON_PATH = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first
 JSON_TOKEN_FIELD = "full_generated_tokens"
 
 # MIDI de salida
-OUTPUT_MIDI_PATH = PROJECT_ROOT / "output" / "generation_finetuning_tfg_first" / "generated_from_json9.mid"
+OUTPUT_MIDI_PATH = PROJECT_ROOT / "output" / "generation_finetuning_tfg_second" / "generated_from_json9.mid"
 
 # Si True, elimina PAD / BOS / MASK y un EOS final si aparece
 FILTER_SPECIAL_TOKENS = True

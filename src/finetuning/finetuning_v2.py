@@ -16,7 +16,7 @@ from typing import Optional
 import numpy as np
 import torch
 
-from src.model.model import MusicTransformerGPTlike, MTModelConfig
+from src.model.model import MusicTransformerAutoregressive, MTModelConfig
 from src.training.common import (
     CacheConfig,
     configure_amp,
@@ -163,7 +163,7 @@ def load_pretrained_checkpoint(model: torch.nn.Module, ckpt_path: Path, device: 
 
 @torch.no_grad()
 def export_listen_samples(
-    model: MusicTransformerGPTlike,
+    model: MusicTransformerAutoregressive,
     test_bin: Path,
     dtype,
     out_dir: Path,
@@ -361,7 +361,7 @@ def main():
     )
 
     cfg = model_config()
-    model = MusicTransformerGPTlike(cfg).to(DEVICE)
+    model = MusicTransformerAutoregressive(cfg).to(DEVICE)
     load_pretrained_checkpoint(model, PRETRAINED_CKPT, DEVICE)
 
     val0 = evaluate(model, val_loader, DEVICE, EVAL_BATCHES)

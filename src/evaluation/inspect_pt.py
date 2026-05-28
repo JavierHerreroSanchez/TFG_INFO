@@ -9,7 +9,7 @@ from pathlib import Path
 
 import torch
 
-from src.model.model import MusicTransformerGPTlike, MTModelConfig
+from src.model.model import MusicTransformerAutoregressive, MTModelConfig
 
 # =============================================================================
 # CONFIGURACIÓN
@@ -74,7 +74,7 @@ def main():
 
     # Reconstrucción del modelo desde la configuración guardada.
     cfg = MTModelConfig(**cfg_dict)
-    model = MusicTransformerGPTlike(cfg)
+    model = MusicTransformerAutoregressive(cfg)
 
     state_dict = ckpt.get("model", None)
     if state_dict is None:

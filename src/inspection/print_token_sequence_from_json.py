@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 """
 print_token_sequence_from_json.py
 
@@ -9,20 +6,8 @@ Carga un JSON tokenizado por MidiTok y muestra secuencialmente:
 - id
 - token legible
 
-Pensado para JSONs tokenizados con tokenizer_REMI_BPE_v4.json.
+Pensado para JSONs tokenizados con tokenizer_REMI_BPE_v1.json.
 
-Soporta:
-- JSON con "ids": [int, int, ...]
-- JSON con "ids": [[...], [...], ...]   (varios streams/tracks)
-
-Uso:
-    python print_token_sequence_from_json.py
-
-Ajusta abajo:
-- TOKENIZER_PATH
-- JSON_PATH
-- MAX_TOKENS
-- STREAM_INDEX
 """
 
 from __future__ import annotations
@@ -41,7 +26,7 @@ from miditok import TokSequence
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-TOKENIZER_PATH = (PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v5.json").resolve()
+TOKENIZER_PATH = (PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v2.json").resolve()
 
 # Ruta del JSON a inspeccionar.
 JSON_PATH = (PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe_v2" / "ariamidi"  / "aa" / "000002_0.json"

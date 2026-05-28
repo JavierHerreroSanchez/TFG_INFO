@@ -16,7 +16,7 @@ import torch.nn.functional as F
 from src.model.blocks import MTConfig, MTEmbedding, MusicTransformerBlockPreLN
 
 # =============================================================================
-# Configuración de alto nivel del modelo (GPT decoder-only)
+# Configuración de alto nivel del modelo (Transformer decoder-only)
 # -----------------------------------------------------------------------------
 # En esta dataclass se definen los hiperparámetros “macro” del modelo:
 # - tamaño del vocabulario y longitud máxima (block_size)
@@ -41,7 +41,7 @@ class MTModelConfig:
     debug: bool = False
 
 # =============================================================================
-# MusicTransformerGPT (decoder-only autoregresivo)
+# MusicTransformerAutoregressive (decoder-only autoregresivo)
 # -----------------------------------------------------------------------------
 # Se implementa un Transformer únicamente con la parte del decoder:
 #   idx (B, T) -> embeddings (B, T, D) -> bloques (B, T, D) -> logits (B, T, V)
@@ -49,12 +49,12 @@ class MTModelConfig:
 # predecimos el siguiente token (next-token prediction) usando máscara causal
 # (implementada dentro de la atención relativa del bloque).
 # =============================================================================
-class MusicTransformerGPTlike(nn.Module):
+class MusicTransformerAutoregressive(nn.Module):
     """
     Modelo decoder-only autorregresivo para música,
     inspirado en la idea de combinar:
       - una pila de bloques tipo Music Transformer (atención relativa + máscara causal),
-      - con el objetivo clásico de GPT: predecir el siguiente token en la secuencia.
+      - con el objetivo autorregresivo: predecir el siguiente token en la secuencia.
 
     La interfaz principal es:
       idx (B, T) -> logits (B, T, V)
@@ -97,7 +97,7 @@ class MusicTransformerGPTlike(nn.Module):
         if cfg.tie_weights:
             self.lm_head.weight = self.embed.wte.weight
 
-        # Inicialización explícita de pesos (estilo GPT: Normal(0, 0.02)).
+        # Inicialización explícita de pesos (Normal(0, 0.02)).
         self.apply(self._init_weights)
 
         # Resumen informativo: número de parámetros y configuración principal.
@@ -112,7 +112,7 @@ class MusicTransformerGPTlike(nn.Module):
     # -----------------------------------------------------------------------------
     # Se aplica una inicialización gaussiana a capas lineales y embeddings, y
     # ponemos a cero los sesgos. Este patrón es habitual en implementaciones
-    # tipo GPT para estabilizar el arranque del entrenamiento.
+    # de modelos Transformer autorregresivos para estabilizar el arranque del entrenamiento.
     # =============================================================================
     def _init_weights(self, module):
 
@@ -175,7 +175,7 @@ class MusicTransformerGPTlike(nn.Module):
     #  - obtenemos logits del último timestep
     #  - aplicar temperatura y (opcionalmente) top-k sampling
     #  - muestreamos el siguiente token y lo concatenamos al contexto
-    # Este es el patrón estándar de muestreo en modelos GPT.
+    # Este es el patrón estándar de muestreo en modelos autoregresivos.
     # =============================================================================
     @torch.no_grad()
     def generate(self, idx: torch.Tensor, max_new_tokens: int, temperature: float = 1.0, top_k: Optional[int] = None) -> torch.Tensor:

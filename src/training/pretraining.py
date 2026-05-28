@@ -13,7 +13,7 @@ from pathlib import Path
 
 import torch
 
-from src.model.model import MusicTransformerGPTlike, MTModelConfig
+from src.model.model import MusicTransformerAutoregressive, MTModelConfig
 from src.training.common import (
     CacheConfig,
     configure_amp,
@@ -252,7 +252,7 @@ def main():
     )
 
     cfg = model_config()
-    model = MusicTransformerGPTlike(cfg).to(DEVICE)
+    model = MusicTransformerAutoregressive(cfg).to(DEVICE)
     opt = configure_optimizer(model, LR, WEIGHT_DECAY)
     scaler, autocast_dtype = configure_amp(DEVICE, USE_AMP, AMP_DTYPE)
 

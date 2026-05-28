@@ -44,7 +44,7 @@ TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v2"
 INDEX_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_finetuning_v2.csv"
 
 BAD_LIST = PROJECT_ROOT / "tokenizer" / "bad_midis_finetuning.txt"
-TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v5.json"
+TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v1.json"
 
 TOKEN_FIELD_CANDIDATES = ("ids", "ids_encoded")
 

@@ -19,7 +19,7 @@ from miditok import REMI, TokSequence
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 # Tokenizador usado para generar los ids del JSON.
-TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v5.json"
+TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v2.json"
 
 # JSON generado por el script de generación.
 GENERATED_JSON_PATH = PROJECT_ROOT / "output" / "generation_pretraining_tfg_second" / "sample_009.json"

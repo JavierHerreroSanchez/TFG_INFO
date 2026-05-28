@@ -1,19 +1,19 @@
 # Estructura de `data/pretraining_raw`
 
-Esta carpeta almacena los corpus MIDI originales usados en la fase de preentrenamiento. El contenido no se versiona por tamano y por tratarse de datos externos.
-
-Estructura prevista:
+Corpus MIDI originales para preentrenamiento. No se versionan por tamano ni por
+ser datos externos.
 
 ```text
 data/pretraining_raw/
-├── maestro-v3.0.0/
-│   ├── 2004/
-│   ├── 2006/
-│   └── ...
-└── ariamidi/
-    ├── aa/
-    ├── ab/
-    └── ...
+|-- maestro-v3.0.0/
+|   |-- 2004/
+|   |-- 2006/
+|   `-- ...
+`-- ariamidi/
+    |-- aa/
+    |-- ab/
+    `-- ...
 ```
 
-En MAESTRO, la organizacion sigue las carpetas por ano del propio dataset. En ARIAMidi, la organizacion local usa carpetas alfabeticas de dos letras; se muestran solo algunos ejemplos porque el conjunto completo contiene muchas subcarpetas equivalentes.
+MAESTRO mantiene la organizacion por ano del dataset. ARIAMidi usa subcarpetas
+alfabeticas de dos letras.

@@ -28,7 +28,7 @@ PROJECT_ROOT = THIS_FILE.parents[2]
 DATA_RAW = PROJECT_ROOT / "data" / "pretraining_raw"
 TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_json_bpe_v2"
 INDEX_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_pretraining_v2.csv"
-TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v4.json"
+TOKENIZER_PATH = PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v1.json"
 BAD_LIST = PROJECT_ROOT / "tokenizer" / "bad_midis.txt"
 
 DATASETS_TO_SCAN = [

@@ -1,12 +1,10 @@
 # Estructura de `data/interim/tokenized_finetuning`
 
-Esta carpeta contiene los JSON tokenizados del primer corpus de fine-tuning.
-
-Estructura prevista:
+JSON tokenizados del primer corpus de fine-tuning.
 
 ```text
 data/interim/tokenized_finetuning/
-└── <json tokenizados del corpus objetivo>
+`-- <json tokenizados del corpus objetivo>
 ```
 
-Los archivos internos corresponden a piezas y variantes del corpus preparado en `data/finetuning`.
+Los archivos proceden de `data/finetuning`.

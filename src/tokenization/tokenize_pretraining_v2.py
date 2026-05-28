@@ -37,7 +37,7 @@ from src.tokenization.indexing import build_token_index
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-TOKENIZER_PATH = (PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v5.json").resolve()
+TOKENIZER_PATH = (PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v2.json").resolve()
 
 # Rutas internas del proyecto.
 DATASET_ROOT = (PROJECT_ROOT / "data" / "pretraining_raw").resolve()
