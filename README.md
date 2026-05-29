@@ -67,7 +67,7 @@ Tokenizador usado: `tokenizer/tokenizer_REMI_BPE_v2.json`.
 
 ```bash
 python -m src.tokenization.tokenize_pretraining_v2
-python -m src.training.pretraining_v2
+python -m src.pretraining.pretraining_v2
 ```
 
 Salidas principales:

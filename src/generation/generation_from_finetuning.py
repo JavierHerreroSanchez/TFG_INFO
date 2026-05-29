@@ -32,8 +32,8 @@ from src.finetuning.finetuning import (
     CKPT_DIR,
     cache_config,
 )
-from src.training import common as training_common
-from src.training.common import (
+from src.pretraining import common as training_common
+from src.pretraining.common import (
     MemmapRandomCropDataset,
     evaluate,
     resolve_json_paths,

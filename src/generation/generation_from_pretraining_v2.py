@@ -15,15 +15,15 @@ from typing import Dict, List, Tuple
 import torch
 import torch.nn.functional as F
 
-from src.training import common as training_common
-from src.training.common import (
+from src.pretraining import common as training_common
+from src.pretraining.common import (
     MemmapRandomCropDataset,
     evaluate,
     resolve_json_paths,
     seed_all,
     split_train_val_test,
 )
-from src.training.pretraining_v2 import (
+from src.pretraining.pretraining_v2 import (
     INDEX_CSV,
     TOKENS_DIR,
     ANCHOR,

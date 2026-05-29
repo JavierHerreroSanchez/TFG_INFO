@@ -14,7 +14,7 @@ from pathlib import Path
 import torch
 
 from src.model.model import MusicTransformerAutoregressive, MTModelConfig
-from src.training.common import (
+from src.pretraining.common import (
     CacheConfig,
     configure_amp,
     configure_optimizer,
