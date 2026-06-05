@@ -130,8 +130,8 @@ Los resultados se guardan en las carpetas `output/generation_*`.
 tokenizer/                         tokenizadores entrenados
 data/interim/indexes/*.csv         índices de tokenización
 data/bin/                          caches binarias
-output/checkpoints/*/best.pt       checkpoints principales
-output/generation_*/               muestras e informes
+output/checkpoints/*/best.pt       checkpoints/modelos principales
+output/generation_*/               muestras generadas e informes de evaluación
 ```
 
 ## Reproducibilidad
