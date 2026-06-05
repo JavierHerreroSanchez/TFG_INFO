@@ -1,7 +1,7 @@
 # Estructura de `data/pretraining_raw`
 
-Corpus MIDI originales para preentrenamiento. No se versionan por tamaño ni por
-ser datos externos.
+Corpus MIDI originales para preentrenamiento. No se versionan por tamaño y al
+ser datos externos con licencia Creative Commons.
 
 ```text
 data/pretraining_raw/

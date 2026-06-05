@@ -9,7 +9,6 @@ data/bin/
 |-- bin_for_pretraining_v2/
 |-- bin_for_finetuning/
 |-- bin_for_finetuning_v2/
-`-- bin_for_finetuning_v3/
 ```
 
 Cada subcarpeta contiene los splits binarios y sus metadatos.

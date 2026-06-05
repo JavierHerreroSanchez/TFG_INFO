@@ -3,7 +3,7 @@
 Tokenización principal usada por `finetuning_v2.py`.
 
 ```text
-data/interim/tokenized_finetuning_v3/
+data/interim/tokenized_finetuning_v2/
 `-- <json tokenizados del corpus objetivo>
 ```
 
