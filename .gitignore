@@ -154,8 +154,6 @@ data/interim/tokenized_finetuning/*
 !data/interim/tokenized_finetuning/README.md
 data/interim/tokenized_finetuning_v2/*
 !data/interim/tokenized_finetuning_v2/README.md
-data/interim/tokenized_finetuning_v2/*
-!data/interim/tokenized_finetuning_v2/README.md
 data/pretraining_raw/*
 !data/pretraining_raw/README.md
 data/finetuning/*
@@ -165,6 +163,10 @@ data/finetuning_v2/*
 data/deprecated
 data/bin/*
 !data/bin/README.md
+data/bin/bin_for_pretraining
+data/bin/bin_for_pretraining/*
+data/bin/bin_for_finetuning
+data/bin/bin_for_finetuning/*
 output/checkpoints/finetuning/samples/*
 !output/checkpoints/finetuning/samples/README.md
 output/checkpoints/finetuning_v2/samples/*
