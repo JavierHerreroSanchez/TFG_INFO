@@ -50,7 +50,7 @@ class Tee:
 
 
 # =============================================================================
-# CONFIGURACION
+# CONFIGURACIÓN
 # =============================================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -360,6 +360,6 @@ def main():
     print("[DONE] pretraining finished.")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

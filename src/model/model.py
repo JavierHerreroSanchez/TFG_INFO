@@ -1,7 +1,8 @@
 """
-Define componentes del modelo Transformer usado para generacion musical simbolica.
+Define componentes del modelo Transformer usado para generación musical simbólica.
 
-Estas clases encapsulan la arquitectura neuronal que despues se reutiliza en preentrenamiento, fine-tuning y generacion.
+Estas clases encapsulan la arquitectura neuronal que después se reutiliza en
+preentrenamiento, fine-tuning y generación.
 """
 
 from __future__ import annotations
@@ -41,7 +42,7 @@ class MTModelConfig:
     debug: bool = False
 
 # =============================================================================
-# MusicTransformerAutoregressive (decoder-only autoregresivo)
+# MusicTransformerAutoregressive (decoder-only autorregresivo)
 # -----------------------------------------------------------------------------
 # Se implementa un Transformer únicamente con la parte del decoder:
 #   idx (B, T) -> embeddings (B, T, D) -> bloques (B, T, D) -> logits (B, T, V)
@@ -131,7 +132,7 @@ class MusicTransformerAutoregressive(nn.Module):
     #  - embebemos tokens
     #  - pasamos por la pila de bloques decoder
     #  - proyectamos a logits de vocabulario
-        # Si `targets` está presente, se calcula cross-entropy a nivel de token,
+    #  - si `targets` está presente, se calcula cross-entropy a nivel de token,
     # tal y como se hace en next-token prediction (lenguaje/música).
     # =============================================================================
     def forward(self, idx: torch.Tensor, targets: Optional[torch.Tensor] = None) -> Tuple[torch.Tensor, Optional[torch.Tensor]]:
@@ -175,7 +176,7 @@ class MusicTransformerAutoregressive(nn.Module):
     #  - obtenemos logits del último timestep
     #  - aplicar temperatura y (opcionalmente) top-k sampling
     #  - muestreamos el siguiente token y lo concatenamos al contexto
-    # Este es el patrón estándar de muestreo en modelos autoregresivos.
+    # Este es el patrón estándar de muestreo en modelos autorregresivos.
     # =============================================================================
     @torch.no_grad()
     def generate(self, idx: torch.Tensor, max_new_tokens: int, temperature: float = 1.0, top_k: Optional[int] = None) -> torch.Tensor:

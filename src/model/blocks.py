@@ -1,7 +1,8 @@
 """
-Define componentes del modelo Transformer usado para generacion musical simbolica.
+Define componentes del modelo Transformer usado para generación musical simbólica.
 
-Estas clases encapsulan la arquitectura neuronal que despues se reutiliza en preentrenamiento, fine-tuning y generacion.
+Estas clases encapsulan la arquitectura neuronal que después se reutiliza en
+preentrenamiento, fine-tuning y generación.
 """
 
 from __future__ import annotations
@@ -24,7 +25,7 @@ import torch.nn.functional as F
 # =============================================================================
 @dataclass
 class MTConfig:
-    """Agrupa la configuracion de MTConfig para hacer reproducibles los experimentos."""
+    """Agrupa la configuración de MTConfig para hacer reproducibles los experimentos."""
 
     vocab_size: int
     d_model: int
@@ -121,7 +122,7 @@ def skew(QEr: torch.Tensor) -> torch.Tensor:
 # La puntuación de atención combina:
 #   - contenido: QK^T
 #   - término relativo: S_rel = skew(Q * Er^T)
-# y máscara causal para evitar atención al futuro (modelo autoregresivo).
+# y máscara causal para evitar atención al futuro (modelo autorregresivo).
 # =============================================================================
 class RelativeMaskedMHA(nn.Module):
     """

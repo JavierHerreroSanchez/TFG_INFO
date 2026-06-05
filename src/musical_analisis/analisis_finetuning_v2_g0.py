@@ -1,5 +1,5 @@
 """
-Genera una imagen de analisis musicologico para generated_from_json0.
+Genera una imagen de análisis musicológico para generated_from_json0.
 
 Las zonas formales y los elementos analiticos se fijan manualmente para que la
 figura refleje una lectura musicologica concreta: motivo original, estructuras
@@ -27,19 +27,19 @@ SECTIONS = [
     {"label": "Zona cadencial", "start": 45.0, "end": 999.0, "color": "#fff0df"},
 ]
 
-# Llaves analiticas superiores: no colorean notas, solo senalan zonas.
+# Llaves analíticas superiores: no colorean notas, solo señalan zonas.
 ANALYTIC_BRACKETS = [
     {"label": "motivo original", "start": 4.31, "end": 19.2, "color": "#222222"},
     {"label": "impulso cadencial", "start": 45.0, "end": 68.0, "color": "#222222"},
 ]
 
-# Anotaciones melodicas. mode="top" colorea solo la voz superior del intervalo.
+# Anotaciones melódicas. mode="top" colorea solo la voz superior del intervalo.
 TOP_ANNOTATIONS = [
     {"label": "", "start": 4.31, "end": 5.38, "color": "#d62728", "mode": "top"},
     {"label": "rep. motivo", "start": 9.75, "end": 10.69, "color": "#d62728", "mode": "top"},
     {"label": "rep. motivo", "start": 15.25, "end": 16.38, "color": "#d62728", "mode": "top"},
 
-    # Estructuras ascendente-descendentes que articulan la seccion B.
+    # Estructuras ascendente-descendentes que articulan la sección B.
     {"label": "asc.-desc.", "start": 21.38, "end": 23.95, "color": "#1f77b4", "mode": "top"},
     {"label": "motivo A", "start": 24.94, "end": 26.70, "color": "#1f77b4", "mode": "top"},
     {"label": "A'", "start": 28.38, "end": 30.76, "color": "#1f77b4", "mode": "top"},

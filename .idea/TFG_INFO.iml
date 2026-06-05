@@ -14,8 +14,8 @@
       <excludeFolder url="file://$MODULE_DIR$/data" />
       <excludeFolder url="file://$MODULE_DIR$/data/finetuning_v2" />
       <excludeFolder url="file://$MODULE_DIR$/data/interim/tokenized_finetuning_v2" />
-      <excludeFolder url="file://$MODULE_DIR$/data/interim/tokenized_finetuning_v3" />
       <excludeFolder url="file://$MODULE_DIR$/data/interim/tokenized_json_bpe" />
+      <excludeFolder url="file://$MODULE_DIR$/data/interim/tokenized_finetuning_v2" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.14 (TFG_INFO)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />

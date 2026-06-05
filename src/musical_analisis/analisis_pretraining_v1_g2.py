@@ -1,5 +1,5 @@
 """
-Genera una imagen de analisis motivico para generated_from_json2 del primer
+Genera una imagen de análisis motívico para generated_from_json2 del primer
 pretraining.
 
 No marca estructura formal. Solo dibuja, en ventanas manuales, las seis notas

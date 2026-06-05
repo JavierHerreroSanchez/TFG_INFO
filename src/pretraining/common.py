@@ -57,7 +57,7 @@ def seed_all(seed: int) -> None:
 
 
 def choose_np_dtype(use_uint16: bool, vocab_size: int):
-    """Elige el dtype del memmap segun el tamano del vocabulario."""
+    """Elige el dtype del memmap según el tamaño del vocabulario."""
     if use_uint16:
         if vocab_size >= 65535:
             raise ValueError("VOCAB_SIZE no cabe en uint16; usa uint32.")
@@ -82,7 +82,7 @@ def split_train_val_test(paths: List[Path], val_ratio: float, test_ratio: float,
 
 
 def rebase_path(abs_path: str, tokens_dir: Path, anchor: str) -> Path:
-    """Reconstruye rutas del CSV cuando el proyecto se ha movido de maquina o carpeta."""
+    """Reconstruye rutas del CSV cuando el proyecto se ha movido de máquina o carpeta."""
     source = abs_path.replace("\\", "/")
     marker = anchor.replace("\\", "/")
     pos = source.find(marker)

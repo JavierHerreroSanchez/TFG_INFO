@@ -1,5 +1,5 @@
 """
-Usado para tokenizar los ficheros del finetuning añadiendo attribute controls
+Tokeniza el corpus de fine-tuning principal añadiendo attribute controls.
 
 Objetivo:
 1) Tokenizar correctamente con el tokenizer BPE ya entrenado.
@@ -9,11 +9,11 @@ Objetivo:
 
 Notas importantes:
 - Se usa tokenizer.encode(..., attribute_controls_indexes=...) en vez de tokenize_dataset(),
-  porque aqui se controlan explicitamente los AC.
+  porque aquí se controlan explícitamente los AC.
 - Primero preprocesa el Score con tokenizer.preprocess_score(score), y luego tokeniza con
   no_preprocess_score=True. MidiTok recomienda esto cuando se usan attribute_controls_indexes.
 - El conteo de barras para los AC bar-level se obtiene de una tokenización preliminar SIN AC,
-  contando los tokens Bar_None. Asi no se depende de utilidades internas.
+  contando los tokens Bar_None. Así no se depende de utilidades internas.
 """
 
 from __future__ import annotations
@@ -41,7 +41,7 @@ TOKENIZER_PATH = (PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v2.json").res
 
 # Rutas internas del proyecto.
 DATASET_ROOT = (PROJECT_ROOT / "data" / "finetuning_v3" / "mozart_sonatas_aug").resolve()
-OUT_DIR = (PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v3").resolve()
+OUT_DIR = (PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v2").resolve()
 INDEX_CSV = (PROJECT_ROOT / "data" / "interim" / "indexes" / "index_finetuning_v3.csv").resolve()
 BAD_LIST_PATH = (PROJECT_ROOT / "tokenizer" / "bad_midis.txt").resolve()
 
@@ -52,7 +52,7 @@ PREVIEW_TOKEN_COUNT = 128
 
 MIDI_EXTS = {".mid", ".midi"}
 
-# Cache por proceso
+# Caché por proceso.
 _TOKENIZER: REMI | None = None
 
 
@@ -78,7 +78,7 @@ def list_midi_files(root: Path) -> list[Path]:
 
 def is_bar_level_ac(ac_obj: Any) -> bool:
     """
-    MidiTok documenta AC bar-level y track-level, pero aqui no se depende de internals fragiles.
+    MidiTok documenta AC bar-level y track-level, pero aquí no se depende de internals frágiles.
     Heurística robusta:
     - si el nombre de clase contiene 'Bar' => bar-level
     - si contiene 'Track' => track-level
@@ -361,6 +361,6 @@ def main() -> None:
     build_token_index(OUT_DIR, INDEX_CSV, PROJECT_ROOT)
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

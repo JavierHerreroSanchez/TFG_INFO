@@ -1,8 +1,8 @@
 # TFG_INFO
 
-Trabajo de Fin de Grado sobre generacion musical simbolica con modelos
-Transformer. El repositorio contiene el pipeline de preparacion de datos,
-entrenamiento, generacion y evaluacion.
+Trabajo de Fin de Grado sobre generación musical con modelos Transformer. El
+repositorio contiene el pipeline de preparación de datos, entrenamiento,
+generación y evaluación.
 
 ## Requisitos
 
@@ -10,7 +10,7 @@ entrenamiento, generacion y evaluacion.
 pip install -r requirements.txt
 ```
 
-Ejecutar desde la raiz del proyecto:
+Ejecutar desde la raíz del proyecto:
 
 ```bash
 python -m src.<paquete>.<script>
@@ -20,19 +20,19 @@ python -m src.<paquete>.<script>
 
 ```text
 src/
-|-- model/              # Modelo Transformer
-|-- tokenization/       # Tokenizacion REMI+BPE e indices
-|-- training/           # Preentrenamiento
-|-- finetuning/         # Limpieza, aumentacion y ajuste fino
-|-- generation/         # Generacion y JSON -> MIDI
-|-- evaluation/         # Metricas y graficos
-|-- inspection/         # Utilidades de revision
-`-- musical_analisis/   # Figuras de analisis musical
+|-- model/              # Modelo y bloques Transformer
+|-- tokenization/       # Tokenización REMI+BPE, attribute controls e índices
+|-- pretraining/        # Preentrenamiento
+|-- finetuning/         # Limpieza, aumento de datos y ajuste fino
+|-- generation/         # Generación y JSON -> MIDI
+|-- evaluation/         # Métricas y gráficos
+|-- inspection/         # Utilidades de revisión
+`-- musical_analisis/   # Figuras de análisis musical
 ```
 
 ## Datos
 
-Los datasets y artefactos pesados no se versionan.
+Los datasets y los bins de entrenamiento no se proporcionan por su tamaño.
 
 ```text
 data/
@@ -97,7 +97,7 @@ data/bin/bin_for_finetuning_v3/
 output/checkpoints/finetuning_v2/
 ```
 
-### 4. Generacion
+### 4. Generación
 
 ```bash
 python -m src.generation.generation_from_pretraining_v2
@@ -112,7 +112,7 @@ output/generation_pretraining_tfg_second/
 output/generation_finetuning_tfg_second/
 ```
 
-### 5. Evaluacion
+### 5. Evaluación
 
 ```bash
 python -m src.evaluation.evaluate_generated_pretraining
@@ -128,7 +128,7 @@ Los resultados se guardan en las carpetas `output/generation_*`.
 
 ```text
 tokenizer/                         tokenizadores entrenados
-data/interim/indexes/*.csv         indices de tokenizacion
+data/interim/indexes/*.csv         índices de tokenización
 data/bin/                          caches binarias
 output/checkpoints/*/best.pt       checkpoints principales
 output/generation_*/               muestras e informes
@@ -136,5 +136,6 @@ output/generation_*/               muestras e informes
 
 ## Reproducibilidad
 
-Las rutas se resuelven desde la raiz del proyecto. Si se cambian datasets,
-tokenizadores o checkpoints, deben regenerarse indices, caches y evaluaciones.
+Las rutas se resuelven desde la raíz del proyecto. Si se cambian datasets,
+tokenizadores o checkpoints, deben regenerarse índices, caches y evaluaciones
+siguiendo los pasos proporcionados.

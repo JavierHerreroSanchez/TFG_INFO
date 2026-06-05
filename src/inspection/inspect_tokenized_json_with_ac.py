@@ -299,6 +299,6 @@ def main() -> None:
         print(f"  {fam:<20} {cnt}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

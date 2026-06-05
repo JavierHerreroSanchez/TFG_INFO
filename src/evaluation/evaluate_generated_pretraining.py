@@ -1,7 +1,7 @@
 """
-Evalua las piezas generadas mediante metricas simbolicas, espectrales o graficas.
+Evalúa las piezas generadas mediante métricas simbólicas, espectrales o gráficas.
 
-Los resultados producidos aqui sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
+Los resultados producidos aquí sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
 """
 
 from __future__ import annotations
@@ -206,7 +206,7 @@ def choose_reference_files() -> List[Path]:
 
 
 # ============================================================
-# CONVERSION Y FILTRADO MUSPY
+# CONVERSIÓN Y FILTRADO MUSPY
 # ============================================================
 def load_music(path: Path) -> muspy.Music:
     """Carga un MIDI como objeto MusPy con resolución conocida."""
@@ -229,7 +229,7 @@ def keep_only_piano_tracks(music: muspy.Music) -> muspy.Music:
 
 
 # ============================================================
-# FEATURES CUSTOM MINIMAS
+# FEATURES CUSTOM MÍNIMAS
 # ============================================================
 def iter_notes(music: muspy.Music):
 
@@ -341,7 +341,7 @@ def pitch_histogram_12(music: muspy.Music) -> np.ndarray:
 
 
 # ============================================================
-# WRAPPERS METRICAS MUSPY
+# WRAPPERS MÉTRICAS MUSPY
 # ============================================================
 def muspy_metric_safe(name: str, music: muspy.Music) -> float:
 
@@ -355,7 +355,7 @@ def muspy_metric_safe(name: str, music: muspy.Music) -> float:
 
 
 # ============================================================
-# EXTRACCION FEATURES POR PIEZA
+# EXTRACCIÓN FEATURES POR PIEZA
 # ============================================================
 def extract_features(path: Path) -> Dict[str, float | str]:
 
@@ -498,7 +498,7 @@ def global_distribution_report(ref_df: pd.DataFrame, gen_df: pd.DataFrame, featu
 # SCORE POR PIEZA: reference-based
 # ============================================================
 def select_reference_pool(duration_beats: float, ref_df: pd.DataFrame) -> pd.DataFrame:
-    """Devuelve todas las referencias de duracion compatible, sin limite de tamano."""
+    """Devuelve todas las referencias de duración compatible, sin límite de tamaño."""
 
     if ref_df.empty or not np.isfinite(duration_beats) or "duration_beats_custom" not in ref_df.columns:
         return ref_df
@@ -856,6 +856,6 @@ def main():
     print(f"  - {per_piece_details_json}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

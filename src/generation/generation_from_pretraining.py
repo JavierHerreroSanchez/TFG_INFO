@@ -1,7 +1,7 @@
 """
 Genera muestras musicales y las convierte entre formatos intermedios y MIDI.
 
-El objetivo es transformar la salida autoregresiva del modelo en artefactos audibles y evaluables.
+El objetivo es transformar la salida autorregresiva del modelo en artefactos audibles y evaluables.
 """
 
 from __future__ import annotations
@@ -118,8 +118,8 @@ def load_checkpoint_and_model(ckpt_name: str, device: str) -> Tuple[MusicTransfo
 # =============================================================================
 # Split real por ficheros JSON (no memmap)
 # -----------------------------------------------------------------------------
-# Para generación condicionada se selecciona una pieza/tokenized JSON real.
-# del split train/val/test, tomar un prompt y dejar que el modelo continúe.
+# Para generación condicionada se selecciona una pieza/tokenized JSON real
+# del split train/val/test, se toma un prompt y se deja que el modelo continúe.
 # Esto es diferente del memmap aleatorio del entrenamiento.
 # =============================================================================
 
@@ -231,7 +231,7 @@ def evaluate_split_loss(model: torch.nn.Module, split: str, block_size: int, dev
 
 
 # =============================================================================
-# Generación autoregresiva
+# Generación autorregresiva
 # =============================================================================
 
 def sample_next_token(
@@ -278,7 +278,7 @@ def generate_from_prompt(
         device: str,
 ) -> Tuple[List[int], bool]:
     """
-    Genera de forma autoregresiva a partir de prompt_tokens.
+    Genera de forma autorregresiva a partir de prompt_tokens.
     Devuelve:
       - secuencia completa (prompt + generación)
       - flag indicando si se encontró EOS
@@ -484,7 +484,7 @@ def run_generation(
 def parse_args():
 
     parser = argparse.ArgumentParser(
-        description="Evaluación y generación para el pretraining del Music Transformer autoregresivo."
+        description="Evaluación y generación para el pretraining del Music Transformer autorregresivo."
     )
 
     parser.add_argument("--mode", choices=["loss", "generate", "all"], default="all")
@@ -548,6 +548,6 @@ def main():
         )
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

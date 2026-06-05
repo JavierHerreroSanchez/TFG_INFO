@@ -1,7 +1,7 @@
 """
-Evalua las piezas generadas mediante metricas simbolicas, espectrales o graficas.
+Evalúa las piezas generadas mediante métricas simbólicas, espectrales o gráficas.
 
-Los resultados producidos aqui sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
+Los resultados producidos aquí sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
 """
 
 from __future__ import annotations
@@ -175,7 +175,7 @@ def choose_reference_files() -> List[Path]:
 
 
 # ============================================================
-# CONVERSION Y FILTRADO MUSPY
+# CONVERSIÓN Y FILTRADO MUSPY
 # ============================================================
 def load_music(path: Path) -> muspy.Music:
     """Carga un MIDI como objeto MusPy con resolución conocida."""
@@ -212,7 +212,7 @@ def all_notes_sorted(music: muspy.Music) -> List:
 
 
 # ============================================================
-# FEATURES CUSTOM MINIMAS
+# FEATURES CUSTOM MÍNIMAS
 # ============================================================
 def pitch_histogram_entropy_custom(music: muspy.Music) -> float:
 
@@ -310,7 +310,7 @@ def pitch_histogram_12(music: muspy.Music) -> np.ndarray:
 
 
 # ============================================================
-# WRAPPERS METRICAS MUSPY
+# WRAPPERS MÉTRICAS MUSPY
 # ============================================================
 def muspy_metric_safe(name: str, music: muspy.Music) -> float:
 
@@ -324,7 +324,7 @@ def muspy_metric_safe(name: str, music: muspy.Music) -> float:
 
 
 # ============================================================
-# EXTRACCION FEATURES POR PIEZA / VENTANA
+# EXTRACCIÓN FEATURES POR PIEZA / VENTANA
 # ============================================================
 def extract_features_from_music(music: muspy.Music, file_label: str) -> Dict[str, float | str]:
 
@@ -380,7 +380,7 @@ def build_feature_table(files: List[Path], tag: str) -> pd.DataFrame:
 
 
 # ============================================================
-# CREACION DE VENTANAS DE REFERENCIA
+# CREACIÓN DE VENTANAS DE REFERENCIA
 # ============================================================
 def music_end_tick(music: muspy.Music) -> int:
 
@@ -946,6 +946,6 @@ def main():
     print(f"  - {per_piece_details_json}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

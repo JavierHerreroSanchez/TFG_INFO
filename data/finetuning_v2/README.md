@@ -1,6 +1,6 @@
 # Estructura de `data/finetuning_v2`
 
-Corpus objetivo del flujo principal de fine-tuning. No se versiona por tamano.
+Corpus objetivo del flujo principal de fine-tuning. No se versiona por tamaño.
 
 ```text
 data/finetuning_v2/

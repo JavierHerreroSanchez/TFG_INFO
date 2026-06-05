@@ -30,14 +30,14 @@ from src.pretraining.common import (
 )
 
 # =============================================================================
-# CONFIGURACION DE FINETUNING
+# CONFIGURACIÓN DE FINETUNING
 # =============================================================================
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-INDEX_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_finetuning_v3.csv"
-TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v3"
-ANCHOR = r"data\interim\tokenized_finetuning_v3"
+INDEX_CSV = PROJECT_ROOT / "data" / "interim" / "indexes" / "index_finetuning_v2.csv"
+TOKENS_DIR = PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v2"
+ANCHOR = r"data\interim\tokenized_finetuning_v2"
 
 TOKEN_FIELD = "ids"
 VOCAB_SIZE = 18000
@@ -46,7 +46,7 @@ VAL_RATIO = 0.10
 TEST_RATIO = 0.10
 SEED = 1453
 
-CACHE_DIR = (PROJECT_ROOT / "data" / "bin" / "bin_for_finetuning_v3").resolve()
+CACHE_DIR = (PROJECT_ROOT / "data" / "bin" / "bin_for_finetuning_v2").resolve()
 ADD_EOS = True
 EOS_ID = 2
 USE_UINT16 = True
@@ -404,6 +404,6 @@ def main():
     evaluate_test(model, test_loader)
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

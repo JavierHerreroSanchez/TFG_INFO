@@ -1,7 +1,7 @@
 """
-Evalua las piezas generadas mediante metricas simbolicas, espectrales o graficas.
+Evalúa las piezas generadas mediante métricas simbólicas, espectrales o gráficas.
 
-Los resultados producidos aqui sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
+Los resultados producidos aquí sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
 """
 
 from __future__ import annotations
@@ -512,7 +512,7 @@ def global_distribution_report(ref_df: pd.DataFrame, gen_df: pd.DataFrame, featu
 # SCORE POR PIEZA
 # ============================================================
 def select_reference_pool(duration_s: float, ref_df: pd.DataFrame) -> pd.DataFrame:
-    """Devuelve todas las referencias de duracion compatible, sin limite de tamano."""
+    """Devuelve todas las referencias de duración compatible, sin límite de tamaño."""
 
     if ref_df.empty or not np.isfinite(duration_s) or "duration_s" not in ref_df.columns:
         return ref_df
@@ -846,6 +846,6 @@ def main():
     print(f"  - {summary_json}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

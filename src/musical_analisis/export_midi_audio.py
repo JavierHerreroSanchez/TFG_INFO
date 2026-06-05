@@ -8,7 +8,7 @@ Este script no necesita FluidSynth ni un .sf2. Descarga en cache las muestras
 MP3 necesarias del SoundFont de Magenta, las decodifica con ffmpeg y las mezcla
 en audio PCM para generar archivos incrustables en LaTeX/PPTX.
 
-Uso desde la raiz del proyecto:
+Uso desde la raíz del proyecto:
 
     python -m src.musical_analisis.export_midi_audio
     python -m src.musical_analisis.export_midi_audio --format mp3
@@ -60,7 +60,6 @@ DEFAULT_TARGETS = [
         "finetuning_v2_g0",
         ROOT_DIR / "output" / "generation_finetuning_tfg_second" / "generated_from_json0.mid",
     ),
-    # Incluido porque el analisis musical existente usa tambien g9 del segundo fine-tuning.
     RenderTarget(
         "finetuning_v2_g9",
         ROOT_DIR / "output" / "generation_finetuning_tfg_second" / "generated_from_json9.mid",

@@ -1,8 +1,8 @@
 """
-Genera una imagen de analisis para generated_from_json7 del segundo pretraining.
+Genera una imagen de análisis para generated_from_json7 del segundo pretraining.
 
-No plantea una estructura formal completa: solo senala el motivo original y dos
-zonas de alta riqueza armonica con direccionalidad visible.
+No plantea una estructura formal completa: solo señala el motivo original y dos
+zonas de alta riqueza armónica con direccionalidad visible.
 """
 
 from pathlib import Path

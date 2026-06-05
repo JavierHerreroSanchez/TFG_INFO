@@ -661,6 +661,6 @@ def main() -> None:
         print(f"JSON guardado en: {args.json}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

@@ -229,6 +229,6 @@ def main():
     print(f"[INFO] Nº tracks en score: {num_tracks}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

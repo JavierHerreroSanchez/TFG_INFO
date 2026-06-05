@@ -1,5 +1,5 @@
 """
-Genera una imagen de analisis musicologico para generated_from_json1 del
+Genera una imagen de análisis musicológico para generated_from_json1 del
 primer finetuning.
 
 La lectura formal evita forzar una reexposicion: se entiende como una exposicion
@@ -35,7 +35,7 @@ ANALYTIC_BRACKETS = [
     {"label": "motivo original", "start": 0.44, "end": 12.0, "color": "#222222"},
 ]
 
-# Motivos amplios senalados manualmente por su recurrencia o contraste.
+# Motivos amplios señalados manualmente por su recurrencia o contraste.
 # mode="top" colorea solo la voz superior de cada ventana.
 MOTIF_ANNOTATIONS = [
     {"label": "motivo A", "start": 12.0, "end": 23.0, "color": "#d62728", "mode": "top", "pitch_min": 57},

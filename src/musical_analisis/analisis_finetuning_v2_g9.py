@@ -1,7 +1,9 @@
 """
-Calcula analisis musicales agregados sobre las muestras generadas.
+Genera una imagen de análisis musicológico para generated_from_json9 del
+segundo fine-tuning.
 
-Se usa para obtener evidencias cuantitativas y visuales del comportamiento musical del sistema.
+La figura marca secciones, motivos repetidos, repeticiones descendentes y bajo
+arpegiado sobre el piano roll.
 """
 
 from pathlib import Path
@@ -171,7 +173,7 @@ def build_note_annotations(notes):
 
 
 def plot():
-    """Dibuja una visualizacion usada durante la evaluacion."""
+    """Dibuja una visualización usada durante la evaluación."""
 
     pm = pretty_midi.PrettyMIDI(str(MIDI_PATH))
     notes = collect_notes(pm)
@@ -264,6 +266,6 @@ def plot():
     print(f"Guardado: {OUT_PATH}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     plot()

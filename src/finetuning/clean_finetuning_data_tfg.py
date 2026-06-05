@@ -794,6 +794,6 @@ def main():
     print(f"[OK] clean dir -> {OUT_CLEAN_DIR}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

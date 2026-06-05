@@ -50,7 +50,7 @@ def prepare_cache_and_splits():
 # =============================================================================
 # CONFIGURACIÓN POR DEFECTO
 # -----------------------------------------------------------------------------
-# Este script está adaptado a la lógica de pretraining.py:
+# Este script está adaptado a la lógica de finetuning.py:
 #   - mismo split reproducible train/val/test
 #   - misma resolución de JSON tokenizados
 #   - mismo caché binario memmap para loss teacher-forced
@@ -91,7 +91,7 @@ def get_model_block_size(model: torch.nn.Module) -> int:
 def load_checkpoint_and_model(ckpt_name: str, device: str) -> Tuple[MusicTransformerAutoregressive, Dict]:
     """
     Carga best.pt o last.pt y reconstruye el modelo desde el cfg guardado
-    dentro del checkpoint del pretraining.
+    dentro del checkpoint del fine-tuning.
     """
     if ckpt_name not in {"best", "last"}:
         raise ValueError("ckpt_name debe ser 'best' o 'last'.")
@@ -120,8 +120,8 @@ def load_checkpoint_and_model(ckpt_name: str, device: str) -> Tuple[MusicTransfo
 # =============================================================================
 # Split real por ficheros JSON (no memmap)
 # -----------------------------------------------------------------------------
-# Para generación condicionada se selecciona una pieza/tokenized JSON real.
-# del split train/val/test, tomar un prompt y dejar que el modelo continúe.
+# Para generación condicionada se selecciona una pieza/tokenized JSON real
+# del split train/val/test, se toma un prompt y se deja que el modelo continúe.
 # Esto es diferente del memmap aleatorio del entrenamiento.
 # =============================================================================
 
@@ -295,7 +295,7 @@ def evaluate_split_loss(model: torch.nn.Module, split: str, block_size: int, dev
 
 
 # =============================================================================
-# Generación autoregresiva
+# Generación autorregresiva
 # =============================================================================
 
 def sample_next_token(
@@ -343,7 +343,7 @@ def generate_from_prompt(
         device: str,
 ) -> Tuple[List[int], bool]:
     """
-    Genera de forma autoregresiva a partir de prompt_tokens.
+    Genera de forma autorregresiva a partir de prompt_tokens.
 
     Política de longitud mínima:
       - antes de alcanzar min_new_tokens, EOS no puede terminar la secuencia
@@ -591,7 +591,7 @@ def run_generation(
 def parse_args():
 
     parser = argparse.ArgumentParser(
-        description="Evaluación y generación para el pretraining del Music Transformer autoregresivo."
+        description="Evaluación y generación para el fine-tuning del Music Transformer autorregresivo."
     )
 
     parser.add_argument("--mode", choices=["loss", "generate", "all"], default="all")
@@ -679,6 +679,6 @@ def main():
             device=args.device,
         )
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

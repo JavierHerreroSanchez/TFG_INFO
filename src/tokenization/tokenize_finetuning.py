@@ -1,22 +1,23 @@
 """
-Prepara la representacion simbolica que alimenta al modelo generativo.
+Prepara la representación simbólica que alimenta al modelo generativo.
 
-El script convierte corpus MIDI en indices, tokens o secuencias de ids para que las fases de entrenamiento trabajen con tensores reproducibles.
+El script convierte el corpus de fine-tuning configurado en JSONs tokenizados e
+índice CSV para construir los tensores reproducibles de entrenamiento.
 """
 
 from __future__ import annotations
 
 """
-Tokenización del corpus de fine-tuning.
+Tokenización del corpus de fine-tuning legacy.
 
-El script recorre los MIDIs limpios/aumentados del corpus objetivo y genera JSONs
+El script recorre los MIDIs limpios/aumentados del directorio configurado y genera JSONs
 con los ids del tokenizador REMI+BPE usado en el resto del proyecto.
 
 Entrada:
-  <PROJECT_ROOT>/finetuning/finetuning_sonatas_aug/**/*.mid
+  FINETUNING_MIDIS_DIR/**/*.mid
 
 Salida:
-  <PROJECT_ROOT>/data/interim/tokenized_finetuning/**/<mismo_rel_path>.json
+  TOKENS_DIR/**/<mismo_rel_path>.json
 
 Incluye paralelización con `ProcessPoolExecutor`, validación de JSONs existentes
 y una lista de MIDIs fallidos para evitar reintentos innecesarios.
@@ -248,6 +249,6 @@ def main():
     build_token_index(TOKENS_DIR, INDEX_CSV, PROJECT_ROOT)
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

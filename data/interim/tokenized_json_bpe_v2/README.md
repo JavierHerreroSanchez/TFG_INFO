@@ -1,6 +1,6 @@
 # Estructura de `data/interim/tokenized_json_bpe_v2`
 
-Tokenizacion principal usada para preentrenamiento.
+Tokenización principal usada para preentrenamiento.
 
 ```text
 data/interim/tokenized_json_bpe_v2/

@@ -7,4 +7,4 @@ output/checkpoints/finetuning/samples/
 `-- <muestras por update de entrenamiento>
 ```
 
-El contenido se genera automaticamente y no se versiona.
+El contenido se genera automáticamente y no se versiona.

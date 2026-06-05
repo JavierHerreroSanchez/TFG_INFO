@@ -1,7 +1,7 @@
 # Estructura de `data/bin`
 
 Caches binarias generadas desde los JSON tokenizados. Se pueden reconstruir a
-partir de los indices, por eso no se versionan.
+partir de los índices, por eso no se versionan.
 
 ```text
 data/bin/

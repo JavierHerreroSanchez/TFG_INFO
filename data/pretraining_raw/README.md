@@ -1,6 +1,6 @@
 # Estructura de `data/pretraining_raw`
 
-Corpus MIDI originales para preentrenamiento. No se versionan por tamano ni por
+Corpus MIDI originales para preentrenamiento. No se versionan por tamaño ni por
 ser datos externos.
 
 ```text
@@ -15,5 +15,5 @@ data/pretraining_raw/
     `-- ...
 ```
 
-MAESTRO mantiene la organizacion por ano del dataset. ARIAMidi usa subcarpetas
-alfabeticas de dos letras.
+MAESTRO mantiene la organización por año del dataset. ARIAMidi usa subcarpetas
+alfabéticas de dos letras.

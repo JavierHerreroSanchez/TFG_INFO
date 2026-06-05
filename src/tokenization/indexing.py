@@ -1,7 +1,8 @@
 """
-Prepara la representacion simbolica que alimenta al modelo generativo.
+Prepara la representación simbólica que alimenta al modelo generativo.
 
-El script convierte corpus MIDI en indices, tokens o secuencias de ids para que las fases de entrenamiento trabajen con tensores reproducibles.
+El script convierte JSONs tokenizados en índices reproducibles para las fases
+de entrenamiento.
 """
 
 from __future__ import annotations
@@ -41,7 +42,7 @@ def extract_ids(obj: dict) -> list[int]:
 
 
 def path_for_index(json_path: Path, project_root: Path | None) -> str:
-    """Guarda rutas relativas al proyecto cuando es posible para evitar atarlas a una maquina."""
+    """Guarda rutas relativas al proyecto cuando es posible para evitar atarlas a una máquina."""
     resolved = json_path.resolve()
     if project_root is None:
         return str(resolved)
@@ -62,8 +63,8 @@ def build_token_index(tokens_dir: Path, out_csv: Path, project_root: Path | None
 
     Columnas:
     - path: JSON tokenizado, preferiblemente relativo al root del proyecto
-    - length: numero total de ids
-    - min_id / max_id: comprobacion rapida del rango de vocabulario
+    - length: número total de ids
+    - min_id / max_id: comprobación rápida del rango de vocabulario
     """
     if not tokens_dir.exists():
         raise FileNotFoundError(f"No existe TOKENS_DIR: {tokens_dir}")

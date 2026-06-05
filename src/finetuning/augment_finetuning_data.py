@@ -483,6 +483,6 @@ def main() -> None:
     print(f"[OK] aug dir-> {OUT_AUG_DIR}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

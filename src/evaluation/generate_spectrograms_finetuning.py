@@ -1,7 +1,7 @@
 """
-Evalua las piezas generadas mediante metricas simbolicas, espectrales o graficas.
+Evalúa las piezas generadas mediante métricas simbólicas, espectrales o gráficas.
 
-Los resultados producidos aqui sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
+Los resultados producidos aquí sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
 """
 
 from __future__ import annotations
@@ -998,6 +998,6 @@ def main():
     print(f"  - {summary_json}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

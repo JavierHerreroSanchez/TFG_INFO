@@ -1,7 +1,8 @@
 """
-Prepara la representacion simbolica que alimenta al modelo generativo.
+Prepara la representación simbólica que alimenta al modelo generativo.
 
-El script convierte corpus MIDI en indices, tokens o secuencias de ids para que las fases de entrenamiento trabajen con tensores reproducibles.
+El script convierte el corpus de preentrenamiento en JSONs tokenizados e índice
+CSV para construir los tensores reproducibles de entrenamiento.
 """
 
 from __future__ import annotations
@@ -253,6 +254,6 @@ def main():
     build_token_index(TOKENS_DIR, INDEX_CSV, PROJECT_ROOT)
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

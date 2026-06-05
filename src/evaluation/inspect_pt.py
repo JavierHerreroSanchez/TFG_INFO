@@ -127,6 +127,6 @@ def main():
     print("=" * 90)
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

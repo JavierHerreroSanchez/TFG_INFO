@@ -1,6 +1,6 @@
 # Estructura de `data/interim/tokenized_json_bpe`
 
-Primera tokenizacion REMI+BPE usada para preentrenamiento.
+Primera tokenización REMI+BPE usada para preentrenamiento.
 
 ```text
 data/interim/tokenized_json_bpe/

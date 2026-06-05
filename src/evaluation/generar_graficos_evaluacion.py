@@ -1,7 +1,7 @@
 """
-Evalua las piezas generadas mediante metricas simbolicas, espectrales o graficas.
+Evalúa las piezas generadas mediante métricas simbólicas, espectrales o gráficas.
 
-Los resultados producidos aqui sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
+Los resultados producidos aquí sirven para justificar experimentalmente la calidad del modelo en la memoria del TFG.
 """
 
 from __future__ import annotations
@@ -24,15 +24,15 @@ except Exception:
 
 
 # ============================================================
-# CONFIGURACION PYCHARM
+# CONFIGURACIÓN PYCHARM
 # ============================================================
 
-# Opcion 1: si este script esta en la misma carpeta que los CSV/JSON, deja esto asi.
+# Opción 1: si este script está en la misma carpeta que los CSV/JSON, deja esto así.
 DATA_DIR = Path(__file__).resolve().parent
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
-# Opcion 2: si los datos estan en carpetas separadas, ajusta estas dos rutas.
-# Tambien puedes pasarlas por consola con --symbolic-dir y --spectral-dir.
+# Opción 2: si los datos están en carpetas separadas, ajusta estas dos rutas.
+# También puedes pasarlas por consola con --symbolic-dir y --spectral-dir.
 SYMBOLIC_DATA_DIR = PROJECT_ROOT / "output" / "generation_finetuning_tfg_second" / "midi_eval_windows"
 SPECTRAL_DATA_DIR = PROJECT_ROOT / "output" / "generation_finetuning_tfg_second" / "midi_spectral_eval_windows"
 
@@ -43,8 +43,8 @@ OUTPUT_SUFFIX = "_v2"
 MAX_PIECES = 10
 DPI = 150
 
-# Si tienes un global_report_windows.csv junto a estos ficheros, el script lo usara
-# para OA/KLD simbolico. Si no existe, calcula OA/KLD desde reference_features.csv
+# Si tienes un global_report_windows.csv junto a estos ficheros, el script lo usará
+# para OA/KLD simbólico. Si no existe, calcula OA/KLD desde reference_features.csv
 # y per_piece_details.json.
 PREFER_OPTIONAL_SYMBOLIC_GLOBAL_REPORT = True
 OPTIONAL_SYMBOLIC_GLOBAL_REPORT_NAME = "global_report_windows.csv"
@@ -160,7 +160,7 @@ def check_required_files(data_dir: Path, required_files: List[str], label: str) 
         msg = "\n".join(f"- {m}" for m in missing)
         raise FileNotFoundError(
             f"Faltan ficheros en {label}={data_dir}:\n{msg}\n\n"
-            "Ajusta --symbolic-dir/--spectral-dir o las constantes de CONFIGURACION PYCHARM."
+            "Ajusta --symbolic-dir/--spectral-dir o las constantes de CONFIGURACIÓN PYCHARM."
         )
 
 
@@ -175,7 +175,7 @@ def parse_args() -> argparse.Namespace:
     """Lee la configuracion opcional de consola."""
 
     parser = argparse.ArgumentParser(
-        description="Genera los 7 graficos de evaluacion simbolica/espectral del TFG."
+        description="Genera los 7 gráficos de evaluación simbólica/espectral del TFG."
     )
     parser.add_argument(
         "--data-dir",
@@ -507,7 +507,7 @@ def style_hbar_axis(ax) -> None:
 
 def plot_score_comparison(piece_df: pd.DataFrame, out_path: Path) -> None:
     """
-    Dibuja una visualizacion usada durante la evaluacion.
+    Dibuja una visualización usada durante la evaluación.
 
     """
 
@@ -538,7 +538,7 @@ def plot_score_comparison(piece_df: pd.DataFrame, out_path: Path) -> None:
 
 def plot_componentes(piece_df: pd.DataFrame, out_path: Path, kind: str) -> None:
     """
-    Dibuja una visualizacion usada durante la evaluacion.
+    Dibuja una visualización usada durante la evaluación.
 
     """
 
@@ -581,7 +581,7 @@ def plot_componentes(piece_df: pd.DataFrame, out_path: Path, kind: str) -> None:
 
 def plot_hbar(report: pd.DataFrame, order: List[str], labels_map: Dict[str, str], value_col: str, title: str, xlabel: str, fmt: str, out_path: Path) -> None:
     """
-    Dibuja una visualizacion usada durante la evaluacion.
+    Dibuja una visualización usada durante la evaluación.
 
     """
 
@@ -766,6 +766,6 @@ def main() -> None:
         print(f" - {p}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

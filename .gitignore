@@ -154,8 +154,8 @@ data/interim/tokenized_finetuning/*
 !data/interim/tokenized_finetuning/README.md
 data/interim/tokenized_finetuning_v2/*
 !data/interim/tokenized_finetuning_v2/README.md
-data/interim/tokenized_finetuning_v3/*
-!data/interim/tokenized_finetuning_v3/README.md
+data/interim/tokenized_finetuning_v2/*
+!data/interim/tokenized_finetuning_v2/README.md
 data/pretraining_raw/*
 !data/pretraining_raw/README.md
 data/finetuning/*

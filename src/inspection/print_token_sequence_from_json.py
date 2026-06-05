@@ -6,7 +6,7 @@ Carga un JSON tokenizado por MidiTok y muestra secuencialmente:
 - id
 - token legible
 
-Pensado para JSONs tokenizados con tokenizer_REMI_BPE_v1.json.
+Pensado para JSONs tokenizados con tokenizer_REMI_BPE_v2.json.
 
 """
 
@@ -166,6 +166,6 @@ def main() -> None:
         print("Establecer MAX_TOKENS = None para imprimirlos todos.")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()

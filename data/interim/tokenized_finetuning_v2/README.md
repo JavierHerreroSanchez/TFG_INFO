@@ -1,10 +1,10 @@
-# Estructura de `data/interim/tokenized_finetuning_v2`
+# Estructura de `data/interim/tokenized_finetuning_v3`
 
-Tokenizacion intermedia del corpus de fine-tuning.
+Tokenización principal usada por `finetuning_v2.py`.
 
 ```text
-data/interim/tokenized_finetuning_v2/
+data/interim/tokenized_finetuning_v3/
 `-- <json tokenizados del corpus objetivo>
 ```
 
-Los archivos proceden de `data/finetuning_v2`.
+Los archivos corresponden a piezas y variantes aumentadas del corpus de sonatas.

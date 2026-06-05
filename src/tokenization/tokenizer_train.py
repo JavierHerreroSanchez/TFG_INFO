@@ -193,6 +193,6 @@ def main() -> None:
     print(f"[OK] Tokenizer guardado en: {tok_path}")
 
 
-# Ejecucion directa del script.
+# Ejecución directa del script.
 if __name__ == "__main__":
     main()
