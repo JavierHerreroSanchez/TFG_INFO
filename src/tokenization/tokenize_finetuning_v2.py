@@ -40,9 +40,9 @@ PROJECT_ROOT = Path(__file__).resolve().parents[2]
 TOKENIZER_PATH = (PROJECT_ROOT / "tokenizer" / "tokenizer_REMI_BPE_v2.json").resolve()
 
 # Rutas internas del proyecto.
-DATASET_ROOT = (PROJECT_ROOT / "data" / "finetuning_v3" / "mozart_sonatas_aug").resolve()
+DATASET_ROOT = (PROJECT_ROOT / "data" / "finetuning_v2" / "mozart_sonatas_aug").resolve()
 OUT_DIR = (PROJECT_ROOT / "data" / "interim" / "tokenized_finetuning_v2").resolve()
-INDEX_CSV = (PROJECT_ROOT / "data" / "interim" / "indexes" / "index_finetuning_v3.csv").resolve()
+INDEX_CSV = (PROJECT_ROOT / "data" / "interim" / "indexes" / "index_finetuning_v2.csv").resolve()
 BAD_LIST_PATH = (PROJECT_ROOT / "tokenizer" / "bad_midis.txt").resolve()
 
 NUM_WORKERS = max(1, (os.cpu_count() or 8) - 2)

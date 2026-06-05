@@ -1,4 +1,4 @@
-# Estructura de `data/interim/tokenized_finetuning_v3`
+# Estructura de `data/interim/tokenized_finetuning_v2`
 
 Tokenización principal usada por `finetuning_v2.py`.
 

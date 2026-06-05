@@ -91,9 +91,9 @@ python -m src.finetuning.finetuning_v2
 Salidas principales:
 
 ```text
-data/interim/tokenized_finetuning_v3/
-data/interim/indexes/index_finetuning_v3.csv
-data/bin/bin_for_finetuning_v3/
+data/interim/tokenized_finetuning_v2/
+data/interim/indexes/index_finetuning_v2.csv
+data/bin/bin_for_finetuning_v2/
 output/checkpoints/finetuning_v2/
 ```
 

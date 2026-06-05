@@ -1,7 +1,7 @@
-﻿section,key,value
+section,key,value
 meta,generated_dir,..\..\output\generation_finetuning_tfg_third\best_train
 meta,reference_mode,single_dir
-meta,reference_dir,C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v3\mozart_sonatas_aug
+meta,reference_dir,C:\Users\herre\PycharmProjects\TFG_INFO\data\finetuning_v2\mozart_sonatas_aug
 meta,n_generated_files,10
 meta,n_reference_files_full_piece,322
 meta,n_reference_windows,20431

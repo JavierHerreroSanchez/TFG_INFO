@@ -1,7 +1,7 @@
 {
   "split": "train",
   "checkpoint": "best",
-  "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\mozart_sonata_2-pianos_375_2_cishenko_merged_piano__tr+2__ts1p025.json",
+  "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v2\\mozart_sonata_2-pianos_375_2_cishenko_merged_piano__tr+2__ts1p025.json",
   "prompt_start": 0,
   "prompt_len": 250,
   "generated_len": 2000,

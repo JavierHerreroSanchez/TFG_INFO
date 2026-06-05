@@ -1,7 +1,7 @@
 {
   "split": "train",
   "checkpoint": "best",
-  "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v3\\1piano_sonata_279_hisamori_merged_piano__tr-1__ts0p950.json",
+  "source_json": "C:\\Users\\herre\\PycharmProjects\\TFG_INFO\\data\\interim\\tokenized_finetuning_v2\\1piano_sonata_279_hisamori_merged_piano__tr-1__ts0p950.json",
   "prompt_start": 0,
   "prompt_len": 250,
   "generated_len": 2000,
