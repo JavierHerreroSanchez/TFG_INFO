@@ -139,3 +139,14 @@ output/generation_*/               muestras generadas e informes de evaluación
 Las rutas se resuelven desde la raíz del proyecto. Si se cambian datasets,
 tokenizadores o checkpoints, deben regenerarse índices, caches y evaluaciones
 siguiendo los pasos proporcionados.
+
+## Licencia
+
+Copyright (c) 2026 Javier Herrero Sánchez.
+
+El código fuente original de este repositorio se distribuye bajo la
+[GNU General Public License v3.0](LICENSE) (`GPL-3.0-only`).
+
+Esta licencia no se aplica automáticamente a datasets, archivos MIDI,
+composiciones, dependencias ni otros materiales de terceros. Dichos contenidos
+conservan sus licencias y condiciones de uso originales.
