@@ -51,6 +51,5 @@ contiene 21 obras distribuidas en 23 archivos MIDI.
 ## Disponibilidad
 
 Los archivos MIDI originales y sus versiones procesadas o aumentadas no se
-redistribuyen en este repositorio. Permanecen excluidos mediante `.gitignore`
-debido a las condiciones de uso de Kunst der Fuge y a los derechos de las
+redistribuyen en este repositorio. Permanecen excluidos debido a las condiciones de uso de Kunst der Fuge y a los derechos de las
 personas autoras de las secuencias.
