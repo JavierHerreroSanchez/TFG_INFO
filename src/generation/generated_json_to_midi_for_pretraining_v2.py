@@ -1,6 +1,6 @@
 
 """
-Conversión a MIDI de una muestra generada por el modelo de pretraining.
+Conversión a MIDI de una muestra generada por el modelo de pretraining v2.
 
 El script reconstruye una secuencia MIDI a partir de los ids guardados en JSON,
 manteniendo el mismo tokenizador REMI+BPE usado durante el entrenamiento.

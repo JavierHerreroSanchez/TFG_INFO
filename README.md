@@ -21,9 +21,9 @@ python -m src.<paquete>.<script>
 ```text
 src/
 |-- model/              # Modelo y bloques Transformer
-|-- tokenization/       # Tokenización REMI+BPE, attribute controls e índices
+|-- tokenization/       # Tokenización REMI, BPE, attribute controls e índices
 |-- pretraining/        # Preentrenamiento
-|-- finetuning/         # Limpieza, aumento de datos y ajuste fino
+|-- finetuning/         # Limpieza, aumento de datos y finetuning
 |-- generation/         # Generación y JSON -> MIDI
 |-- evaluation/         # Métricas y gráficos
 |-- inspection/         # Utilidades de revisión
@@ -55,13 +55,20 @@ Las carpetas excluidas de Git incluyen un `README.md` con su estructura local.
 
 ## Flujo Principal
 
-### 1. Tokenizador
+### 1. Tokenizadores
 
 ```bash
 python -m src.tokenization.tokenizer_train
 ```
 
-Tokenizador usado: `tokenizer/tokenizer_REMI_BPE_v2.json`.
+Durante el proyecto se probaron dos variantes:
+
+- `REMI+BPE`: primera versión del tokenizador.
+- `REMI con attribute controls`: versión final, sin BPE, seleccionada para el
+  flujo principal por ofrecer los mejores resultados.
+
+El archivo de la versión final conserva actualmente el nombre histórico
+`tokenizer/tokenizer_REMI_BPE_v2.json`.
 
 ### 2. Preentrenamiento
 
@@ -79,7 +86,7 @@ data/bin/bin_for_pretraining_v2/
 output/checkpoints/pretraining_v2/
 ```
 
-### 3. Fine-tuning
+### 3. Finetuning
 
 ```bash
 python -m src.finetuning.clean_finetuning_data_tfg
@@ -99,10 +106,19 @@ output/checkpoints/finetuning_v2/
 
 ### 4. Generación
 
+Primero se generan las muestras en formato JSON:
+
 ```bash
 python -m src.generation.generation_from_pretraining_v2
 python -m src.generation.generation_from_finetuning_v2
-python -m src.generation.generated_json_to_midi
+```
+
+Después, los JSON se convierten a MIDI con el script correspondiente a cada
+modelo:
+
+```bash
+python -m src.generation.generated_json_to_midi_for_pretraining_v2
+python -m src.generation.generated_json_to_midi_for_finetuning_v2
 ```
 
 Salidas principales:
