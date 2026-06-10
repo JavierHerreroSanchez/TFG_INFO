@@ -32,7 +32,10 @@ src/
 
 ## Datos
 
-Los datasets y los bins de entrenamiento no se proporcionan por su tamaño.
+Los datasets y los bins de entrenamiento no se proporcionan. Los corpus y el
+listado concreto de obras utilizadas se documentan en
+[`data/finetuning/README.md`](data/finetuning/README.md) y
+[`data/finetuning_v2/README.md`](data/finetuning_v2/README.md).
 
 ```text
 data/
